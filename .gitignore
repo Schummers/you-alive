@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# corrupted install artifacts (cleanup pending)
+.node_modules_corrupt_*/
+.package-lock.corrupt
