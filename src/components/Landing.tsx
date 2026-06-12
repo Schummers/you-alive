@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import type { Variant } from "@/content/variants";
-import { track } from "@/lib/analytics";
+import { track, getAttribution } from "@/lib/analytics";
 
 // Mobile-first landing for paid traffic. Structure: Hero -> Problem ->
 // Solution & Benefits -> Pricing -> Reassurance -> Footer.
@@ -10,6 +10,11 @@ import { track } from "@/lib/analytics";
 export default function Landing({ variant }: { variant: Variant }) {
   const [showWaitlist, setShowWaitlist] = useState(false);
   const pricingRef = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    track("variant_viewed", { variant: variant.id, positioning: variant.positioning });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   // Fire pricing_view once when the pricing block scrolls into view.
   useEffect(() => {
@@ -123,12 +128,18 @@ function Waitlist({ variant }: { variant: Variant }) {
       const res = await fetch("/api/waitlist", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, variant: variant.id }),
+        body: JSON.stringify({
+          email,
+          variant: variant.id,
+          positioning: variant.positioning,
+          ...getAttribution(),
+        }),
       });
       if (!res.ok) throw new Error("failed");
       track("email_submit", { variant: variant.id });
       setState("done");
     } catch {
+      track("waitlist_error", { variant: variant.id });
       setState("error");
     }
   };

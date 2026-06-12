@@ -43,3 +43,4 @@ next-env.d.ts
 # corrupted install artifacts (cleanup pending)
 .node_modules_corrupt_*/
 .package-lock.corrupt
+.env.local

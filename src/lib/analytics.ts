@@ -35,3 +35,18 @@ export function track(event: string, props: Props = {}) {
     window.fbq("track", fb, props);
   }
 }
+
+// Attribution captured at submit time: UTM params + Meta click id (from the
+// ad URL) + the PostHog distinct_id (bridge to the session/replay/geo).
+export function getAttribution() {
+  if (typeof window === "undefined") return {};
+  const p = new URLSearchParams(window.location.search);
+  const val = (k: string) => p.get(k) || undefined;
+  return {
+    utm_source: val("utm_source"),
+    utm_campaign: val("utm_campaign"),
+    utm_content: val("utm_content"),
+    fbclid: val("fbclid"),
+    posthog_id: posthog?.get_distinct_id?.() || undefined,
+  };
+}
