@@ -6,7 +6,7 @@ if (params.get("internal") === "1") {
 }
 const isInternal = localStorage.getItem("ph_internal") === "1";
 
-posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+posthog.init(process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN!, {
   api_host: "/ingest",
   ui_host: "https://eu.posthog.com",
   defaults: "2026-01-30",
