@@ -1,5 +1,6 @@
 import { designs } from "@/designs/registry";
 import type { DesignModule } from "@/designs/types";
+import LikeButton from "./LikeButton";
 
 // Static-screenshot gallery for the design bake-off. Thumbnails are pre-rendered
 // 390px screenshots in /public/gallery/<slug>.jpg (regenerate with the Playwright
@@ -50,17 +51,20 @@ function Card({ d }: { d: DesignModule }) {
           <span className="text-[13px] font-semibold text-gray-800">
             {d.label}
           </span>
-          {d.mode && (
-            <span
-              className={`rounded px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide ${
-                d.mode === "free"
-                  ? "bg-amber-100 text-amber-800"
-                  : "bg-emerald-100 text-emerald-800"
-              }`}
-            >
-              {d.mode}
-            </span>
-          )}
+          <div className="flex items-center gap-1.5">
+            {d.mode && (
+              <span
+                className={`rounded px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-wide ${
+                  d.mode === "free"
+                    ? "bg-amber-100 text-amber-800"
+                    : "bg-emerald-100 text-emerald-800"
+                }`}
+              >
+                {d.mode}
+              </span>
+            )}
+            <LikeButton slug={d.slug} />
+          </div>
         </div>
         {d.note && (
           <p className="text-[11px] leading-snug text-gray-500">{d.note}</p>
