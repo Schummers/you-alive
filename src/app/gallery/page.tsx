@@ -127,6 +127,7 @@ export default function GalleryPage() {
   }
 
   return (
+    <div className="min-h-screen bg-[#faf9f7] text-gray-900">
     <main className="mx-auto max-w-[1400px] px-6 py-10">
       <header className="mb-10">
         <h1 className="text-2xl font-semibold text-gray-900">
@@ -167,5 +168,6 @@ export default function GalleryPage() {
         })}
       </div>
     </main>
+    </div>
   );
 }
