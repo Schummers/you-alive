@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Client } from "@notionhq/client";
 import { getPostHogClient } from "@/lib/posthog-server";
+import { sendMetaConversion } from "@/lib/meta-capi";
 
 // Stores a captured email in Notion (source of truth) and mirrors the
 // conversion to PostHog server-side (so ad blockers can't drop the signal).
@@ -18,6 +19,8 @@ type WaitlistBody = {
   utm_content?: string;
   fbclid?: string;
   posthog_id?: string;
+  event_id?: string; // shared dedup key with the browser Pixel "Lead" event
+  event_source_url?: string;
 };
 
 export async function POST(req: NextRequest) {
@@ -93,6 +96,28 @@ export async function POST(req: NextRequest) {
     ph.capture({ distinctId: email, event: "email_submit_server", properties: { variant } });
   } catch (err) {
     console.error("PostHog server capture failed:", err);
+  }
+
+  // Meta Conversions API mirror (best-effort). Same event_id as the browser
+  // Pixel "Lead" so Meta deduplicates them into a single conversion. fbp/fbc
+  // come from cookies the Pixel sets; they sharply improve match quality.
+  try {
+    const result = await sendMetaConversion({
+      eventName: "Lead",
+      eventId: body.event_id ?? `lead_${email}_${Date.now()}`,
+      eventSourceUrl: body.event_source_url,
+      userData: {
+        email,
+        clientIp: req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() ?? undefined,
+        userAgent: req.headers.get("user-agent") ?? undefined,
+        fbp: req.cookies.get("_fbp")?.value,
+        fbc: req.cookies.get("_fbc")?.value,
+      },
+      customData: { variant },
+    });
+    if (!result.ok) console.error("Meta CAPI send failed:", result.error);
+  } catch (err) {
+    console.error("Meta CAPI send threw:", err);
   }
 
   return NextResponse.json({ ok: true });

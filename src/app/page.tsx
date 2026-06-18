@@ -1,7 +1,7 @@
 import { redirect } from "next/navigation";
-import { defaultVariant } from "@/content/variants";
 
-// Bare domain redirects to the default variant. Ads always link to /a or /b.
+// Bare domain → the design gallery (all variants side by side). Ads link
+// directly to /preview/a, /preview/b, /preview/c.
 export default function Home() {
-  redirect(`/${defaultVariant}`);
+  redirect("/gallery");
 }

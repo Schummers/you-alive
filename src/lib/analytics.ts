@@ -23,7 +23,11 @@ declare global {
   }
 }
 
-export function track(event: string, props: Props = {}) {
+// `eventId` is passed through to the Meta Pixel as the dedup key so the browser
+// event and the server-side CAPI event (same event_id + event_name) collapse
+// into one. Generate it once at the call site and send the same value to the
+// server route.
+export function track(event: string, props: Props = {}, opts: { eventId?: string } = {}) {
   if (typeof window === "undefined") return;
 
   // PostHog
@@ -32,7 +36,11 @@ export function track(event: string, props: Props = {}) {
   // Meta Pixel
   const fb = metaStandardEvent[event];
   if (window.fbq && fb) {
-    window.fbq("track", fb, props);
+    if (opts.eventId) {
+      window.fbq("track", fb, props, { eventID: opts.eventId });
+    } else {
+      window.fbq("track", fb, props);
+    }
   }
 }
 
