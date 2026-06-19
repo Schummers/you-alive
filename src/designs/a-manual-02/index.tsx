@@ -5,6 +5,7 @@ import { Fraunces, Quicksand } from "next/font/google";
 import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
+import { WaitlistTakeover } from "@/designs/shared/WaitlistTakeover";
 import { useScrollReveal } from "@/designs/shared/useScrollReveal";
 import { CountUp } from "@/designs/shared/CountUp";
 
@@ -81,6 +82,20 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
       strokeWidth={2.25}
     />
   );
+
+  // CTA click → full-screen waitlist takeover (centered for this design).
+  if (fd.showWaitlist) {
+    return (
+      <WaitlistTakeover
+        fd={fd}
+        fakedoor={fakedoor}
+        confirmation={content.confirmation}
+        align="center"
+        fontVars={`${fraunces.variable} ${quicksand.variable}`}
+        brand={wordmark(FOREST, TERRA)}
+      />
+    );
+  }
 
   return (
     <main
@@ -487,70 +502,6 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           </button>
           </div>
         </section>
-
-        {/* ───────── FAKE-DOOR ───────── */}
-        {fd.showWaitlist && (
-          <section
-            id="waitlist"
-            className="mt-12 bg-white/60 px-7 py-10 ring-1 ring-[#1F2A22]/[0.06] backdrop-blur-[2px]"
-            style={{ borderRadius: "44px" }}
-          >
-            {fd.state === "done" ? (
-              <div className="text-center">
-                <p
-                  className="font-[family-name:var(--font-fraunces)] text-[24px] leading-tight"
-                  style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 480 }}
-                >
-                  {content.confirmation.title}
-                </p>
-                <p className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
-                  {content.confirmation.body}
-                </p>
-              </div>
-            ) : (
-              <>
-                <p
-                  className="text-center font-[family-name:var(--font-fraunces)] text-[26px] italic leading-[1.18] tracking-[-0.01em]"
-                  style={{ fontVariationSettings: '"opsz" 48, "SOFT" 100', fontWeight: 460 }}
-                >
-                  {fakedoor.title}
-                </p>
-                <p className="mx-auto mt-4 max-w-[34ch] text-center text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
-                  {fakedoor.body}
-                </p>
-                <form onSubmit={fd.submit} className="mt-7 flex flex-col gap-3">
-                  <label htmlFor="ya-email" className="sr-only">
-                    {fakedoor.emailPlaceholder}
-                  </label>
-                  <input
-                    id="ya-email"
-                    type="email"
-                    required
-                    value={fd.email}
-                    onChange={(e) => fd.setEmail(e.target.value)}
-                    placeholder={fakedoor.emailPlaceholder}
-                    className="w-full rounded-full border border-[#1F2A22]/15 bg-[#F4EFE6] px-6 py-4 text-[15px] text-[#1F2A22] placeholder:text-[#9c8a6d] focus:border-[#1F2A22] focus:outline-none focus:ring-2 focus:ring-[#B5754E]/40"
-                  />
-                  <button
-                    type="submit"
-                    disabled={fd.state === "loading"}
-                    className="w-full rounded-full bg-[#1F2A22] px-6 py-4 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98] disabled:opacity-60"
-                  >
-                    {fd.state === "loading" ? "…" : fakedoor.submitLabel}
-                  </button>
-                  {fd.state === "error" && (
-                    <p className="text-center text-[13px]" style={{ color: TERRA }}>
-                      Something went wrong. Try again.
-                    </p>
-                  )}
-                </form>
-                <p className="mt-5 text-center text-[12px]" style={{ color: "#6a7a6f" }}>
-                  {fakedoor.privacyLine}
-                </p>
-              </>
-            )}
-          </section>
-        )}
 
         {/* ───────── FOOTER (cream) ───────── */}
         <footer className="mt-16 pb-20 text-center">

@@ -55,6 +55,12 @@ export type SiteContent = {
     emailPlaceholder: string;
     submitLabel: string;
     privacyLine: string;
+    // Optional fields used by the full-screen waitlist takeover (manual A
+    // designs). Other designs ignore them and keep their email-only form.
+    badge?: string;
+    fieldNote?: string;
+    featuresTitle?: string;
+    features?: { id: string; label: string }[];
   };
   confirmation: {
     title: string;
@@ -167,11 +173,24 @@ export const site: SiteContent = {
     },
   ],
   fakedoor: {
-    title: "You're early.",
-    body: "You Alive is in final development. Leave your email and we'll let you know the moment it opens, at this price.",
-    emailPlaceholder: "Your email",
+    title: "Thank you for your interest!",
+    body: "You Alive isn't live yet, we're still building it. Leave your email to get first access and 20% off at launch.",
+    emailPlaceholder: "your email",
     submitLabel: "Reserve my spot",
-    privacyLine: "No spam. Only the launch email.",
+    privacyLine: "No spam. One email when we launch.",
+    badge: "Launching soon",
+    fieldNote: "First access + 20% off at launch",
+    featuresTitle: "Which features matter most to you?",
+    features: [
+      { id: "store-passwords", label: "Store passwords & logins" },
+      { id: "final-letters", label: "Write final letters" },
+      { id: "last-wishes", label: "Document my last wishes" },
+      { id: "photos", label: "Save photos & memories" },
+      { id: "trusted-contacts", label: "Assign trusted contacts" },
+      { id: "access-control", label: "Control who sees what, and when" },
+      { id: "subscriptions", label: "List subscriptions to close" },
+      { id: "verified-release", label: "Verified release" },
+    ],
   },
   confirmation: {
     title: "Your spot is reserved.",

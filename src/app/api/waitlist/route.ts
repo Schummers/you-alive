@@ -12,6 +12,7 @@ import { sendMetaConversion } from "@/lib/meta-capi";
 //   - "Source"  (rich_text, optional)
 type WaitlistBody = {
   email?: string;
+  features?: string[];
   variant?: string;
   positioning?: string;
   utm_source?: string;
@@ -37,6 +38,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "invalid email" }, { status: 400 });
   }
 
+  // Features the user ticked on the waitlist takeover (optional, may be empty).
+  const features = Array.isArray(body.features)
+    ? body.features.filter((f): f is string => typeof f === "string" && f.length > 0)
+    : [];
+
   // Country from Vercel's geo header (helps segment / exclude own traffic).
   const country = req.headers.get("x-vercel-ip-country") ?? undefined;
 
@@ -61,6 +67,9 @@ export async function POST(req: NextRequest) {
       const optional: Record<string, unknown> = {
         Variant: select(variant),
         Positioning: select(body.positioning),
+        Features: features.length
+          ? { multi_select: features.map((name) => ({ name })) }
+          : undefined,
         "UTM Source": richText(body.utm_source),
         "UTM Campaign": richText(body.utm_campaign),
         "UTM Content": richText(body.utm_content),
@@ -93,7 +102,7 @@ export async function POST(req: NextRequest) {
   // Server-side PostHog mirror (best-effort — bypasses ad blockers).
   try {
     const ph = getPostHogClient();
-    ph.capture({ distinctId: email, event: "email_submit_server", properties: { variant } });
+    ph.capture({ distinctId: email, event: "email_submit_server", properties: { variant, features } });
   } catch (err) {
     console.error("PostHog server capture failed:", err);
   }
@@ -113,7 +122,7 @@ export async function POST(req: NextRequest) {
         fbp: req.cookies.get("_fbp")?.value,
         fbc: req.cookies.get("_fbc")?.value,
       },
-      customData: { variant },
+      customData: { variant, features },
     });
     if (!result.ok) console.error("Meta CAPI send failed:", result.error);
   } catch (err) {

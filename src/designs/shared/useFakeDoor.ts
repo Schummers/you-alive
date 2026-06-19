@@ -25,6 +25,7 @@ export type FakeDoorState = "idle" | "loading" | "done" | "error";
 export function useFakeDoor(slug: string) {
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [email, setEmail] = useState("");
+  const [features, setFeatures] = useState<string[]>([]);
   const [state, setState] = useState<FakeDoorState>("idle");
   const pricingRef = useRef<HTMLElement | null>(null);
 
@@ -55,14 +56,30 @@ export function useFakeDoor(slug: string) {
     (placement: string) => {
       track("cta_click", { design: slug, placement });
       setShowWaitlist(true);
-      requestAnimationFrame(() =>
-        document
-          .getElementById("waitlist")
-          ?.scrollIntoView({ behavior: "smooth" })
-      );
+      requestAnimationFrame(() => {
+        // Designs that still reveal an inline #waitlist section scroll to it;
+        // the manual-A designs replace the page with a full-screen takeover
+        // (no #waitlist node), so we jump to the top instead.
+        const el = document.getElementById("waitlist");
+        if (el) el.scrollIntoView({ behavior: "smooth" });
+        else window.scrollTo({ top: 0 });
+      });
     },
     [slug]
   );
+
+  // "Back to home" from the takeover — return to the landing, reset the form
+  // state but keep whatever the user typed in case they reopen it.
+  const closeWaitlist = useCallback(() => {
+    setShowWaitlist(false);
+    setState("idle");
+  }, []);
+
+  const toggleFeature = useCallback((id: string) => {
+    setFeatures((prev) =>
+      prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id]
+    );
+  }, []);
 
   const submit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
@@ -76,6 +93,7 @@ export function useFakeDoor(slug: string) {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
+            features,
             variant: slug,
             event_id: eventId,
             event_source_url: window.location.href,
@@ -83,14 +101,14 @@ export function useFakeDoor(slug: string) {
           }),
         });
         if (!res.ok) throw new Error("failed");
-        track("email_submit", { design: slug }, { eventId });
+        track("email_submit", { design: slug, features }, { eventId });
         setState("done");
       } catch {
         track("waitlist_error", { design: slug });
         setState("error");
       }
     },
-    [email, slug]
+    [email, features, slug]
   );
 
   return {
@@ -98,6 +116,9 @@ export function useFakeDoor(slug: string) {
     showWaitlist,
     email,
     setEmail,
+    features,
+    toggleFeature,
+    closeWaitlist,
     state,
     onCta,
     submit,
