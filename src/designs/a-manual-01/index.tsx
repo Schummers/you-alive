@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Fraunces, Quicksand } from "next/font/google";
+import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { useScrollReveal } from "@/designs/shared/useScrollReveal";
@@ -9,13 +10,11 @@ import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · 01 — "Hero plein écran"
-// Worked by hand with Jonathan. Hero = the clean (text-free) hammock photo,
-// full-bleed, with a gradient melting into forest so the "You Alive?" wordmark
-// reads at the top and the headline rests inside the photo at the bottom.
-// Subtitle + CTA live BELOW the image on cream. The rest of the page reuses the
-// a-taste-08 body (organic warmth) — soft blobs, rounded cards, Fraunces +
-// Quicksand — with a touch more colour (a dusty-rose accent alongside terracotta)
-// and scroll-reveal "apparitions". No sticky CTA: the hero CTA carries the page.
+// Hero rebuilt to mirror the original Editorial-A hero Jonathan liked: clean
+// hammock photo full-bleed, headline resting inside bottom-left, then subtitle +
+// CTA + reassurance LEFT-aligned on cream below. Body (problem → footer) reuses
+// the a-taste-08 system but LEFT-aligned throughout, with eyebrow kickers giving
+// a clear section/card hierarchy. Strict cream/forest/terracotta. No sticky CTA.
 // ─────────────────────────────────────────────────────────────────────────────
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -31,7 +30,6 @@ const quicksand = Quicksand({
   display: "swap",
 });
 
-// Palette — locked cream / forest / terracotta (single accent).
 const CREAM = "#F4EFE6";
 const FOREST = "#1F2A22";
 const TERRA = "#B5754E";
@@ -44,19 +42,45 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
 
   // Signature moment #1 — H1 split into clauses for a line-by-line reveal.
   const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
-  // Signature moment #2 — pull the first number out of the reassurance line so
-  // it can count up; the rest of the sentence stays as plain text.
+  // Signature moment #2 — count up the first number in the reassurance line.
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
 
-  // "You Alive?" wordmark — the "?" is the brand mark, picked out in terracotta.
-  const wordmark = (color: string) => (
+  // "You Alive?" wordmark. On the photo the "?" must stay white (an accent hue
+  // would disappear over foliage); on cream it can take the terracotta accent.
+  const wordmark = (color: string, markColor: string) => (
     <span
-      className="font-[family-name:var(--font-fraunces)] text-[20px] italic tracking-[-0.01em]"
-      style={{ color, fontVariationSettings: '"opsz" 40, "SOFT" 60' }}
+      className="font-[family-name:var(--font-fraunces)] italic tracking-[-0.01em]"
+      style={{ color, fontSize: 22, fontWeight: 560, fontVariationSettings: '"opsz" 48, "SOFT" 40' }}
     >
       {hero.brandLockup.replace("?", "")}
-      <span style={{ color: TERRA }}>?</span>
+      <span style={{ color: markColor }}>?</span>
     </span>
+  );
+
+  // Eyebrow kicker — the accent label that lifts each section above card content.
+  const Eyebrow = ({ children }: { children: string }) => (
+    <p
+      className="text-[10.5px] font-semibold uppercase tracking-[0.3em]"
+      style={{ color: TERRA }}
+    >
+      {children}
+    </p>
+  );
+
+  // Section heading (H2 tier) — clearly larger than the H3 card titles below.
+  const headingClass =
+    "font-[family-name:var(--font-fraunces)] text-[28px] leading-[1.14] tracking-[-0.012em]";
+  const headingStyle = {
+    fontVariationSettings: '"opsz" 72, "SOFT" 80',
+    fontWeight: 480,
+  } as const;
+
+  const arrow = (
+    <ArrowRight
+      className="transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1"
+      style={{ width: 19, height: 19 }}
+      strokeWidth={2.25}
+    />
   );
 
   return (
@@ -64,7 +88,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
       className={`${fraunces.variable} ${quicksand.variable} font-[family-name:var(--font-quicksand)] relative min-h-screen overflow-hidden antialiased`}
       style={{ backgroundColor: CREAM, color: FOREST }}
     >
-      {/* Soft warm gradient washes + organic blobs (decorative, behind content). */}
+      {/* Soft warm washes + organic blobs (decorative). */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="ya-float absolute -left-24 top-[58vh] h-72 w-72 rounded-[58%_42%_55%_45%/55%_48%_52%_45%] opacity-70 blur-2xl"
@@ -74,7 +98,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           }}
         />
         <div
-          className="ya-float-slow absolute right-[-30%] top-[110vh] h-80 w-80 rounded-[42%_58%_46%_54%/52%_44%_56%_48%] opacity-60 blur-2xl"
+          className="ya-float-slow absolute right-[-30%] top-[120vh] h-80 w-80 rounded-[42%_58%_46%_54%/52%_44%_56%_48%] opacity-60 blur-2xl"
           style={{
             background:
               "radial-gradient(circle at 50% 50%, rgba(31,42,34,0.14), rgba(31,42,34,0) 72%)",
@@ -100,34 +124,38 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             sizes="(max-width: 768px) 100vw, 450px"
             className="ya-kenburns object-cover object-center"
           />
-          {/* Gradient: a light top scrim for the wordmark, melting into forest at
-              the bottom so the headline reads cleanly. */}
+          {/* Overall gentle tint across the whole photo for legibility. */}
+          <div
+            className="absolute inset-0"
+            style={{ backgroundColor: "rgba(31,42,34,0.14)" }}
+          />
+          {/* Vertical gradient, accentuated at top (wordmark) and bottom (title). */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                "linear-gradient(to bottom, rgba(31,42,34,0.42) 0%, rgba(31,42,34,0) 20%, rgba(31,42,34,0) 38%, rgba(31,42,34,0.55) 72%, rgba(31,42,34,0.94) 100%)",
+                "linear-gradient(to bottom, rgba(31,42,34,0.62) 0%, rgba(31,42,34,0.10) 26%, rgba(31,42,34,0.10) 46%, rgba(31,42,34,0.58) 72%, rgba(31,42,34,0.96) 100%)",
             }}
           />
 
-          {/* Top bar — wordmark left, nothing right. */}
-          <div className="absolute inset-x-0 top-0 flex items-center justify-between px-6 pt-7">
-            <span className="ya-hero ya-hero-1 [text-shadow:0_1px_16px_rgba(31,42,34,0.55)]">
-              {wordmark(CREAM)}
+          {/* Wordmark, top-left. */}
+          <div className="absolute inset-x-0 top-0 px-6 pt-7">
+            <span className="ya-hero ya-hero-1 [text-shadow:0_1px_18px_rgba(31,42,34,0.6)]">
+              {wordmark(CREAM, CREAM)}
             </span>
           </div>
 
-          {/* Headline resting inside the photo. */}
-          <div className="absolute inset-x-0 bottom-0 px-6 pb-11">
+          {/* Headline resting inside the photo, bottom-left, clause-by-clause. */}
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-9">
             <h1
-              className="max-w-[16ch] text-balance font-[family-name:var(--font-fraunces)] text-[42px] leading-[1.04] tracking-[-0.015em]"
-              style={{ color: CREAM, fontVariationSettings: '"opsz" 144, "SOFT" 60' }}
+              className="max-w-[15ch] text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em]"
+              style={{ color: CREAM, fontVariationSettings: '"opsz" 144, "SOFT" 70' }}
             >
               {titleLines.map((line, i) => (
                 <span
                   key={i}
                   className="ya-hero block"
-                  style={{ animationDelay: `${0.18 + i * 0.16}s` }}
+                  style={{ animationDelay: `${0.2 + i * 0.16}s` }}
                 >
                   {line}
                 </span>
@@ -138,74 +166,64 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
       </header>
 
       <div className="relative mx-auto max-w-md px-6 pb-28">
-        {/* Subtitle + CTA on cream, just under the image. */}
-        <section className="pt-9 text-center">
+        {/* Subtitle + CTA + reassurance on cream, LEFT-aligned. */}
+        <section className="pt-8">
           <p
-            className="ya-hero ya-hero-3 mx-auto max-w-[33ch] text-[16px] leading-[1.7]"
-            style={{ color: "#4a5a4f" }}
+            className="ya-hero ya-hero-3 max-w-[40ch] text-[18px] font-medium leading-[1.6]"
+            style={{ color: "#3a4a3f" }}
           >
             {hero.subtitle}
           </p>
 
-          <button
-            onClick={() => fd.onCta("hero")}
-            className="ya-hero ya-hero-4 group mt-9 inline-flex items-center justify-center gap-2.5 rounded-full px-9 py-4 text-[15px] font-semibold transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
-            style={{ backgroundColor: FOREST, color: CREAM }}
-          >
-            {hero.ctaLabel}
-            <span
-              className="flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5"
-              style={{ backgroundColor: "rgba(244,239,230,0.15)" }}
+          <div className="ya-hero ya-hero-4 mt-7">
+            <button
+              onClick={() => fd.onCta("hero")}
+              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-[15.5px] font-semibold transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
+              style={{ backgroundColor: FOREST, color: CREAM }}
             >
-              →
-            </span>
-          </button>
+              {hero.ctaLabel}
+              {arrow}
+            </button>
+          </div>
 
           <p
-            className="ya-hero ya-hero-5 mx-auto mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[12.5px]"
-            style={{ backgroundColor: "rgba(181,117,78,0.10)", color: "#8a5e3f" }}
+            className="ya-hero ya-hero-5 mt-5 flex items-center gap-3 text-[13px] tracking-wide"
+            style={{ color: "#6a7a6f" }}
           >
-            <span
-              className="h-1.5 w-1.5 rounded-full"
-              style={{ backgroundColor: TERRA }}
-            />
-            {reMatch ? (
-              <span>
-                {reMatch[1]}
-                <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
-                {reMatch[3]}
-              </span>
-            ) : (
-              hero.reassuranceLine
-            )}
+            <span className="inline-block h-px w-7" style={{ backgroundColor: "#b8a888" }} />
+            <span>
+              {reMatch ? (
+                <>
+                  {reMatch[1]}
+                  <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
+                  {reMatch[3]}
+                </>
+              ) : (
+                hero.reassuranceLine
+              )}
+            </span>
           </p>
         </section>
 
         {/* ───────── PROBLEM ───────── */}
-        <section className="mt-28 text-center">
-          <h2
-            className="mx-auto max-w-[20ch] text-balance font-[family-name:var(--font-fraunces)] text-[27px] leading-[1.2] tracking-[-0.01em]"
-            style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 460 }}
-          >
+        <section className="mt-24">
+          <Eyebrow>The problem</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {problem.title}
           </h2>
-          <p
-            className="mx-auto mt-7 max-w-[34ch] text-[15.5px] leading-[1.75]"
-            style={{ color: "#4a5a4f" }}
-          >
+          <p className="mt-6 max-w-[42ch] text-[16px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
             {problem.body}
           </p>
         </section>
 
         {/* ───────── SOLUTION ───────── */}
-        <section className="mt-28">
-          <div className="text-center">
-            <p className="font-[family-name:var(--font-fraunces)] text-[22px] italic leading-tight">
-              {solution.intro}
-            </p>
-          </div>
+        <section className="mt-24">
+          <Eyebrow>How it works</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
+            {solution.intro}
+          </h2>
 
-          <ol className="mt-10 space-y-6">
+          <ol className="mt-9 space-y-6">
             {solution.steps.map((s, i) => (
               <li
                 key={i}
@@ -242,21 +260,16 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── PRICING ───────── */}
-        <section ref={fd.pricingRef} className="mt-28 text-center">
-          <h2
-            className="mx-auto max-w-[20ch] text-balance font-[family-name:var(--font-fraunces)] text-[26px] leading-[1.2] tracking-[-0.01em]"
-            style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 460 }}
-          >
+        <section ref={fd.pricingRef} className="mt-24">
+          <Eyebrow>Pricing</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {pricing.title}
           </h2>
-          <p
-            className="mx-auto mt-5 max-w-[34ch] text-[15px] leading-[1.7]"
-            style={{ color: "#4a5a4f" }}
-          >
+          <p className="mt-5 max-w-[40ch] text-[15px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
             {pricing.subtitle}
           </p>
 
-          <div className="mt-10 space-y-5">
+          <div className="mt-9 space-y-5">
             {pricing.plans.map((plan, i) => (
               <div
                 key={i}
@@ -273,7 +286,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
               >
                 {plan.highlight && (
                   <span
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
+                    className="absolute -top-3 left-7 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
                     style={{ backgroundColor: TERRA }}
                   >
                     Most chosen
@@ -303,22 +316,22 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
                   onClick={() => fd.onCta(`pricing-${plan.name.toLowerCase()}`)}
                   className={
                     plan.highlight
-                      ? "mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#F4EFE6] px-7 py-3.5 text-[15px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
-                      : "mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1F2A22] px-7 py-3.5 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
+                      ? "group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#F4EFE6] px-7 py-3.5 text-[15px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
+                      : "group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1F2A22] px-7 py-3.5 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
                   }
                 >
                   {plan.ctaLabel}
-                  <span>→</span>
+                  {arrow}
                 </button>
               </div>
             ))}
           </div>
 
           <div
-            className="mt-10 bg-white/45 px-7 py-8 text-left ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
+            className="mt-9 bg-white/45 px-7 py-8 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
             style={{ borderRadius: "40px" }}
           >
-            <p className="text-center font-[family-name:var(--font-fraunces)] text-[18px] italic">
+            <p className="font-[family-name:var(--font-fraunces)] text-[18px] italic">
               Everything included
             </p>
             <ul className="mt-6 grid grid-cols-1 gap-y-3.5">
@@ -344,21 +357,19 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             </ul>
           </div>
 
-          <p
-            className="mx-auto mt-7 max-w-[34ch] text-[12.5px] leading-[1.65]"
-            style={{ color: "#6a7a6f" }}
-          >
+          <p className="mt-7 max-w-[40ch] text-[12.5px] leading-[1.65]" style={{ color: "#6a7a6f" }}>
             {pricing.scarcityLine}
           </p>
         </section>
 
         {/* ───────── TESTIMONIALS ───────── */}
-        <section className="mt-28">
-          <p className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic">
+        <section className="mt-24">
+          <Eyebrow>Stories</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             From those who started
-          </p>
+          </h2>
 
-          <div className="space-y-6">
+          <div className="mt-9 space-y-6">
             {testimonials.map((t, i) => (
               <figure
                 key={i}
@@ -396,11 +407,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── FAQ ───────── */}
-        <section className="mt-28">
-          <p className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic">
+        <section className="mt-24">
+          <Eyebrow>Questions</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             Questions you might have
-          </p>
-          <div className="space-y-4">
+          </h2>
+          <div className="mt-9 space-y-4">
             {faq.map((item, i) => (
               <details
                 key={i}
@@ -435,7 +447,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
 
         {/* ───────── FINAL CTA ───────── */}
         <section
-          className="relative mt-28 overflow-hidden bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-8 py-14 text-center text-[#F4EFE6]"
+          className="relative mt-24 overflow-hidden bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-8 py-14 text-[#F4EFE6]"
           style={{ borderRadius: "52px 52px 52px 20px" }}
         >
           <div
@@ -448,19 +460,17 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             }}
           />
           <h2
-            className="relative mx-auto max-w-[16ch] text-balance font-[family-name:var(--font-fraunces)] text-[30px] leading-[1.15] tracking-[-0.01em]"
+            className="relative max-w-[16ch] text-balance font-[family-name:var(--font-fraunces)] text-[30px] leading-[1.15] tracking-[-0.01em]"
             style={{ fontVariationSettings: '"opsz" 72, "SOFT" 80', fontWeight: 480 }}
           >
             {content.finalCta.headline}
           </h2>
           <button
             onClick={() => fd.onCta("final")}
-            className="group relative mt-9 inline-flex items-center justify-center gap-2.5 rounded-full bg-[#F4EFE6] px-9 py-4 text-[15px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
+            className="group relative mt-9 inline-flex items-center gap-2.5 rounded-full bg-[#F4EFE6] px-8 py-4 text-[15.5px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
           >
             {content.finalCta.ctaLabel}
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1F2A22]/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
-              →
-            </span>
+            {arrow}
           </button>
         </section>
 
@@ -472,32 +482,26 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             style={{ borderRadius: "44px" }}
           >
             {fd.state === "done" ? (
-              <div className="text-center">
+              <div>
                 <p
                   className="font-[family-name:var(--font-fraunces)] text-[24px] leading-tight"
                   style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 480 }}
                 >
                   {content.confirmation.title}
                 </p>
-                <p
-                  className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.7]"
-                  style={{ color: "#4a5a4f" }}
-                >
+                <p className="mt-4 max-w-[40ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {content.confirmation.body}
                 </p>
               </div>
             ) : (
               <>
                 <p
-                  className="text-center font-[family-name:var(--font-fraunces)] text-[26px] italic leading-[1.18] tracking-[-0.01em]"
+                  className="font-[family-name:var(--font-fraunces)] text-[26px] italic leading-[1.18] tracking-[-0.01em]"
                   style={{ fontVariationSettings: '"opsz" 48, "SOFT" 100', fontWeight: 460 }}
                 >
                   {fakedoor.title}
                 </p>
-                <p
-                  className="mx-auto mt-4 max-w-[34ch] text-center text-[14.5px] leading-[1.7]"
-                  style={{ color: "#4a5a4f" }}
-                >
+                <p className="mt-4 max-w-[40ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {fakedoor.body}
                 </p>
                 <form onSubmit={fd.submit} className="mt-7 flex flex-col gap-3">
@@ -521,12 +525,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
                     {fd.state === "loading" ? "…" : fakedoor.submitLabel}
                   </button>
                   {fd.state === "error" && (
-                    <p className="text-center text-[13px]" style={{ color: TERRA }}>
+                    <p className="text-[13px]" style={{ color: TERRA }}>
                       Something went wrong. Try again.
                     </p>
                   )}
                 </form>
-                <p className="mt-5 text-center text-[12px]" style={{ color: "#6a7a6f" }}>
+                <p className="mt-5 text-[12px]" style={{ color: "#6a7a6f" }}>
                   {fakedoor.privacyLine}
                 </p>
               </>
@@ -535,8 +539,8 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         )}
 
         {/* ───────── FOOTER ───────── */}
-        <footer className="mt-24 text-center">
-          <p className="mb-3">{wordmark(FOREST)}</p>
+        <footer className="mt-20">
+          <p className="mb-3">{wordmark(FOREST, TERRA)}</p>
           <p
             className="font-[family-name:var(--font-fraunces)] text-[16px] italic"
             style={{ fontVariationSettings: '"opsz" 36, "SOFT" 90' }}
@@ -566,15 +570,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         .ya-float-slow { animation: yaFloat 20s ease-in-out infinite; }
         .ya-kenburns { animation: yaKenburns 18s ease-out both; }
 
-        /* Hero load — staggered "apparition". */
         .ya-hero { animation: yaHeroRise 0.9s cubic-bezier(0.16,1,0.3,1) both; }
         .ya-hero-1 { animation-delay: 0.05s; }
-        .ya-hero-2 { animation-delay: 0.18s; }
-        .ya-hero-3 { animation-delay: 0.42s; }
-        .ya-hero-4 { animation-delay: 0.54s; }
-        .ya-hero-5 { animation-delay: 0.66s; }
+        .ya-hero-3 { animation-delay: 0.46s; }
+        .ya-hero-4 { animation-delay: 0.58s; }
+        .ya-hero-5 { animation-delay: 0.68s; }
 
-        /* Scroll reveal — hidden until [data-revealed]. */
         [data-reveal] { opacity: 0; transform: translateY(22px); }
         [data-reveal][data-revealed="true"] {
           opacity: 1;

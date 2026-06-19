@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { Fraunces, Quicksand } from "next/font/google";
+import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { useScrollReveal } from "@/designs/shared/useScrollReveal";
@@ -9,12 +10,10 @@ import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · 02 — "Forme organique"
-// Worked by hand with Jonathan. Same a-taste-08 body (organic warmth) but the
-// hero photo sits inside an organic blob frame instead of full-bleed. Clean
-// (text-free) photo. "You Alive?" wordmark left, NOTHING top-right (the old
-// "Kept warm, kept safe" pill is gone). Headline + subtitle + CTA centred under
-// the blob. Dusty-rose accent alongside terracotta, scroll-reveal apparitions,
-// no sticky CTA.
+// Hero photo in an organic blob frame, everything CENTRED. Same a-taste-08 body.
+// "You Alive?" wordmark (terracotta "?" on cream), bolder. Hero CTA full-width.
+// Eyebrow kickers give a clear section/card hierarchy. Strict cream/forest/
+// terracotta, scroll-reveal on steps + testimonials, no sticky CTA.
 // ─────────────────────────────────────────────────────────────────────────────
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -40,19 +39,41 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
 
-  // Signature moment #1 — H1 split into clauses for a line-by-line reveal.
   const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
-  // Signature moment #2 — count up the first number in the reassurance line.
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
 
-  const wordmark = (color: string) => (
+  const wordmark = (color: string, markColor: string) => (
     <span
-      className="font-[family-name:var(--font-fraunces)] text-[20px] italic tracking-[-0.01em]"
-      style={{ color, fontVariationSettings: '"opsz" 40, "SOFT" 60' }}
+      className="font-[family-name:var(--font-fraunces)] italic tracking-[-0.01em]"
+      style={{ color, fontSize: 21, fontWeight: 560, fontVariationSettings: '"opsz" 48, "SOFT" 40' }}
     >
       {hero.brandLockup.replace("?", "")}
-      <span style={{ color: TERRA }}>?</span>
+      <span style={{ color: markColor }}>?</span>
     </span>
+  );
+
+  const Eyebrow = ({ children }: { children: string }) => (
+    <p
+      className="text-[10.5px] font-semibold uppercase tracking-[0.3em]"
+      style={{ color: TERRA }}
+    >
+      {children}
+    </p>
+  );
+
+  const headingClass =
+    "font-[family-name:var(--font-fraunces)] text-[27px] leading-[1.16] tracking-[-0.012em]";
+  const headingStyle = {
+    fontVariationSettings: '"opsz" 72, "SOFT" 80',
+    fontWeight: 480,
+  } as const;
+
+  const arrow = (
+    <ArrowRight
+      className="transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-1"
+      style={{ width: 19, height: 19 }}
+      strokeWidth={2.25}
+    />
   );
 
   return (
@@ -60,7 +81,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
       className={`${fraunces.variable} ${quicksand.variable} font-[family-name:var(--font-quicksand)] relative min-h-screen overflow-hidden antialiased`}
       style={{ backgroundColor: CREAM, color: FOREST }}
     >
-      {/* Soft warm gradient washes + organic blobs. */}
+      {/* Soft warm washes + organic blobs. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="ya-float absolute -left-24 -top-16 h-72 w-72 rounded-[58%_42%_55%_45%/55%_48%_52%_45%] opacity-70 blur-2xl"
@@ -89,11 +110,9 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         {/* ───────── HERO — organic blob ───────── */}
         <header className="pt-7">
           <div className="ya-hero ya-hero-1 flex items-center justify-between px-1">
-            {wordmark(FOREST)}
-            {/* nothing top-right */}
+            {wordmark(FOREST, TERRA)}
           </div>
 
-          {/* Hero photo in an organic soft-blob frame. */}
           <div
             className="ya-hero ya-hero-2 mt-7 overflow-hidden bg-[#1F2A22]/[0.04] p-2 shadow-[0_34px_80px_-46px_rgba(31,42,34,0.55)]"
             style={{ borderRadius: "44% 56% 52% 48% / 40% 42% 58% 60%" }}
@@ -137,46 +156,41 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
             <button
               onClick={() => fd.onCta("hero")}
-              className="ya-hero ya-hero-5 group mt-9 inline-flex items-center justify-center gap-2.5 rounded-full px-9 py-4 text-[15px] font-semibold transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
+              className="ya-hero ya-hero-5 group mt-9 inline-flex w-full items-center justify-center gap-2.5 rounded-full px-9 py-4 text-[15.5px] font-semibold transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
               style={{ backgroundColor: FOREST, color: CREAM }}
             >
               {hero.ctaLabel}
-              <span
-                className="flex h-7 w-7 items-center justify-center rounded-full transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5"
-                style={{ backgroundColor: "rgba(244,239,230,0.15)" }}
-              >
-                →
-              </span>
+              {arrow}
             </button>
 
             <p
-              className="ya-hero ya-hero-6 mt-6 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-[12.5px]"
+              className="ya-hero ya-hero-6 mx-auto mt-6 flex w-fit items-center gap-2 rounded-full px-4 py-1.5 text-[12.5px]"
               style={{ backgroundColor: "rgba(181,117,78,0.10)", color: "#8a5e3f" }}
             >
               <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: TERRA }} />
-              {reMatch ? (
-                <span>
-                  {reMatch[1]}
-                  <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
-                  {reMatch[3]}
-                </span>
-              ) : (
-                hero.reassuranceLine
-              )}
+              <span>
+                {reMatch ? (
+                  <>
+                    {reMatch[1]}
+                    <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
+                    {reMatch[3]}
+                  </>
+                ) : (
+                  hero.reassuranceLine
+                )}
+              </span>
             </p>
           </section>
         </header>
 
         {/* ───────── PROBLEM ───────── */}
-        <section className="mt-28 text-center">
-          <h2
-            className="mx-auto max-w-[20ch] text-balance font-[family-name:var(--font-fraunces)] text-[27px] leading-[1.2] tracking-[-0.01em]"
-            style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 460 }}
-          >
+        <section className="mt-24 text-center">
+          <Eyebrow>The problem</Eyebrow>
+          <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
             {problem.title}
           </h2>
           <p
-            className="mx-auto mt-7 max-w-[34ch] text-[15.5px] leading-[1.75]"
+            className="mx-auto mt-6 max-w-[34ch] text-[15.5px] leading-[1.75]"
             style={{ color: "#4a5a4f" }}
           >
             {problem.body}
@@ -184,14 +198,15 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── SOLUTION ───────── */}
-        <section className="mt-28">
+        <section className="mt-24">
           <div className="text-center">
-            <p className="font-[family-name:var(--font-fraunces)] text-[22px] italic leading-tight">
+            <Eyebrow>How it works</Eyebrow>
+            <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
               {solution.intro}
-            </p>
+            </h2>
           </div>
 
-          <ol className="mt-10 space-y-6">
+          <ol className="mt-9 space-y-6">
             {solution.steps.map((s, i) => (
               <li
                 key={i}
@@ -228,21 +243,16 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── PRICING ───────── */}
-        <section ref={fd.pricingRef} className="mt-28 text-center">
-          <h2
-            className="mx-auto max-w-[20ch] text-balance font-[family-name:var(--font-fraunces)] text-[26px] leading-[1.2] tracking-[-0.01em]"
-            style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 460 }}
-          >
+        <section ref={fd.pricingRef} className="mt-24 text-center">
+          <Eyebrow>Pricing</Eyebrow>
+          <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
             {pricing.title}
           </h2>
-          <p
-            className="mx-auto mt-5 max-w-[34ch] text-[15px] leading-[1.7]"
-            style={{ color: "#4a5a4f" }}
-          >
+          <p className="mx-auto mt-5 max-w-[34ch] text-[15px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
             {pricing.subtitle}
           </p>
 
-          <div className="mt-10 space-y-5">
+          <div className="mt-9 space-y-5">
             {pricing.plans.map((plan, i) => (
               <div
                 key={i}
@@ -289,19 +299,19 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                   onClick={() => fd.onCta(`pricing-${plan.name.toLowerCase()}`)}
                   className={
                     plan.highlight
-                      ? "mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#F4EFE6] px-7 py-3.5 text-[15px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
-                      : "mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1F2A22] px-7 py-3.5 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
+                      ? "group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#F4EFE6] px-7 py-3.5 text-[15px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
+                      : "group mt-7 inline-flex w-full items-center justify-center gap-2 rounded-full bg-[#1F2A22] px-7 py-3.5 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98]"
                   }
                 >
                   {plan.ctaLabel}
-                  <span>→</span>
+                  {arrow}
                 </button>
               </div>
             ))}
           </div>
 
           <div
-            className="mt-10 bg-white/45 px-7 py-8 text-left ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
+            className="mt-9 bg-white/45 px-7 py-8 text-left ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
             style={{ borderRadius: "40px" }}
           >
             <p className="text-center font-[family-name:var(--font-fraunces)] text-[18px] italic">
@@ -330,21 +340,21 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             </ul>
           </div>
 
-          <p
-            className="mx-auto mt-7 max-w-[34ch] text-[12.5px] leading-[1.65]"
-            style={{ color: "#6a7a6f" }}
-          >
+          <p className="mx-auto mt-7 max-w-[34ch] text-[12.5px] leading-[1.65]" style={{ color: "#6a7a6f" }}>
             {pricing.scarcityLine}
           </p>
         </section>
 
         {/* ───────── TESTIMONIALS ───────── */}
-        <section className="mt-28">
-          <p className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic">
-            From those who started
-          </p>
+        <section className="mt-24">
+          <div className="text-center">
+            <Eyebrow>Stories</Eyebrow>
+            <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
+              From those who started
+            </h2>
+          </div>
 
-          <div className="space-y-6">
+          <div className="mt-9 space-y-6">
             {testimonials.map((t, i) => (
               <figure
                 key={i}
@@ -382,11 +392,14 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── FAQ ───────── */}
-        <section className="mt-28">
-          <p className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic">
-            Questions you might have
-          </p>
-          <div className="space-y-4">
+        <section className="mt-24">
+          <div className="text-center">
+            <Eyebrow>Questions</Eyebrow>
+            <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
+              Questions you might have
+            </h2>
+          </div>
+          <div className="mt-9 space-y-4">
             {faq.map((item, i) => (
               <details
                 key={i}
@@ -421,7 +434,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── FINAL CTA ───────── */}
         <section
-          className="relative mt-28 overflow-hidden bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-8 py-14 text-center text-[#F4EFE6]"
+          className="relative mt-24 overflow-hidden bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-8 py-14 text-center text-[#F4EFE6]"
           style={{ borderRadius: "52px 52px 52px 20px" }}
         >
           <div
@@ -441,12 +454,10 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           </h2>
           <button
             onClick={() => fd.onCta("final")}
-            className="group relative mt-9 inline-flex items-center justify-center gap-2.5 rounded-full bg-[#F4EFE6] px-9 py-4 text-[15px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
+            className="group relative mt-9 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#F4EFE6] px-8 py-4 text-[15.5px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
           >
             {content.finalCta.ctaLabel}
-            <span className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1F2A22]/10 transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-hover:translate-x-0.5">
-              →
-            </span>
+            {arrow}
           </button>
         </section>
 
@@ -465,10 +476,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                 >
                   {content.confirmation.title}
                 </p>
-                <p
-                  className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.7]"
-                  style={{ color: "#4a5a4f" }}
-                >
+                <p className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {content.confirmation.body}
                 </p>
               </div>
@@ -480,10 +488,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                 >
                   {fakedoor.title}
                 </p>
-                <p
-                  className="mx-auto mt-4 max-w-[34ch] text-center text-[14.5px] leading-[1.7]"
-                  style={{ color: "#4a5a4f" }}
-                >
+                <p className="mx-auto mt-4 max-w-[34ch] text-center text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {fakedoor.body}
                 </p>
                 <form onSubmit={fd.submit} className="mt-7 flex flex-col gap-3">
@@ -521,8 +526,8 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         )}
 
         {/* ───────── FOOTER ───────── */}
-        <footer className="mt-24 text-center">
-          <p className="mb-3">{wordmark(FOREST)}</p>
+        <footer className="mt-20 text-center">
+          <p className="mb-3">{wordmark(FOREST, TERRA)}</p>
           <p
             className="font-[family-name:var(--font-fraunces)] text-[16px] italic"
             style={{ fontVariationSettings: '"opsz" 36, "SOFT" 90' }}
@@ -555,10 +560,9 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         .ya-hero { animation: yaHeroRise 0.9s cubic-bezier(0.16,1,0.3,1) both; }
         .ya-hero-1 { animation-delay: 0.05s; }
         .ya-hero-2 { animation-delay: 0.16s; }
-        .ya-hero-3 { animation-delay: 0.36s; }
-        .ya-hero-4 { animation-delay: 0.48s; }
-        .ya-hero-5 { animation-delay: 0.60s; }
-        .ya-hero-6 { animation-delay: 0.72s; }
+        .ya-hero-4 { animation-delay: 0.6s; }
+        .ya-hero-5 { animation-delay: 0.72s; }
+        .ya-hero-6 { animation-delay: 0.84s; }
 
         [data-reveal] { opacity: 0; transform: translateY(22px); }
         [data-reveal][data-revealed="true"] {
