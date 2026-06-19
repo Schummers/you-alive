@@ -220,7 +220,7 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
               <li key={i} data-reveal style={{ transitionDelay: `${i * 90}ms` }} className="relative pl-16">
                 <span
                   className="absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full font-[family-name:var(--font-fraunces)] text-[19px]"
-                  style={{ backgroundColor: "#97582F", color: CREAM, fontWeight: 600, fontVariationSettings: '"opsz" 36' }}
+                  style={{ backgroundColor: "#EBDED1", color: TERRA, fontWeight: 600, fontVariationSettings: '"opsz" 36' }}
                 >
                   {i + 1}
                 </span>

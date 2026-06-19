@@ -335,7 +335,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             className="mt-9 bg-white/60 px-7 py-8 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
             style={{ borderRadius: "40px" }}
           >
-            <p className="text-center font-[family-name:var(--font-fraunces)] text-[18px] italic">
+            <p className="pl-2 font-[family-name:var(--font-fraunces)] text-[18px] italic">
               Everything included
             </p>
             <ul className="mt-6 grid grid-cols-1 gap-y-3.5 pl-2">
