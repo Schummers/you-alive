@@ -211,7 +211,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           <div className="text-center">
             <Eyebrow>How it works</Eyebrow>
             <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
-              Three quiet steps, and your family is covered.
+              It takes three steps to leave nothing unsaid.
             </h2>
           </div>
 

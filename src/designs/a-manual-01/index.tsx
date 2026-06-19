@@ -216,7 +216,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         <section className="mt-20">
           <Eyebrow>How it works</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
-            Three quiet steps, and your family is covered.
+            It takes three steps to leave nothing unsaid.
           </h2>
 
           <ol className="mt-9 space-y-6">
