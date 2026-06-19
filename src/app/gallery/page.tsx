@@ -16,6 +16,7 @@ const VARIANTS: { key: "a" | "b" | "c"; title: string }[] = [
 ];
 
 const TOOL_LABEL: Record<string, string> = {
+  manual: "Manuel — travaillé à la main",
   base: "Original (frontend-design)",
   fd: "frontend-design",
   taste: "taste-skill",

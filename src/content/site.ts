@@ -68,38 +68,38 @@ export type SiteContent = {
 export const site: SiteContent = {
   hero: {
     brandLockup: "You Alive?",
-    title: "Don't leave your loved ones guessing.",
+    title: "Leave nothing unsaid. Leave nothing unfound.",
     subtitle:
       "No scramble for passwords, no guessing your wishes. Just the answers you left them, ready the day they're needed.",
     ctaLabel: "Start my plan",
     reassuranceLine:
-      "Join 2,400+ people getting their affairs in order.",
+      "Join 623 people getting their affairs in order.",
   },
   problem: {
-    title: "Your loved ones won't know where to look, or what you wanted.",
-    body: "After a death, the average family spends months untangling accounts, hunting for documents and guessing at wishes. You can hand them answers instead, the kindest thing you'll ever leave behind.",
+    title: "Logins, documents, last wishes: someone has to sort it all.",
+    body: "Death doesn't log you out. Subscriptions keep charging, accounts stay active, and years of photos and messages get locked behind passwords no one has. Your family inherits the cleanup, in the middle of their grief.",
   },
   solution: {
     intro: "How You Alive works",
     steps: [
       {
-        title: "We guide you through what to prepare, so you forget nothing.",
-        body: "You don't need to know where to start. Our app walks you through it, prompting you for the accounts, passwords, documents and wishes most people forget, so nothing important slips through.",
+        title: "Don't know where to start? We walk you through every step.",
+        body: "Everything important, gathered into one secure plan. We prompt, you answer, and your family is covered, without the stress of doing it alone.",
       },
       {
-        title: "Triggered by silence, confirmed by people you trust, never by mistake.",
-        body: "Inactivity, repeated attempts to reach you, confirmation from trusted contacts, and a waiting period: several safeguards mean your plan opens only when it truly should.",
+        title: "A quick check-in keeps it sealed; your silence is what releases it.",
+        body: "We check in with you now and then. Miss a few over several weeks and we begin a careful release, after trying hard to reach you first.",
       },
       {
-        title: "Your family spends their energy grieving, not chasing passwords and paperwork.",
-        body: "When you're no longer there, we carefully confirm before anything is shared, then the people you chose receive a single secure access. Inside, everything is waiting: accounts, passwords, documents, wishes and your words.",
+        title: "Your family is guided through everything, instead of left guessing.",
+        body: "Your family doesn't have to search or guess. They get one clear access that unlocks your whole plan, exactly as you organized it.",
       },
     ],
   },
   pricing: {
-    title: "Spare your family the worst week of their lives.",
+    title: "Take care of them, before you can't.",
     subtitle:
-      "Everything you'd struggle to organize alone — we guide you through it, intuitively, so your family is ready when it's needed.",
+      "Step by step, we help you prepare, protect and pass on what matters.",
     plans: [
       {
         name: "Annual",
@@ -116,27 +116,24 @@ export const site: SiteContent = {
       },
     ],
     included: [
-      "Guided setup",
-      "3 GB encrypted storage",
-      "Zero-knowledge vault",
-      "Passwords vault",
-      "Document vault",
-      "Final letters",
-      "Lawyer / notary access",
-      "Verified release",
-      "Subscription cleanup",
+      "Personal guidance",
+      "Write your final letters",
+      "Document your wishes",
+      "Assign trusted contacts",
+      "Share with your notary",
+      "Carefully verified release",
     ],
     monthly: "$4 / month",
     annual: "$40 / year (2 months free)",
     ctaLabel: "Start my plan",
-    scarcityLine: "No lock-in. Your data stays encrypted and exportable, anytime.",
+    scarcityLine: "No lock-in. Export your plan whenever you want, it's always yours.",
   },
   testimonials: [
     {
-      name: "David",
-      age: 41,
+      name: "Sarah",
+      age: 39,
       quote:
-        "I wrote six letters to my children in one evening. Knowing they'll one day read them is the best thing I've done all year.",
+        "A close friend died suddenly on holiday last summer. It hit me how unprepared I was. Two weeks later, my plan was done.",
     },
     {
       name: "Lena",
@@ -153,16 +150,16 @@ export const site: SiteContent = {
   ],
   faq: [
     {
-      q: "Is my data really secure? Who can read it?",
-      a: "Your data is end-to-end encrypted with AES-256 in our zero-knowledge vault: no one, not even our team, can ever read it. Only you, and the people you choose, on the day they need it.",
-    },
-    {
       q: "How do you actually know I'm gone?",
-      a: "We never act on a single signal. We check in with you regularly; if you stop responding, we try to reach you over several weeks, and we ask the trusted contacts you designated to confirm before anything is released. Nothing is ever triggered by mistake.",
+      a: "We never act on a single signal. We check in with you regularly; if you stop responding, we try to reach you over several weeks. Your trusted contacts confirm before anything is released. Nothing is triggered by mistake.",
     },
     {
-      q: "How does my family actually receive everything?",
-      a: "When the release is triggered, the people you chose receive a single secure access by email. Your plan is already organized inside, accounts, documents, wishes, your letters, with step-by-step guidance. They don't need any technical skill or a separate account.",
+      q: "Can I share access with my lawyer, notary or several trusted people?",
+      a: "Yes. You can add as many trusted contacts as you like, partner, family, lawyer or notary, and choose exactly what each one can see, today or after you're gone.",
+    },
+    {
+      q: "Can I update or change my plan over time?",
+      a: "Yes, anytime. Life changes (new account, new recipient, divorce, a child being born) so does your plan. Edit it in seconds from any device, as often as you want.",
     },
     {
       q: "What if I cancel? Can I keep my data?",

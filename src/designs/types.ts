@@ -15,12 +15,12 @@ export type DesignProps = {
 };
 
 export type DesignModule = {
-  slug: string; // url segment, e.g. "baseline", "a-fd-01"
+  slug: string; // url segment, e.g. "baseline", "a-fd-09"
   label: string; // human label shown in the gallery
   ad?: string; // which ad inspired it, e.g. "image1"
   note?: string; // one-line art-direction summary
   variant?: "a" | "b" | "c"; // brand family the design belongs to
-  tool?: "fd" | "taste" | "stitch"; // generator that produced it
+  tool?: "fd" | "taste" | "stitch" | "manual"; // generator that produced it (manual = hand-built)
   mode?: "free" | "guided"; // how much direction the brief gave
   tags?: string[]; // axis tags shown in the gallery, e.g. ["serif", "airy"]
   brief?: string; // the art-direction brief given to the generator
