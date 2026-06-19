@@ -1,6 +1,8 @@
 import { designs } from "@/designs/registry";
 import type { DesignModule } from "@/designs/types";
 import LikeButton from "./LikeButton";
+import TrashButton from "./TrashButton";
+import MarksBar from "./MarksBar";
 
 // Static-screenshot gallery for the design bake-off. Thumbnails are pre-rendered
 // 390px screenshots in /public/gallery/<slug>.jpg (regenerate with the Playwright
@@ -64,6 +66,7 @@ function Card({ d }: { d: DesignModule }) {
               </span>
             )}
             <LikeButton slug={d.slug} />
+            <TrashButton slug={d.slug} />
           </div>
         </div>
         {d.note && (
@@ -133,6 +136,7 @@ export default function GalleryPage() {
   return (
     <div className="min-h-screen bg-[#faf9f7] text-gray-900">
     <main className="mx-auto max-w-[1400px] px-6 py-10">
+      <MarksBar />
       <header className="mb-10">
         <h1 className="text-2xl font-semibold text-gray-900">
           You Alive — design bake-off

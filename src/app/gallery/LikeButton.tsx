@@ -1,39 +1,25 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { LIKE_PREFIX, MARKS_EVENT, isMarked, setMarked } from "./marks";
 
-// Dead-simple favourite toggle, no backend: the on/off state lives in the
-// browser's localStorage keyed by design slug. Persists across reloads, scoped
-// to this browser (use a DB only if likes must be shared across devices/people).
+// Dead-simple favourite toggle, no backend: state lives in localStorage keyed
+// by slug. Persists across reloads, scoped to this browser.
 export default function LikeButton({ slug }: { slug: string }) {
   const [liked, setLiked] = useState(false);
 
-  // Read after mount to avoid SSR/client hydration mismatch.
+  // Read after mount (avoid hydration mismatch) and stay in sync with the bar.
   useEffect(() => {
-    try {
-      setLiked(localStorage.getItem(`yalike:${slug}`) === "1");
-    } catch {
-      /* localStorage unavailable */
-    }
+    const sync = () => setLiked(isMarked(LIKE_PREFIX, slug));
+    sync();
+    window.addEventListener(MARKS_EVENT, sync);
+    return () => window.removeEventListener(MARKS_EVENT, sync);
   }, [slug]);
-
-  const toggle = () => {
-    setLiked((prev) => {
-      const next = !prev;
-      try {
-        if (next) localStorage.setItem(`yalike:${slug}`, "1");
-        else localStorage.removeItem(`yalike:${slug}`);
-      } catch {
-        /* ignore */
-      }
-      return next;
-    });
-  };
 
   return (
     <button
       type="button"
-      onClick={toggle}
+      onClick={() => setMarked(LIKE_PREFIX, slug, !liked)}
       aria-pressed={liked}
       aria-label={liked ? "Retirer des favoris" : "Ajouter aux favoris"}
       title={liked ? "Aimé" : "Aimer"}
