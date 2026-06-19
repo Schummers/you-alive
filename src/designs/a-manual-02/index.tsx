@@ -5,6 +5,7 @@ import { Fraunces, Quicksand } from "next/font/google";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { useScrollReveal } from "@/designs/shared/useScrollReveal";
+import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · 02 — "Forme organique"
@@ -32,13 +33,17 @@ const quicksand = Quicksand({
 const CREAM = "#F4EFE6";
 const FOREST = "#1F2A22";
 const TERRA = "#B5754E";
-const ROSE = "#C58B83";
 
 export default function ManualOrganicDesign({ content, slug }: DesignProps) {
   const fd = useFakeDoor(slug);
   useScrollReveal();
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
+
+  // Signature moment #1 — H1 split into clauses for a line-by-line reveal.
+  const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
+  // Signature moment #2 — count up the first number in the reassurance line.
+  const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
 
   const wordmark = (color: string) => (
     <span
@@ -68,7 +73,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           className="ya-float-slow absolute right-[-30%] top-[34%] h-80 w-80 rounded-[42%_58%_46%_54%/52%_44%_56%_48%] opacity-60 blur-2xl"
           style={{
             background:
-              "radial-gradient(circle at 50% 50%, rgba(197,139,131,0.26), rgba(197,139,131,0) 72%)",
+              "radial-gradient(circle at 50% 50%, rgba(31,42,34,0.14), rgba(31,42,34,0) 72%)",
           }}
         />
         <div
@@ -110,10 +115,18 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
           <section className="px-1 pt-10 text-center">
             <h1
-              className="ya-hero ya-hero-3 text-balance font-[family-name:var(--font-fraunces)] text-[34px] leading-[1.1] tracking-[-0.01em]"
+              className="text-balance font-[family-name:var(--font-fraunces)] text-[34px] leading-[1.1] tracking-[-0.01em]"
               style={{ fontVariationSettings: '"opsz" 80, "SOFT" 80', fontWeight: 480 }}
             >
-              {hero.title}
+              {titleLines.map((line, i) => (
+                <span
+                  key={i}
+                  className="ya-hero block"
+                  style={{ animationDelay: `${0.36 + i * 0.16}s` }}
+                >
+                  {line}
+                </span>
+              ))}
             </h1>
             <p
               className="ya-hero ya-hero-4 mx-auto mt-6 max-w-[32ch] text-[16px] leading-[1.7]"
@@ -141,13 +154,21 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
               style={{ backgroundColor: "rgba(181,117,78,0.10)", color: "#8a5e3f" }}
             >
               <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: TERRA }} />
-              {hero.reassuranceLine}
+              {reMatch ? (
+                <span>
+                  {reMatch[1]}
+                  <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
+                  {reMatch[3]}
+                </span>
+              ) : (
+                hero.reassuranceLine
+              )}
             </p>
           </section>
         </header>
 
         {/* ───────── PROBLEM ───────── */}
-        <section data-reveal className="mt-28 text-center">
+        <section className="mt-28 text-center">
           <h2
             className="mx-auto max-w-[20ch] text-balance font-[family-name:var(--font-fraunces)] text-[27px] leading-[1.2] tracking-[-0.01em]"
             style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 460 }}
@@ -164,7 +185,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── SOLUTION ───────── */}
         <section className="mt-28">
-          <div className="text-center" data-reveal>
+          <div className="text-center">
             <p className="font-[family-name:var(--font-fraunces)] text-[22px] italic leading-tight">
               {solution.intro}
             </p>
@@ -186,9 +207,8 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                   className="flex h-12 w-12 items-center justify-center font-[family-name:var(--font-fraunces)] text-[22px] italic"
                   style={{
                     borderRadius: "52% 48% 56% 44% / 50% 56% 44% 50%",
-                    backgroundColor:
-                      i % 2 === 0 ? "rgba(181,117,78,0.14)" : "rgba(197,139,131,0.16)",
-                    color: i % 2 === 0 ? TERRA : ROSE,
+                    backgroundColor: "rgba(181,117,78,0.14)",
+                    color: TERRA,
                   }}
                 >
                   {i + 1}
@@ -210,14 +230,12 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         {/* ───────── PRICING ───────── */}
         <section ref={fd.pricingRef} className="mt-28 text-center">
           <h2
-            data-reveal
             className="mx-auto max-w-[20ch] text-balance font-[family-name:var(--font-fraunces)] text-[26px] leading-[1.2] tracking-[-0.01em]"
             style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 460 }}
           >
             {pricing.title}
           </h2>
           <p
-            data-reveal
             className="mx-auto mt-5 max-w-[34ch] text-[15px] leading-[1.7]"
             style={{ color: "#4a5a4f" }}
           >
@@ -228,9 +246,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             {pricing.plans.map((plan, i) => (
               <div
                 key={i}
-                data-reveal
                 style={{
-                  transitionDelay: `${i * 90}ms`,
                   borderRadius: plan.highlight
                     ? "40px 40px 16px 40px"
                     : "40px 16px 40px 40px",
@@ -285,7 +301,6 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           </div>
 
           <div
-            data-reveal
             className="mt-10 bg-white/45 px-7 py-8 text-left ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
             style={{ borderRadius: "40px" }}
           >
@@ -303,9 +318,8 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                     className="flex h-5 w-5 flex-none items-center justify-center text-[11px]"
                     style={{
                       borderRadius: "56% 44% 50% 50% / 50% 50% 44% 56%",
-                      backgroundColor:
-                        i % 2 === 0 ? "rgba(181,117,78,0.16)" : "rgba(197,139,131,0.18)",
-                      color: i % 2 === 0 ? TERRA : ROSE,
+                      backgroundColor: "rgba(181,117,78,0.16)",
+                      color: TERRA,
                     }}
                   >
                     ✓
@@ -326,10 +340,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── TESTIMONIALS ───────── */}
         <section className="mt-28">
-          <p
-            data-reveal
-            className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic"
-          >
+          <p className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic">
             From those who started
           </p>
 
@@ -350,7 +361,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                   aria-hidden
                   className="block font-[family-name:var(--font-fraunces)] text-[44px] leading-none"
                   style={{
-                    color: i % 2 === 0 ? "rgba(181,117,78,0.45)" : "rgba(197,139,131,0.5)",
+                    color: "rgba(181,117,78,0.45)",
                     fontVariationSettings: '"opsz" 72, "SOFT" 100',
                   }}
                 >
@@ -372,18 +383,14 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── FAQ ───────── */}
         <section className="mt-28">
-          <p
-            data-reveal
-            className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic"
-          >
+          <p className="mb-8 text-center font-[family-name:var(--font-fraunces)] text-[22px] italic">
             Questions you might have
           </p>
           <div className="space-y-4">
             {faq.map((item, i) => (
               <details
                 key={i}
-                data-reveal
-                style={{ borderRadius: "28px", transitionDelay: `${i * 70}ms` }}
+                style={{ borderRadius: "28px" }}
                 className="group bg-white/55 px-7 py-5 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px] open:bg-white/70"
               >
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
@@ -414,7 +421,6 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── FINAL CTA ───────── */}
         <section
-          data-reveal
           className="relative mt-28 overflow-hidden bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-8 py-14 text-center text-[#F4EFE6]"
           style={{ borderRadius: "52px 52px 52px 20px" }}
         >
@@ -424,15 +430,6 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             style={{
               background:
                 "radial-gradient(circle, rgba(181,117,78,0.45), rgba(181,117,78,0) 70%)",
-              borderRadius: "50%",
-            }}
-          />
-          <div
-            aria-hidden
-            className="pointer-events-none absolute -bottom-12 -left-10 h-40 w-40 opacity-45 blur-2xl"
-            style={{
-              background:
-                "radial-gradient(circle, rgba(197,139,131,0.45), rgba(197,139,131,0) 70%)",
               borderRadius: "50%",
             }}
           />
