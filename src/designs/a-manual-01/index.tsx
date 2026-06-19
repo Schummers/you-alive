@@ -454,16 +454,15 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
               </details>
             ))}
           </div>
-        </section>
 
-        {/* ───────── FINAL CTA (terracotta) ───────── */}
-        <section
-          className="relative mt-20 overflow-hidden px-8 py-14 text-[#F4EFE6]"
-          style={{
-            borderRadius: "52px 52px 52px 20px",
-            background: "linear-gradient(135deg, #BC7A50 0%, #97582F 100%)",
-          }}
-        >
+          {/* Final CTA — terracotta card, on the SAME tone band as the FAQ. */}
+          <div
+            className="relative mt-16 overflow-hidden px-8 py-14 text-[#F4EFE6]"
+            style={{
+              borderRadius: "52px 52px 52px 20px",
+              background: "linear-gradient(135deg, #BC7A50 0%, #97582F 100%)",
+            }}
+          >
           <div
             aria-hidden
             className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-60 blur-2xl"
@@ -486,6 +485,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             {content.finalCta.ctaLabel}
             {arrow}
           </button>
+          </div>
         </section>
 
         {/* ───────── FAKE-DOOR ───────── */}
@@ -552,8 +552,8 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </section>
         )}
 
-        {/* ───────── FOOTER (tone band) ───────── */}
-        <footer className="-mx-6 mt-20 px-6 py-14" style={{ backgroundColor: TONE }}>
+        {/* ───────── FOOTER (cream) ───────── */}
+        <footer className="mt-16 pb-20">
           <p className="mb-3">{wordmark(FOREST, TERRA)}</p>
           <p
             className="font-[family-name:var(--font-fraunces)] text-[16px] italic"

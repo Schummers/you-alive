@@ -7,6 +7,7 @@ import RetroForestDesign from "@/designs/c";
 // Manual designs — worked by hand with Jonathan, built on the a-taste-08 body.
 import AManual01 from "@/designs/a-manual-01";
 import AManual02 from "@/designs/a-manual-02";
+import AManual03 from "@/designs/a-manual-03";
 
 import AFd09 from "@/designs/a-fd-09";
 import AFd16 from "@/designs/a-fd-16";
@@ -754,6 +755,16 @@ const aManual: DesignModule[] = [
     tags: ["organic", "blob", "rounded", "feminine"],
     note: "Hero photo dans une forme organique (blob), corps a-taste-08. Wordmark You Alive?, rien en haut à droite, pas de CTA sticky. Reveals au scroll.",
     Component: AManual02,
+  },
+  {
+    slug: "a-manual-03",
+    label: "A · manual · 03 — Hero plein écran + stepper",
+    ad: "image1",
+    variant: "a",
+    tool: "manual",
+    tags: ["photo", "full-bleed", "stepper", "timeline"],
+    note: "Variante de manual-01 : how-it-works en stepper timeline (numéros terracotta), FAQ en lignes (pas de cards), CTA final centré foncé. Aligné à gauche.",
+    Component: AManual03,
   },
 ];
 

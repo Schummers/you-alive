@@ -9,12 +9,11 @@ import { useScrollReveal } from "@/designs/shared/useScrollReveal";
 import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MANUAL · 02 — "Forme organique"
-// Hero photo in an organic blob frame, everything CENTRED. a-taste-08 body.
-// Two near-identical background tones (cream + a hair darker) alternate to give
-// the page rhythm: problem / pricing / questions / footer sit on the darker tone.
-// Eyebrows are bolder + larger; lead paragraphs (hero/problem/pricing) sit one
-// weight above body; final CTA panel is terracotta. No sticky CTA.
+// MANUAL · 03 — "Hero plein écran + stepper"
+// Same full-bleed hero + left-aligned body as a-manual-01, but two sections take
+// the a-taste-01 treatment: "How it works" is a connected timeline STEPPER (no
+// cards, terracotta-filled numbers), and the FAQ is line-separated rows (no
+// cards). The final CTA is centred and dark forest. Footer left, on cream.
 // ─────────────────────────────────────────────────────────────────────────────
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -31,12 +30,12 @@ const quicksand = Quicksand({
 });
 
 const CREAM = "#F4EFE6";
-const TONE = "#EFE9DD"; // second background, ~just-noticeably darker than cream
+const TONE = "#EFE9DD";
 const FOREST = "#1F2A22";
 const TERRA = "#B5754E";
-const LEAD = 600; // "one level above regular" — hero/problem/pricing intros
+const LEAD = 600;
 
-export default function ManualOrganicDesign({ content, slug }: DesignProps) {
+export default function ManualStepperDesign({ content, slug }: DesignProps) {
   const fd = useFakeDoor(slug);
   useScrollReveal();
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
@@ -44,9 +43,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
   const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
-  // Pricing title broken at its comma so it reads on two lines.
   const pricingTitleParts = pricing.title.split(/,\s*/);
-  // Drop the leading "Logins," so the problem title starts at "Documents,".
   const problemTitle = problem.title
     .replace(/^Logins,\s*/i, "")
     .replace(/^\w/, (c) => c.toUpperCase());
@@ -54,7 +51,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
   const wordmark = (color: string, markColor: string) => (
     <span
       className="font-[family-name:var(--font-fraunces)] italic tracking-[-0.01em]"
-      style={{ color, fontSize: 21, fontWeight: 560, fontVariationSettings: '"opsz" 48, "SOFT" 40' }}
+      style={{ color, fontSize: 22, fontWeight: 560, fontVariationSettings: '"opsz" 48, "SOFT" 40' }}
     >
       {hero.brandLockup.replace("?", "")}
       <span style={{ color: markColor }}>?</span>
@@ -68,7 +65,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
   );
 
   const headingClass =
-    "font-[family-name:var(--font-fraunces)] text-[27px] leading-[1.16] tracking-[-0.012em]";
+    "font-[family-name:var(--font-fraunces)] text-[28px] leading-[1.14] tracking-[-0.012em]";
   const headingStyle = {
     fontVariationSettings: '"opsz" 72, "SOFT" 80',
     fontWeight: 480,
@@ -90,21 +87,21 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
       {/* Soft warm washes + organic blobs. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div
-          className="ya-float absolute -left-24 -top-16 h-72 w-72 rounded-[58%_42%_55%_45%/55%_48%_52%_45%] opacity-70 blur-2xl"
+          className="ya-float absolute -left-24 top-[58vh] h-72 w-72 rounded-[58%_42%_55%_45%/55%_48%_52%_45%] opacity-70 blur-2xl"
           style={{
             background:
               "radial-gradient(circle at 35% 35%, rgba(181,117,78,0.30), rgba(181,117,78,0) 70%)",
           }}
         />
         <div
-          className="ya-float-slow absolute right-[-30%] top-[34%] h-80 w-80 rounded-[42%_58%_46%_54%/52%_44%_56%_48%] opacity-60 blur-2xl"
+          className="ya-float-slow absolute right-[-30%] top-[120vh] h-80 w-80 rounded-[42%_58%_46%_54%/52%_44%_56%_48%] opacity-60 blur-2xl"
           style={{
             background:
               "radial-gradient(circle at 50% 50%, rgba(31,42,34,0.14), rgba(31,42,34,0) 72%)",
           }}
         />
         <div
-          className="ya-float absolute bottom-[6%] left-[-20%] h-72 w-72 rounded-[54%_46%_40%_60%/48%_56%_44%_52%] opacity-60 blur-2xl"
+          className="ya-float absolute bottom-[8%] left-[-20%] h-72 w-72 rounded-[54%_46%_40%_60%/48%_56%_44%_52%] opacity-60 blur-2xl"
           style={{
             background:
               "radial-gradient(circle at 50% 50%, rgba(181,117,78,0.22), rgba(181,117,78,0) 70%)",
@@ -112,138 +109,128 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         />
       </div>
 
-      <div className="relative mx-auto max-w-md px-6">
-        {/* ───────── HERO — organic blob ───────── */}
-        <header className="pt-7">
-          <div className="ya-hero ya-hero-1 flex items-center justify-between px-1">
-            {wordmark(FOREST, TERRA)}
-          </div>
-
+      {/* ───────── HERO — full-bleed photo ───────── */}
+      <header className="relative">
+        <div className="relative h-[86vh] min-h-[600px] w-full overflow-hidden">
+          <Image
+            src="/designs/a/hero-clean.jpeg"
+            alt="Resting in a hammock, looking out through pines toward a distant coastal town"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, 450px"
+            className="ya-kenburns object-cover object-center"
+          />
+          <div className="absolute inset-0" style={{ backgroundColor: "rgba(31,42,34,0.14)" }} />
           <div
-            className="ya-hero ya-hero-2 mt-7 overflow-hidden bg-[#1F2A22]/[0.04] p-2 shadow-[0_34px_80px_-46px_rgba(31,42,34,0.55)]"
-            style={{ borderRadius: "44% 56% 52% 48% / 40% 42% 58% 60%" }}
-          >
-            <div
-              className="relative aspect-[4/5] w-full overflow-hidden"
-              style={{ borderRadius: "44% 56% 52% 48% / 40% 42% 58% 60%" }}
-            >
-              <Image
-                src="/designs/a/hero-clean.jpeg"
-                alt="Resting in a hammock, looking out through pines toward a distant coastal town"
-                fill
-                priority
-                sizes="(max-width: 768px) 100vw, 450px"
-                className="ya-kenburns object-cover object-center"
-              />
-            </div>
+            className="absolute inset-0"
+            style={{
+              background:
+                "linear-gradient(to bottom, rgba(31,42,34,0.62) 0%, rgba(31,42,34,0.10) 26%, rgba(31,42,34,0.10) 46%, rgba(31,42,34,0.58) 72%, rgba(31,42,34,0.96) 100%)",
+            }}
+          />
+
+          <div className="absolute inset-x-0 top-0 px-6 pt-7">
+            <span className="ya-hero ya-hero-1 [text-shadow:0_1px_18px_rgba(31,42,34,0.6)]">
+              {wordmark(CREAM, CREAM)}
+            </span>
           </div>
 
-          <section className="px-1 pt-10 text-center">
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-9">
             <h1
-              className="text-balance font-[family-name:var(--font-fraunces)] text-[34px] leading-[1.1] tracking-[-0.01em]"
-              style={{ fontVariationSettings: '"opsz" 80, "SOFT" 80', fontWeight: 480 }}
+              className="max-w-[15ch] text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em]"
+              style={{ color: CREAM, fontVariationSettings: '"opsz" 144, "SOFT" 70' }}
             >
               {titleLines.map((line, i) => (
                 <span
                   key={i}
                   className="ya-hero block"
-                  style={{ animationDelay: `${0.36 + i * 0.16}s` }}
+                  style={{ animationDelay: `${0.2 + i * 0.16}s` }}
                 >
                   {line}
                 </span>
               ))}
             </h1>
-            <p
-              className="ya-hero ya-hero-4 mx-auto mt-6 max-w-[33ch] text-[17.5px] leading-[1.6]"
-              style={{ color: "#3a4a3f", fontWeight: LEAD }}
-            >
-              {hero.subtitle}
-            </p>
+          </div>
+        </div>
+      </header>
 
+      <div className="relative mx-auto max-w-md px-6">
+        {/* Subtitle + CTA + reassurance on cream, LEFT-aligned. */}
+        <section className="pt-8">
+          <p
+            className="ya-hero ya-hero-3 max-w-[40ch] text-[18px] leading-[1.6]"
+            style={{ color: "#3a4a3f", fontWeight: LEAD }}
+          >
+            {hero.subtitle}
+          </p>
+
+          <div className="ya-hero ya-hero-4 mt-7">
             <button
               onClick={() => fd.onCta("hero")}
-              className="ya-hero ya-hero-5 group mt-9 inline-flex w-full items-center justify-center gap-2.5 rounded-full px-9 py-4 text-[15.5px] font-semibold transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
+              className="group inline-flex items-center gap-2.5 rounded-full px-8 py-4 text-[15.5px] font-semibold transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
               style={{ backgroundColor: FOREST, color: CREAM }}
             >
               {hero.ctaLabel}
               {arrow}
             </button>
+          </div>
 
-            <p
-              className="ya-hero ya-hero-6 mx-auto mt-6 flex w-fit items-center gap-2 rounded-full px-4 py-1.5 text-[12.5px]"
-              style={{ backgroundColor: "rgba(181,117,78,0.10)", color: "#8a5e3f" }}
-            >
-              <span className="h-1.5 w-1.5 rounded-full" style={{ backgroundColor: TERRA }} />
-              <span>
-                {reMatch ? (
-                  <>
-                    {reMatch[1]}
-                    <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
-                    {reMatch[3]}
-                  </>
-                ) : (
-                  hero.reassuranceLine
-                )}
-              </span>
-            </p>
-          </section>
-        </header>
+          <p
+            className="ya-hero ya-hero-5 mt-5 flex items-center gap-3 text-[13px] tracking-wide"
+            style={{ color: "#6a7a6f" }}
+          >
+            <span className="inline-block h-px w-7" style={{ backgroundColor: "#b8a888" }} />
+            <span>
+              {reMatch ? (
+                <>
+                  {reMatch[1]}
+                  <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
+                  {reMatch[3]}
+                </>
+              ) : (
+                hero.reassuranceLine
+              )}
+            </span>
+          </p>
+        </section>
 
         {/* ───────── PROBLEM (tone band) ───────── */}
-        <section
-          className="-mx-6 mt-20 px-6 py-16 text-center"
-          style={{ backgroundColor: TONE }}
-        >
+        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
           <Eyebrow>The problem</Eyebrow>
-          <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {problemTitle}
           </h2>
           <p
-            className="mx-auto mt-6 max-w-[34ch] text-[15.5px] leading-[1.75]"
+            className="mt-6 max-w-[42ch] text-[16px] leading-[1.7]"
             style={{ color: "#3a4a3f", fontWeight: LEAD }}
           >
             {problem.body}
           </p>
         </section>
 
-        {/* ───────── SOLUTION ───────── */}
+        {/* ───────── SOLUTION — timeline stepper ───────── */}
         <section className="mt-20">
-          <div className="text-center">
-            <Eyebrow>How it works</Eyebrow>
-            <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
-              It takes three steps to leave nothing unsaid.
-            </h2>
-          </div>
+          <Eyebrow>How it works</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
+            It takes three steps to leave nothing unsaid.
+          </h2>
 
-          <ol className="mt-9 space-y-6">
+          <ol className="relative mt-11 space-y-11 before:absolute before:left-[21px] before:top-5 before:bottom-5 before:w-px before:bg-[#1F2A22]/15">
             {solution.steps.map((s, i) => (
-              <li
-                key={i}
-                data-reveal
-                style={{
-                  borderRadius: "38px 38px 38px 12px",
-                  transitionDelay: `${i * 90}ms`,
-                  backgroundColor: "rgba(255,255,255,0.55)",
-                }}
-                className="relative px-7 py-8 shadow-[0_22px_56px_-44px_rgba(31,42,34,0.6)] ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
-              >
+              <li key={i} data-reveal style={{ transitionDelay: `${i * 90}ms` }} className="relative pl-16">
                 <span
-                  className="flex h-12 w-12 items-center justify-center font-[family-name:var(--font-fraunces)] text-[22px] italic"
-                  style={{
-                    borderRadius: "52% 48% 56% 44% / 50% 56% 44% 50%",
-                    backgroundColor: "rgba(181,117,78,0.14)",
-                    color: TERRA,
-                  }}
+                  className="absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full font-[family-name:var(--font-fraunces)] text-[19px] shadow-[0_10px_24px_-12px_rgba(181,117,78,0.9)]"
+                  style={{ backgroundColor: TERRA, color: CREAM, fontWeight: 600, fontVariationSettings: '"opsz" 36' }}
                 >
                   {i + 1}
                 </span>
                 <h3
-                  className="mt-6 font-[family-name:var(--font-fraunces)] text-[20px] leading-[1.28] tracking-[-0.005em]"
+                  className="pt-1.5 font-[family-name:var(--font-fraunces)] text-[20px] leading-[1.28] tracking-[-0.005em]"
                   style={{ fontVariationSettings: '"opsz" 36, "SOFT" 90', fontWeight: 500 }}
                 >
                   {s.title}
                 </h3>
-                <p className="mt-3 text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
+                <p className="mt-3 max-w-[40ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {s.body}
                 </p>
               </li>
@@ -254,11 +241,11 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         {/* ───────── PRICING (tone band) ───────── */}
         <section
           ref={fd.pricingRef}
-          className="-mx-6 mt-20 px-6 py-16 text-center"
+          className="-mx-6 mt-20 px-6 py-16"
           style={{ backgroundColor: TONE }}
         >
           <Eyebrow>Pricing</Eyebrow>
-          <h2 className={`mx-auto mt-4 max-w-[22ch] ${headingClass}`} style={headingStyle}>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {pricingTitleParts.map((part, i) => (
               <span key={i} className="block">
                 {i < pricingTitleParts.length - 1 ? `${part},` : part}
@@ -266,7 +253,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             ))}
           </h2>
           <p
-            className="mx-auto mt-5 max-w-[34ch] text-[15.5px] leading-[1.7]"
+            className="mt-5 max-w-[40ch] text-[15.5px] leading-[1.7]"
             style={{ color: "#3a4a3f", fontWeight: LEAD }}
           >
             {pricing.subtitle}
@@ -289,7 +276,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
               >
                 {plan.highlight && (
                   <span
-                    className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
+                    className="absolute -top-3 left-7 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
                     style={{ backgroundColor: TERRA }}
                   >
                     Most chosen
@@ -330,19 +317,18 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             ))}
           </div>
 
-          {/* Everything-included card, now also carrying the no-lock-in line. */}
           <div
             className="mt-9 bg-white/60 px-7 py-8 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
             style={{ borderRadius: "40px" }}
           >
-            <p className="text-center font-[family-name:var(--font-fraunces)] text-[18px] italic">
+            <p className="font-[family-name:var(--font-fraunces)] text-[18px] italic">
               Everything included
             </p>
             <ul className="mt-6 grid grid-cols-1 gap-y-3.5">
               {pricing.included.map((feature, i) => (
                 <li
                   key={i}
-                  className="flex items-center justify-center gap-3 text-[14.5px]"
+                  className="flex items-center gap-3 text-[14.5px]"
                   style={{ color: "#3a4a3f" }}
                 >
                   <span
@@ -360,7 +346,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
               ))}
             </ul>
             <p
-              className="mt-7 border-t border-[#1F2A22]/[0.08] pt-6 text-center text-[13px] leading-[1.6]"
+              className="mt-7 border-t border-[#1F2A22]/[0.08] pt-6 text-[13px] leading-[1.6]"
               style={{ color: "#6a7a6f", fontWeight: LEAD }}
             >
               {pricing.scarcityLine}
@@ -370,12 +356,10 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── TESTIMONIALS ───────── */}
         <section className="mt-20">
-          <div className="text-center">
-            <Eyebrow>Stories</Eyebrow>
-            <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
-              From those who started
-            </h2>
-          </div>
+          <Eyebrow>Stories</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
+            From those who started
+          </h2>
 
           <div className="mt-9 space-y-6">
             {testimonials.map((t, i) => (
@@ -415,21 +399,15 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           </div>
         </section>
 
-        {/* ───────── FAQ (tone band) ───────── */}
+        {/* ───────── FAQ — line-separated rows (tone band) ───────── */}
         <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
-          <div className="text-center">
-            <Eyebrow>Good to know</Eyebrow>
-            <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
-              Questions you might have
-            </h2>
-          </div>
-          <div className="mt-9 space-y-4">
+          <Eyebrow>Good to know</Eyebrow>
+          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
+            Questions you might have
+          </h2>
+          <div className="mt-8 divide-y divide-[#1F2A22]/[0.1] border-y border-[#1F2A22]/[0.1]">
             {faq.map((item, i) => (
-              <details
-                key={i}
-                style={{ borderRadius: "28px" }}
-                className="group bg-white/60 px-7 py-5 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px] open:bg-white/75"
-              >
+              <details key={i} className="group py-5">
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
                   <span
                     className="font-[family-name:var(--font-fraunces)] text-[17px] leading-[1.35] tracking-[-0.005em]"
@@ -441,34 +419,35 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                     className="mt-0.5 flex h-7 w-7 flex-none items-center justify-center text-[18px] leading-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] group-open:rotate-45"
                     style={{
                       borderRadius: "54% 46% 50% 50% / 50% 50% 46% 54%",
-                      backgroundColor: "rgba(181,117,78,0.12)",
+                      backgroundColor: "rgba(181,117,78,0.14)",
                       color: TERRA,
                     }}
                   >
                     +
                   </span>
                 </summary>
-                <p className="mt-4 text-[14px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
+                <p className="mt-4 max-w-[42ch] text-[14px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {item.a}
                 </p>
               </details>
             ))}
           </div>
+        </section>
 
-          {/* Final CTA — terracotta card, on the SAME tone band as the FAQ. */}
-          <div
-            className="relative mt-16 overflow-hidden px-8 py-14 text-center text-[#F4EFE6]"
-            style={{
-              borderRadius: "52px 52px 52px 20px",
-              background: "linear-gradient(135deg, #BC7A50 0%, #97582F 100%)",
-            }}
-          >
+        {/* ───────── FINAL CTA — centred, dark forest ───────── */}
+        <section
+          className="relative mt-20 overflow-hidden px-8 py-16 text-center text-[#F4EFE6]"
+          style={{
+            borderRadius: "52px 52px 52px 20px",
+            background: "linear-gradient(135deg, #26342b 0%, #1F2A22 100%)",
+          }}
+        >
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-60 blur-2xl"
+            className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-50 blur-2xl"
             style={{
               background:
-                "radial-gradient(circle, rgba(244,239,230,0.30), rgba(244,239,230,0) 70%)",
+                "radial-gradient(circle, rgba(181,117,78,0.45), rgba(181,117,78,0) 70%)",
               borderRadius: "50%",
             }}
           />
@@ -480,12 +459,11 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           </h2>
           <button
             onClick={() => fd.onCta("final")}
-            className="group relative mt-9 inline-flex w-full items-center justify-center gap-2.5 rounded-full bg-[#F4EFE6] px-8 py-4 text-[15.5px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
+            className="group relative mt-9 inline-flex items-center justify-center gap-2.5 rounded-full bg-[#F4EFE6] px-8 py-4 text-[15.5px] font-semibold text-[#1F2A22] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[2px] active:scale-[0.98]"
           >
             {content.finalCta.ctaLabel}
             {arrow}
           </button>
-          </div>
         </section>
 
         {/* ───────── FAKE-DOOR ───────── */}
@@ -496,26 +474,26 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             style={{ borderRadius: "44px" }}
           >
             {fd.state === "done" ? (
-              <div className="text-center">
+              <div>
                 <p
                   className="font-[family-name:var(--font-fraunces)] text-[24px] leading-tight"
                   style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 480 }}
                 >
                   {content.confirmation.title}
                 </p>
-                <p className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
+                <p className="mt-4 max-w-[40ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {content.confirmation.body}
                 </p>
               </div>
             ) : (
               <>
                 <p
-                  className="text-center font-[family-name:var(--font-fraunces)] text-[26px] italic leading-[1.18] tracking-[-0.01em]"
+                  className="font-[family-name:var(--font-fraunces)] text-[26px] italic leading-[1.18] tracking-[-0.01em]"
                   style={{ fontVariationSettings: '"opsz" 48, "SOFT" 100', fontWeight: 460 }}
                 >
                   {fakedoor.title}
                 </p>
-                <p className="mx-auto mt-4 max-w-[34ch] text-center text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
+                <p className="mt-4 max-w-[40ch] text-[14.5px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
                   {fakedoor.body}
                 </p>
                 <form onSubmit={fd.submit} className="mt-7 flex flex-col gap-3">
@@ -539,12 +517,12 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                     {fd.state === "loading" ? "…" : fakedoor.submitLabel}
                   </button>
                   {fd.state === "error" && (
-                    <p className="text-center text-[13px]" style={{ color: TERRA }}>
+                    <p className="text-[13px]" style={{ color: TERRA }}>
                       Something went wrong. Try again.
                     </p>
                   )}
                 </form>
-                <p className="mt-5 text-center text-[12px]" style={{ color: "#6a7a6f" }}>
+                <p className="mt-5 text-[12px]" style={{ color: "#6a7a6f" }}>
                   {fakedoor.privacyLine}
                 </p>
               </>
@@ -552,8 +530,8 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           </section>
         )}
 
-        {/* ───────── FOOTER (cream) ───────── */}
-        <footer className="mt-16 pb-20 text-center">
+        {/* ───────── FOOTER (cream, left) ───────── */}
+        <footer className="mt-16 pb-20">
           <p className="mb-3">{wordmark(FOREST, TERRA)}</p>
           <p
             className="font-[family-name:var(--font-fraunces)] text-[16px] italic"
@@ -577,19 +555,18 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           to { opacity: 1; transform: translateY(0); }
         }
         @keyframes yaKenburns {
-          from { transform: scale(1); }
-          to { transform: scale(1.045); }
+          from { transform: scale(1.06); }
+          to { transform: scale(1.12); }
         }
         .ya-float { animation: yaFloat 14s ease-in-out infinite; }
         .ya-float-slow { animation: yaFloat 20s ease-in-out infinite; }
-        .ya-kenburns { animation: yaKenburns 20s ease-out both; }
+        .ya-kenburns { animation: yaKenburns 18s ease-out both; }
 
         .ya-hero { animation: yaHeroRise 0.9s cubic-bezier(0.16,1,0.3,1) both; }
         .ya-hero-1 { animation-delay: 0.05s; }
-        .ya-hero-2 { animation-delay: 0.16s; }
-        .ya-hero-4 { animation-delay: 0.6s; }
-        .ya-hero-5 { animation-delay: 0.72s; }
-        .ya-hero-6 { animation-delay: 0.84s; }
+        .ya-hero-3 { animation-delay: 0.46s; }
+        .ya-hero-4 { animation-delay: 0.58s; }
+        .ya-hero-5 { animation-delay: 0.68s; }
 
         [data-reveal] { opacity: 0; transform: translateY(22px); }
         [data-reveal][data-revealed="true"] {
