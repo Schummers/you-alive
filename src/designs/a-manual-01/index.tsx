@@ -134,14 +134,16 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           />
 
           <div className="absolute inset-x-0 top-0 px-6 pt-7">
-            <span className="ya-hero ya-hero-1 [text-shadow:0_1px_18px_rgba(31,42,34,0.6)]">
-              {wordmark(CREAM, CREAM)}
-            </span>
+            <div className="mx-auto max-w-xl">
+              <span className="ya-hero ya-hero-1 [text-shadow:0_1px_18px_rgba(31,42,34,0.6)]">
+                {wordmark(CREAM, CREAM)}
+              </span>
+            </div>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 px-6 pb-9">
+          <div className="absolute inset-x-0 bottom-0 px-6 pb-9 md:pb-14">
             <h1
-              className="max-w-[15ch] text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em]"
+              className="mx-auto max-w-xl text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em] md:text-[64px] lg:text-[76px]"
               style={{ color: CREAM, fontVariationSettings: '"opsz" 144, "SOFT" 70' }}
             >
               {titleLines.map((line, i) => (
@@ -158,7 +160,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         </div>
       </header>
 
-      <div className="relative mx-auto max-w-md px-6">
+      <div className="relative mx-auto max-w-xl px-6">
         {/* Subtitle + CTA + reassurance on cream, LEFT-aligned. */}
         <section className="pt-8">
           <p
@@ -198,18 +200,23 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </p>
         </section>
 
-        {/* ───────── PROBLEM (tone band) ───────── */}
-        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
-          <Eyebrow>The problem</Eyebrow>
-          <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
-            {problemTitle}
-          </h2>
-          <p
-            className="mt-6 max-w-[42ch] text-[16px] leading-[1.7]"
-            style={{ color: "#3a4a3f", fontWeight: LEAD }}
-          >
-            {problem.body}
-          </p>
+        {/* ───────── PROBLEM (full-bleed tone band) ───────── */}
+        <section
+          className="mt-20 px-6 py-16 md:py-20"
+          style={{ backgroundColor: TONE, marginInline: "calc(50% - 50vw)" }}
+        >
+          <div className="mx-auto max-w-xl">
+            <Eyebrow>The problem</Eyebrow>
+            <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
+              {problemTitle}
+            </h2>
+            <p
+              className="mt-6 max-w-[46ch] text-[16px] leading-[1.7]"
+              style={{ color: "#3a4a3f", fontWeight: LEAD }}
+            >
+              {problem.body}
+            </p>
+          </div>
         </section>
 
         {/* ───────── SOLUTION ───────── */}
@@ -255,12 +262,13 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </ol>
         </section>
 
-        {/* ───────── PRICING (tone band) ───────── */}
+        {/* ───────── PRICING (full-bleed tone band) ───────── */}
         <section
           ref={fd.pricingRef}
-          className="-mx-6 mt-20 px-6 py-16"
-          style={{ backgroundColor: TONE }}
+          className="mt-20 px-6 py-16 md:py-20"
+          style={{ backgroundColor: TONE, marginInline: "calc(50% - 50vw)" }}
         >
+          <div className="mx-auto max-w-xl">
           <Eyebrow>Pricing</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {pricingTitleParts.map((part, i) => (
@@ -291,21 +299,23 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
                     : "relative bg-white/60 px-7 py-8 text-[#1F2A22] ring-1 ring-[#1F2A22]/[0.06] backdrop-blur-[2px]"
                 }
               >
-                {plan.highlight && (
-                  <span
-                    className="absolute -top-3 left-7 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
-                    style={{ backgroundColor: TERRA }}
+                <div className="flex items-baseline justify-between gap-4">
+                  <p
+                    className={`font-[family-name:var(--font-fraunces)] text-[16px] italic ${
+                      plan.highlight ? "text-[#d9c4a0]" : "text-[#6a7a6f]"
+                    }`}
                   >
-                    Most chosen
-                  </span>
-                )}
-                <p
-                  className={`font-[family-name:var(--font-fraunces)] text-[16px] italic ${
-                    plan.highlight ? "text-[#d9c4a0]" : "text-[#6a7a6f]"
-                  }`}
-                >
-                  {plan.name}
-                </p>
+                    {plan.name}
+                  </p>
+                  {plan.highlight && (
+                    <span
+                      className="flex-none rounded-full px-3.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
+                      style={{ backgroundColor: TERRA }}
+                    >
+                      Most chosen
+                    </span>
+                  )}
+                </div>
                 <p
                   className="mt-2 font-[family-name:var(--font-fraunces)] text-[40px] leading-none tracking-[-0.01em]"
                   style={{ fontVariationSettings: '"opsz" 72, "SOFT" 70', fontWeight: 540 }}
@@ -370,6 +380,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
               {pricing.scarcityLine}
             </p>
           </div>
+          </div>
         </section>
 
         {/* ───────── TESTIMONIALS ───────── */}
@@ -417,8 +428,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </div>
         </section>
 
-        {/* ───────── FAQ (tone band) ───────── */}
-        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
+        {/* ───────── FAQ + FINAL CTA (full-bleed tone band) ───────── */}
+        <section
+          className="mt-20 px-6 py-16 md:py-20"
+          style={{ backgroundColor: TONE, marginInline: "calc(50% - 50vw)" }}
+        >
+          <div className="mx-auto max-w-xl">
           <Eyebrow>Good to know</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             Questions you might have
@@ -485,6 +500,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             {content.finalCta.ctaLabel}
             {arrow}
           </button>
+          </div>
           </div>
         </section>
 

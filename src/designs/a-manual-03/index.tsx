@@ -154,7 +154,7 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
         </div>
       </header>
 
-      <div className="relative mx-auto max-w-md px-6">
+      <div className="relative mx-auto max-w-xl px-6">
         {/* Subtitle + CTA + reassurance on cream, LEFT-aligned. */}
         <section className="pt-8">
           <p
@@ -195,7 +195,7 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── PROBLEM (tone band) ───────── */}
-        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
+        <section className="ya-bleed mt-20 py-16" style={{ backgroundColor: TONE }}>
           <Eyebrow>The problem</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {problemTitle}
@@ -219,8 +219,8 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
             {solution.steps.map((s, i) => (
               <li key={i} data-reveal style={{ transitionDelay: `${i * 90}ms` }} className="relative pl-16">
                 <span
-                  className="absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full font-[family-name:var(--font-fraunces)] text-[19px] shadow-[0_10px_24px_-12px_rgba(181,117,78,0.9)]"
-                  style={{ backgroundColor: TERRA, color: CREAM, fontWeight: 600, fontVariationSettings: '"opsz" 36' }}
+                  className="absolute left-0 top-0 flex h-11 w-11 items-center justify-center rounded-full font-[family-name:var(--font-fraunces)] text-[19px]"
+                  style={{ backgroundColor: "#97582F", color: CREAM, fontWeight: 600, fontVariationSettings: '"opsz" 36' }}
                 >
                   {i + 1}
                 </span>
@@ -241,7 +241,7 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
         {/* ───────── PRICING (tone band) ───────── */}
         <section
           ref={fd.pricingRef}
-          className="-mx-6 mt-20 px-6 py-16"
+          className="ya-bleed mt-20 py-16"
           style={{ backgroundColor: TONE }}
         >
           <Eyebrow>Pricing</Eyebrow>
@@ -274,21 +274,23 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
                     : "relative bg-white/60 px-7 py-8 text-[#1F2A22] ring-1 ring-[#1F2A22]/[0.06] backdrop-blur-[2px]"
                 }
               >
-                {plan.highlight && (
-                  <span
-                    className="absolute -top-3 left-7 rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
-                    style={{ backgroundColor: TERRA }}
+                <div className="flex items-baseline justify-between gap-4">
+                  <p
+                    className={`font-[family-name:var(--font-fraunces)] text-[16px] italic ${
+                      plan.highlight ? "text-[#d9c4a0]" : "text-[#6a7a6f]"
+                    }`}
                   >
-                    Most chosen
-                  </span>
-                )}
-                <p
-                  className={`font-[family-name:var(--font-fraunces)] text-[16px] italic ${
-                    plan.highlight ? "text-[#d9c4a0]" : "text-[#6a7a6f]"
-                  }`}
-                >
-                  {plan.name}
-                </p>
+                    {plan.name}
+                  </p>
+                  {plan.highlight && (
+                    <span
+                      className="flex-none rounded-full px-3.5 py-1 text-[10px] uppercase tracking-[0.18em] text-[#F4EFE6]"
+                      style={{ backgroundColor: TERRA }}
+                    >
+                      Most chosen
+                    </span>
+                  )}
+                </div>
                 <p
                   className="mt-2 font-[family-name:var(--font-fraunces)] text-[40px] leading-none tracking-[-0.01em]"
                   style={{ fontVariationSettings: '"opsz" 72, "SOFT" 70', fontWeight: 540 }}
@@ -400,7 +402,7 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── FAQ — line-separated rows (tone band) ───────── */}
-        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
+        <section className="ya-bleed mt-20 py-16" style={{ backgroundColor: TONE }}>
           <Eyebrow>Good to know</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             Questions you might have
@@ -432,16 +434,15 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
               </details>
             ))}
           </div>
-        </section>
 
-        {/* ───────── FINAL CTA — centred, dark forest ───────── */}
-        <section
-          className="relative mt-20 overflow-hidden px-8 py-16 text-center text-[#F4EFE6]"
-          style={{
-            borderRadius: "52px 52px 52px 20px",
-            background: "linear-gradient(135deg, #26342b 0%, #1F2A22 100%)",
-          }}
-        >
+          {/* Final CTA — dark forest card, on the SAME tone band as the FAQ. */}
+          <div
+            className="relative mt-16 overflow-hidden px-8 py-16 text-center text-[#F4EFE6]"
+            style={{
+              borderRadius: "52px 52px 52px 20px",
+              background: "linear-gradient(135deg, #26342b 0%, #1F2A22 100%)",
+            }}
+          >
           <div
             aria-hidden
             className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-50 blur-2xl"
@@ -464,6 +465,7 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
             {content.finalCta.ctaLabel}
             {arrow}
           </button>
+          </div>
         </section>
 
         {/* ───────── FAKE-DOOR ───────── */}

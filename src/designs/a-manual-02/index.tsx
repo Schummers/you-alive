@@ -112,7 +112,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         />
       </div>
 
-      <div className="relative mx-auto max-w-md px-6">
+      <div className="relative mx-auto max-w-xl px-6">
         {/* ───────── HERO — organic blob ───────── */}
         <header className="pt-7">
           <div className="ya-hero ya-hero-1 flex items-center justify-between px-1">
@@ -191,7 +191,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
 
         {/* ───────── PROBLEM (tone band) ───────── */}
         <section
-          className="-mx-6 mt-20 px-6 py-16 text-center"
+          className="ya-bleed mt-20 py-16 text-center"
           style={{ backgroundColor: TONE }}
         >
           <Eyebrow>The problem</Eyebrow>
@@ -254,7 +254,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         {/* ───────── PRICING (tone band) ───────── */}
         <section
           ref={fd.pricingRef}
-          className="-mx-6 mt-20 px-6 py-16 text-center"
+          className="ya-bleed mt-20 py-16 text-center"
           style={{ backgroundColor: TONE }}
         >
           <Eyebrow>Pricing</Eyebrow>
@@ -338,11 +338,11 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
             <p className="text-center font-[family-name:var(--font-fraunces)] text-[18px] italic">
               Everything included
             </p>
-            <ul className="mt-6 grid grid-cols-1 gap-y-3.5">
+            <ul className="mt-6 grid grid-cols-1 gap-y-3.5 pl-2">
               {pricing.included.map((feature, i) => (
                 <li
                   key={i}
-                  className="flex items-center justify-center gap-3 text-[14.5px]"
+                  className="flex items-center gap-3 text-[14.5px]"
                   style={{ color: "#3a4a3f" }}
                 >
                   <span
@@ -360,7 +360,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
               ))}
             </ul>
             <p
-              className="mt-7 border-t border-[#1F2A22]/[0.08] pt-6 text-center text-[13px] leading-[1.6]"
+              className="mt-7 border-t border-[#1F2A22]/[0.08] pt-6 pl-2 text-left text-[13px] leading-[1.6]"
               style={{ color: "#6a7a6f", fontWeight: LEAD }}
             >
               {pricing.scarcityLine}
@@ -416,7 +416,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         </section>
 
         {/* ───────── FAQ (tone band) ───────── */}
-        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
+        <section className="ya-bleed mt-20 py-16" style={{ backgroundColor: TONE }}>
           <div className="text-center">
             <Eyebrow>Good to know</Eyebrow>
             <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
