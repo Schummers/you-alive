@@ -10,11 +10,12 @@ import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · 01 — "Hero plein écran"
-// Hero rebuilt to mirror the original Editorial-A hero Jonathan liked: clean
-// hammock photo full-bleed, headline resting inside bottom-left, then subtitle +
-// CTA + reassurance LEFT-aligned on cream below. Body (problem → footer) reuses
-// the a-taste-08 system but LEFT-aligned throughout, with eyebrow kickers giving
-// a clear section/card hierarchy. Strict cream/forest/terracotta. No sticky CTA.
+// Hero mirrors the original Editorial-A: clean photo full-bleed, headline inside
+// bottom-left, subtitle + CTA + dashed "623" reassurance LEFT-aligned below. Body
+// (problem → footer) reuses the a-taste-08 system, LEFT-aligned, with eyebrow
+// kickers and a two-tone background rhythm (problem / pricing / questions / footer
+// sit on a hair-darker tone). Lead paragraphs sit one weight above body; final
+// CTA panel is terracotta. No sticky CTA.
 // ─────────────────────────────────────────────────────────────────────────────
 const fraunces = Fraunces({
   subsets: ["latin"],
@@ -31,8 +32,10 @@ const quicksand = Quicksand({
 });
 
 const CREAM = "#F4EFE6";
+const TONE = "#EFE9DD"; // second background, ~just-noticeably darker than cream
 const FOREST = "#1F2A22";
 const TERRA = "#B5754E";
+const LEAD = 600; // "one level above regular" — hero/problem/pricing intros
 
 export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
   const fd = useFakeDoor(slug);
@@ -40,13 +43,11 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
 
-  // Signature moment #1 — H1 split into clauses for a line-by-line reveal.
   const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
-  // Signature moment #2 — count up the first number in the reassurance line.
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
+  const pricingTitleParts = pricing.title.split(/,\s*/);
 
-  // "You Alive?" wordmark. On the photo the "?" must stay white (an accent hue
-  // would disappear over foliage); on cream it can take the terracotta accent.
+  // On the photo the "?" must stay white; on cream it takes the terracotta accent.
   const wordmark = (color: string, markColor: string) => (
     <span
       className="font-[family-name:var(--font-fraunces)] italic tracking-[-0.01em]"
@@ -57,17 +58,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
     </span>
   );
 
-  // Eyebrow kicker — the accent label that lifts each section above card content.
   const Eyebrow = ({ children }: { children: string }) => (
-    <p
-      className="text-[10.5px] font-semibold uppercase tracking-[0.3em]"
-      style={{ color: TERRA }}
-    >
+    <p className="text-[12px] font-bold uppercase tracking-[0.26em]" style={{ color: TERRA }}>
       {children}
     </p>
   );
 
-  // Section heading (H2 tier) — clearly larger than the H3 card titles below.
   const headingClass =
     "font-[family-name:var(--font-fraunces)] text-[28px] leading-[1.14] tracking-[-0.012em]";
   const headingStyle = {
@@ -88,7 +84,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
       className={`${fraunces.variable} ${quicksand.variable} font-[family-name:var(--font-quicksand)] relative min-h-screen overflow-hidden antialiased`}
       style={{ backgroundColor: CREAM, color: FOREST }}
     >
-      {/* Soft warm washes + organic blobs (decorative). */}
+      {/* Soft warm washes + organic blobs. */}
       <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
         <div
           className="ya-float absolute -left-24 top-[58vh] h-72 w-72 rounded-[58%_42%_55%_45%/55%_48%_52%_45%] opacity-70 blur-2xl"
@@ -124,12 +120,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             sizes="(max-width: 768px) 100vw, 450px"
             className="ya-kenburns object-cover object-center"
           />
-          {/* Overall gentle tint across the whole photo for legibility. */}
-          <div
-            className="absolute inset-0"
-            style={{ backgroundColor: "rgba(31,42,34,0.14)" }}
-          />
-          {/* Vertical gradient, accentuated at top (wordmark) and bottom (title). */}
+          <div className="absolute inset-0" style={{ backgroundColor: "rgba(31,42,34,0.14)" }} />
           <div
             className="absolute inset-0"
             style={{
@@ -138,14 +129,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             }}
           />
 
-          {/* Wordmark, top-left. */}
           <div className="absolute inset-x-0 top-0 px-6 pt-7">
             <span className="ya-hero ya-hero-1 [text-shadow:0_1px_18px_rgba(31,42,34,0.6)]">
               {wordmark(CREAM, CREAM)}
             </span>
           </div>
 
-          {/* Headline resting inside the photo, bottom-left, clause-by-clause. */}
           <div className="absolute inset-x-0 bottom-0 px-6 pb-9">
             <h1
               className="max-w-[15ch] text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em]"
@@ -165,12 +154,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         </div>
       </header>
 
-      <div className="relative mx-auto max-w-md px-6 pb-28">
+      <div className="relative mx-auto max-w-md px-6">
         {/* Subtitle + CTA + reassurance on cream, LEFT-aligned. */}
         <section className="pt-8">
           <p
-            className="ya-hero ya-hero-3 max-w-[40ch] text-[18px] font-medium leading-[1.6]"
-            style={{ color: "#3a4a3f" }}
+            className="ya-hero ya-hero-3 max-w-[40ch] text-[18px] leading-[1.6]"
+            style={{ color: "#3a4a3f", fontWeight: LEAD }}
           >
             {hero.subtitle}
           </p>
@@ -205,22 +194,25 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </p>
         </section>
 
-        {/* ───────── PROBLEM ───────── */}
-        <section className="mt-24">
+        {/* ───────── PROBLEM (tone band) ───────── */}
+        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
           <Eyebrow>The problem</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {problem.title}
           </h2>
-          <p className="mt-6 max-w-[42ch] text-[16px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
+          <p
+            className="mt-6 max-w-[42ch] text-[16px] leading-[1.7]"
+            style={{ color: "#3a4a3f", fontWeight: LEAD }}
+          >
             {problem.body}
           </p>
         </section>
 
         {/* ───────── SOLUTION ───────── */}
-        <section className="mt-24">
+        <section className="mt-20">
           <Eyebrow>How it works</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
-            {solution.intro}
+            Three quiet steps, and your family is covered.
           </h2>
 
           <ol className="mt-9 space-y-6">
@@ -259,13 +251,24 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </ol>
         </section>
 
-        {/* ───────── PRICING ───────── */}
-        <section ref={fd.pricingRef} className="mt-24">
+        {/* ───────── PRICING (tone band) ───────── */}
+        <section
+          ref={fd.pricingRef}
+          className="-mx-6 mt-20 px-6 py-16"
+          style={{ backgroundColor: TONE }}
+        >
           <Eyebrow>Pricing</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
-            {pricing.title}
+            {pricingTitleParts.map((part, i) => (
+              <span key={i} className="block">
+                {i < pricingTitleParts.length - 1 ? `${part},` : part}
+              </span>
+            ))}
           </h2>
-          <p className="mt-5 max-w-[40ch] text-[15px] leading-[1.7]" style={{ color: "#4a5a4f" }}>
+          <p
+            className="mt-5 max-w-[40ch] text-[15.5px] leading-[1.7]"
+            style={{ color: "#3a4a3f", fontWeight: LEAD }}
+          >
             {pricing.subtitle}
           </p>
 
@@ -281,7 +284,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
                 className={
                   plan.highlight
                     ? "relative bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-7 py-8 text-[#F4EFE6] shadow-[0_30px_64px_-38px_rgba(31,42,34,0.8)]"
-                    : "relative bg-white/55 px-7 py-8 text-[#1F2A22] ring-1 ring-[#1F2A22]/[0.06] backdrop-blur-[2px]"
+                    : "relative bg-white/60 px-7 py-8 text-[#1F2A22] ring-1 ring-[#1F2A22]/[0.06] backdrop-blur-[2px]"
                 }
               >
                 {plan.highlight && (
@@ -327,8 +330,9 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             ))}
           </div>
 
+          {/* Everything-included card, now also carrying the no-lock-in line. */}
           <div
-            className="mt-9 bg-white/45 px-7 py-8 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
+            className="mt-9 bg-white/60 px-7 py-8 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px]"
             style={{ borderRadius: "40px" }}
           >
             <p className="font-[family-name:var(--font-fraunces)] text-[18px] italic">
@@ -355,15 +359,17 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
                 </li>
               ))}
             </ul>
+            <p
+              className="mt-7 border-t border-[#1F2A22]/[0.08] pt-6 text-[13px] leading-[1.6]"
+              style={{ color: "#6a7a6f", fontWeight: LEAD }}
+            >
+              {pricing.scarcityLine}
+            </p>
           </div>
-
-          <p className="mt-7 max-w-[40ch] text-[12.5px] leading-[1.65]" style={{ color: "#6a7a6f" }}>
-            {pricing.scarcityLine}
-          </p>
         </section>
 
         {/* ───────── TESTIMONIALS ───────── */}
-        <section className="mt-24">
+        <section className="mt-20">
           <Eyebrow>Stories</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             From those who started
@@ -406,8 +412,8 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </div>
         </section>
 
-        {/* ───────── FAQ ───────── */}
-        <section className="mt-24">
+        {/* ───────── FAQ (tone band) ───────── */}
+        <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
           <Eyebrow>Questions</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             Questions you might have
@@ -417,7 +423,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
               <details
                 key={i}
                 style={{ borderRadius: "28px" }}
-                className="group bg-white/55 px-7 py-5 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px] open:bg-white/70"
+                className="group bg-white/60 px-7 py-5 ring-1 ring-[#1F2A22]/[0.05] backdrop-blur-[2px] open:bg-white/75"
               >
                 <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
                   <span
@@ -445,17 +451,20 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </div>
         </section>
 
-        {/* ───────── FINAL CTA ───────── */}
+        {/* ───────── FINAL CTA (terracotta) ───────── */}
         <section
-          className="relative mt-24 overflow-hidden bg-gradient-to-br from-[#26342b] to-[#1F2A22] px-8 py-14 text-[#F4EFE6]"
-          style={{ borderRadius: "52px 52px 52px 20px" }}
+          className="relative mt-20 overflow-hidden px-8 py-14 text-[#F4EFE6]"
+          style={{
+            borderRadius: "52px 52px 52px 20px",
+            background: "linear-gradient(135deg, #BC7A50 0%, #97582F 100%)",
+          }}
         >
           <div
             aria-hidden
-            className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-50 blur-2xl"
+            className="pointer-events-none absolute -right-10 -top-10 h-44 w-44 opacity-60 blur-2xl"
             style={{
               background:
-                "radial-gradient(circle, rgba(181,117,78,0.45), rgba(181,117,78,0) 70%)",
+                "radial-gradient(circle, rgba(244,239,230,0.30), rgba(244,239,230,0) 70%)",
               borderRadius: "50%",
             }}
           />
@@ -538,8 +547,8 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           </section>
         )}
 
-        {/* ───────── FOOTER ───────── */}
-        <footer className="mt-20">
+        {/* ───────── FOOTER (tone band) ───────── */}
+        <footer className="-mx-6 mt-20 px-6 py-14" style={{ backgroundColor: TONE }}>
           <p className="mb-3">{wordmark(FOREST, TERRA)}</p>
           <p
             className="font-[family-name:var(--font-fraunces)] text-[16px] italic"
