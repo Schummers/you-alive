@@ -406,7 +406,8 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
                 >
                   {t.quote}
                 </blockquote>
-                <figcaption className="mt-5 text-[13px]" style={{ color: "#6a7a6f" }}>
+                <figcaption className="mt-5 flex items-center gap-3 text-[13px]" style={{ color: "#6a7a6f" }}>
+                  <span className="inline-block h-px w-8" style={{ backgroundColor: "rgba(181,117,78,0.55)" }} />
                   {t.name}, {t.age}
                 </figcaption>
               </figure>
@@ -417,7 +418,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         {/* ───────── FAQ (tone band) ───────── */}
         <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
           <div className="text-center">
-            <Eyebrow>Questions</Eyebrow>
+            <Eyebrow>Good to know</Eyebrow>
             <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
               Questions you might have
             </h2>
@@ -563,7 +564,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           >
             {footer.lines[0]}
           </p>
-          <p className="mt-4 text-[12px]" style={{ color: "#9c8a6d" }}>
+          <p className="mt-4 text-[12px]" style={{ color: "#6a7a6f" }}>
             {footer.lines.slice(1).join("  ·  ")}
           </p>
         </footer>
