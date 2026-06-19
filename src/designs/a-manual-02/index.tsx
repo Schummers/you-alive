@@ -258,10 +258,10 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
           style={{ backgroundColor: TONE }}
         >
           <Eyebrow>Pricing</Eyebrow>
-          <h2 className={`mx-auto mt-4 max-w-[22ch] ${headingClass}`} style={headingStyle}>
+          <h2 className={`mx-auto mt-4 max-w-[22ch] md:max-w-none ${headingClass}`} style={headingStyle}>
             {pricingTitleParts.map((part, i) => (
-              <span key={i} className="block">
-                {i < pricingTitleParts.length - 1 ? `${part},` : part}
+              <span key={i} className="block md:inline">
+                {i < pricingTitleParts.length - 1 ? `${part}, ` : part}
               </span>
             ))}
           </h2>

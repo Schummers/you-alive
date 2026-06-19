@@ -133,17 +133,17 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
             }}
           />
 
-          <div className="absolute inset-x-0 top-0 px-6 pt-7">
-            <div className="mx-auto max-w-xl">
+          <div className="absolute inset-x-0 top-0 pt-7">
+            <div className="mx-auto max-w-xl px-6">
               <span className="ya-hero ya-hero-1 [text-shadow:0_1px_18px_rgba(31,42,34,0.6)]">
                 {wordmark(CREAM, CREAM)}
               </span>
             </div>
           </div>
 
-          <div className="absolute inset-x-0 bottom-0 px-6 pb-9 md:pb-14">
+          <div className="absolute inset-x-0 bottom-0 pb-9 md:pb-14">
             <h1
-              className="mx-auto max-w-xl text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em] md:text-[64px] lg:text-[76px]"
+              className="mx-auto max-w-xl px-6 text-balance font-[family-name:var(--font-fraunces)] text-[44px] leading-[0.98] tracking-[-0.02em] md:text-[64px] lg:text-[76px]"
               style={{ color: CREAM, fontVariationSettings: '"opsz" 144, "SOFT" 70' }}
             >
               {titleLines.map((line, i) => (
@@ -205,7 +205,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           className="mt-20 px-6 py-16 md:py-20"
           style={{ backgroundColor: TONE, marginInline: "calc(50% - 50vw)" }}
         >
-          <div className="mx-auto max-w-xl">
+          <div className="mx-auto max-w-xl px-6">
             <Eyebrow>The problem</Eyebrow>
             <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
               {problemTitle}
@@ -268,12 +268,12 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           className="mt-20 px-6 py-16 md:py-20"
           style={{ backgroundColor: TONE, marginInline: "calc(50% - 50vw)" }}
         >
-          <div className="mx-auto max-w-xl">
+          <div className="mx-auto max-w-xl px-6">
           <Eyebrow>Pricing</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             {pricingTitleParts.map((part, i) => (
-              <span key={i} className="block">
-                {i < pricingTitleParts.length - 1 ? `${part},` : part}
+              <span key={i} className="block md:inline">
+                {i < pricingTitleParts.length - 1 ? `${part}, ` : part}
               </span>
             ))}
           </h2>
@@ -433,7 +433,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
           className="mt-20 px-6 py-16 md:py-20"
           style={{ backgroundColor: TONE, marginInline: "calc(50% - 50vw)" }}
         >
-          <div className="mx-auto max-w-xl">
+          <div className="mx-auto max-w-xl px-6">
           <Eyebrow>Good to know</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
             Questions you might have

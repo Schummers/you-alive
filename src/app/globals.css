@@ -25,11 +25,13 @@ body {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-/* Manual-design responsive shell. The content stays a single column centred at
-   --ya-shell; mobile fills the screen (24px gutters). `.ya-bleed` lets a section
-   background span the full viewport while its content stays on the shell. */
+/* Manual-design responsive shell. The content stays a single column whose inner
+   width matches `max-w-xl px-6` exactly (36rem max-width − 2×1.5rem gutters =
+   33rem of content), so full-bleed bands line up edge-for-edge with the normal
+   sections. `.ya-bleed` lets a section background span the full viewport while
+   its content stays on that same column. */
 :root {
-  --ya-shell: 36rem;
+  --ya-shell: 33rem;
 }
 .ya-bleed {
   width: 100vw;
