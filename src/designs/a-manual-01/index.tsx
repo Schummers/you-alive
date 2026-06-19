@@ -46,6 +46,10 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
   const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
   const pricingTitleParts = pricing.title.split(/,\s*/);
+  // Drop the leading "Logins," so the problem title starts at "Documents,".
+  const problemTitle = problem.title
+    .replace(/^Logins,\s*/i, "")
+    .replace(/^\w/, (c) => c.toUpperCase());
 
   // On the photo the "?" must stay white; on cream it takes the terracotta accent.
   const wordmark = (color: string, markColor: string) => (
@@ -198,7 +202,7 @@ export default function ManualFullBleedDesign({ content, slug }: DesignProps) {
         <section className="-mx-6 mt-20 px-6 py-16" style={{ backgroundColor: TONE }}>
           <Eyebrow>The problem</Eyebrow>
           <h2 className={`mt-4 ${headingClass}`} style={headingStyle}>
-            {problem.title}
+            {problemTitle}
           </h2>
           <p
             className="mt-6 max-w-[42ch] text-[16px] leading-[1.7]"

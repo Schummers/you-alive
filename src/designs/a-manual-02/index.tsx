@@ -46,6 +46,10 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
   // Pricing title broken at its comma so it reads on two lines.
   const pricingTitleParts = pricing.title.split(/,\s*/);
+  // Drop the leading "Logins," so the problem title starts at "Documents,".
+  const problemTitle = problem.title
+    .replace(/^Logins,\s*/i, "")
+    .replace(/^\w/, (c) => c.toUpperCase());
 
   const wordmark = (color: string, markColor: string) => (
     <span
@@ -192,7 +196,7 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         >
           <Eyebrow>The problem</Eyebrow>
           <h2 className={`mx-auto mt-4 max-w-[20ch] ${headingClass}`} style={headingStyle}>
-            {problem.title}
+            {problemTitle}
           </h2>
           <p
             className="mx-auto mt-6 max-w-[34ch] text-[15.5px] leading-[1.75]"
