@@ -1,6 +1,5 @@
 "use client";
 
-import type { ReactNode } from "react";
 import { ArrowLeft, Check, Lock, Zap } from "lucide-react";
 import type { SiteContent } from "@/content/site";
 
@@ -33,14 +32,12 @@ export function WaitlistTakeover({
   confirmation,
   align = "left",
   fontVars,
-  brand,
 }: {
   fd: Fd;
   fakedoor: SiteContent["fakedoor"];
   confirmation: SiteContent["confirmation"];
   align?: "left" | "center";
   fontVars: string;
-  brand?: ReactNode;
 }) {
   const centered = align === "center";
   const features = fakedoor.features ?? [];
@@ -69,7 +66,7 @@ export function WaitlistTakeover({
         />
       </div>
 
-      <div className="mx-auto flex min-h-screen max-w-xl flex-col px-6 py-7">
+      <div className="mx-auto flex h-screen max-w-xl flex-col px-6 py-5">
         {/* Top bar: back + badge */}
         <div className="flex items-center justify-between">
           <button
@@ -84,7 +81,7 @@ export function WaitlistTakeover({
           {fakedoor.badge && (
             <span
               className="rounded-full border px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em]"
-              style={{ borderColor: "rgba(31,42,34,0.18)", color: "#6a7a6f" }}
+              style={{ borderColor: "rgba(181,117,78,0.35)", color: TERRA, backgroundColor: "rgba(181,117,78,0.1)" }}
             >
               {fakedoor.badge}
             </span>
@@ -93,13 +90,12 @@ export function WaitlistTakeover({
 
         {/* Center content */}
         <div
-          className={`flex flex-1 flex-col justify-center py-10 ${
+          className={`flex flex-1 flex-col justify-center py-6 ${
             centered ? "items-center text-center" : ""
           }`}
         >
           {fd.state === "done" ? (
             <div className={centered ? "mx-auto max-w-[42ch]" : "max-w-[42ch]"}>
-              {brand && <p className="mb-5">{brand}</p>}
               <h1
                 className="font-[family-name:var(--font-fraunces)] text-[28px] leading-tight tracking-[-0.01em]"
                 style={{ fontVariationSettings: '"opsz" 48, "SOFT" 90', fontWeight: 480 }}
@@ -112,7 +108,6 @@ export function WaitlistTakeover({
             </div>
           ) : (
             <div className="w-full">
-              {brand && <p className="mb-6">{brand}</p>}
               <h1
                 className="font-[family-name:var(--font-fraunces)] text-[34px] leading-[1.12] tracking-[-0.015em] sm:text-[40px]"
                 style={{ fontVariationSettings: '"opsz" 72, "SOFT" 90', fontWeight: 470 }}
@@ -128,13 +123,14 @@ export function WaitlistTakeover({
 
               <form
                 onSubmit={fd.submit}
-                className={`mt-8 w-full ${centered ? "mx-auto max-w-[440px]" : "max-w-[440px]"}`}
+                className={`mt-6 w-full ${centered ? "mx-auto max-w-[440px]" : "max-w-[440px]"}`}
               >
                 <label
                   htmlFor="ya-email"
                   className={`block text-[13px] font-semibold ${centered ? "text-center" : ""}`}
                 >
-                  Your email
+                  Your email{" "}
+                  <span aria-hidden="true" style={{ color: TERRA }}>*</span>
                 </label>
                 <input
                   id="ya-email"
@@ -147,7 +143,7 @@ export function WaitlistTakeover({
                 />
                 {fakedoor.fieldNote && (
                   <p
-                    className={`mt-2 inline-flex items-center gap-1.5 text-[12px] ${
+                    className={`mt-2 inline-flex items-center gap-1.5 text-[12px] font-semibold ${
                       centered ? "justify-center" : ""
                     }`}
                     style={{ color: TERRA }}
@@ -158,7 +154,7 @@ export function WaitlistTakeover({
                 )}
 
                 {features.length > 0 && (
-                  <fieldset className="mt-7 border-0 p-0">
+                  <fieldset className="mt-5 border-0 p-0">
                     <legend
                       className={`mb-3 text-[13px] font-semibold ${centered ? "w-full text-center" : ""}`}
                     >
@@ -174,7 +170,7 @@ export function WaitlistTakeover({
                             type="button"
                             aria-pressed={on}
                             onClick={() => fd.toggleFeature(f.id)}
-                            className="inline-flex items-center gap-1.5 rounded-full border px-3.5 py-2 text-[13px] transition-colors duration-200"
+                            className="inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-[11.5px] font-semibold transition-colors duration-200"
                             style={
                               on
                                 ? { backgroundColor: FOREST, borderColor: FOREST, color: CREAM }
@@ -197,7 +193,7 @@ export function WaitlistTakeover({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="mt-7 w-full rounded-full bg-[#1F2A22] px-6 py-4 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98] disabled:opacity-60"
+                  className="mt-5 w-full rounded-full bg-[#1F2A22] px-6 py-4 text-[15px] font-semibold text-[#F4EFE6] transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] hover:-translate-y-[1px] active:scale-[0.98] disabled:opacity-60"
                 >
                   {loading ? "…" : fakedoor.submitLabel}
                 </button>
@@ -209,9 +205,7 @@ export function WaitlistTakeover({
                 )}
 
                 <p
-                  className={`mt-5 inline-flex items-center gap-1.5 text-[12px] ${
-                    centered ? "w-full justify-center" : ""
-                  }`}
+                  className="mt-3 flex w-full items-center justify-center gap-1.5 text-[12px]"
                   style={{ color: "#6a7a6f" }}
                 >
                   <Lock style={{ width: 12, height: 12 }} strokeWidth={2.25} />

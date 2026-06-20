@@ -89,7 +89,6 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
         confirmation={content.confirmation}
         align="left"
         fontVars={`${fraunces.variable} ${quicksand.variable}`}
-        brand={wordmark(FOREST, TERRA)}
       />
     );
   }

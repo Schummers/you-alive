@@ -92,7 +92,6 @@ export default function ManualOrganicDesign({ content, slug }: DesignProps) {
         confirmation={content.confirmation}
         align="center"
         fontVars={`${fraunces.variable} ${quicksand.variable}`}
-        brand={wordmark(FOREST, TERRA)}
       />
     );
   }
