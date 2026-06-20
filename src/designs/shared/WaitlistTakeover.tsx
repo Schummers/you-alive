@@ -207,11 +207,15 @@ export function WaitlistTakeover({
       {/* Sticky submit footer — hidden on confirmation state */}
       {fd.state !== "done" && (
         <div
-          className="mx-auto w-full max-w-xl shrink-0 px-6 pb-8 pt-5"
-          style={{
-            background: `linear-gradient(to bottom, rgba(244,239,230,0) 0%, ${CREAM} 28%)`,
-          }}
+          className="relative mx-auto w-full max-w-xl shrink-0 px-6 pb-4 pt-4"
+          style={{ backgroundColor: CREAM }}
         >
+          {/* Gradient that bleeds upward into the scroll area — no hard edge */}
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -top-12 left-0 right-0 h-12"
+            style={{ background: `linear-gradient(to bottom, rgba(244,239,230,0), ${CREAM})` }}
+          />
           <button
             type="submit"
             form="ya-form"
