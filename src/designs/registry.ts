@@ -9,6 +9,7 @@ import AManual01 from "@/designs/a-manual-01";
 import AManual02 from "@/designs/a-manual-02";
 import AManual03 from "@/designs/a-manual-03";
 import CManual01 from "@/designs/c-manual-01";
+import CManual02 from "@/designs/c-manual-02";
 
 import AFd09 from "@/designs/a-fd-09";
 import AFd16 from "@/designs/a-fd-16";
@@ -444,8 +445,7 @@ const aManual: DesignModule[] = [
   },
 ];
 
-// Variant C — manual track. RetroForestBase layout, problem band = pale
-// lime-tint (chosen over sand/sage).
+// Variant C — manual track. Shared RetroForestBase; two cuts of the same layout.
 const cManual: DesignModule[] = [
   {
     slug: "c-manual-01",
@@ -454,8 +454,18 @@ const cManual: DesignModule[] = [
     variant: "c",
     tool: "manual",
     tags: ["retro", "forest", "lime"],
-    note: "Base Retro Forest partagée (Bricolage, lime sur forest, stepper 01+barre, marquee). Sections claires en blanc, bande 'problème' lime pâle, CTA lime sans contour, footer blanc séparé. Accessible.",
+    note: "Base Retro Forest partagée. Hero blanc + accents lime (48px), bande 'problème' + footer en lime pâle, sections blanches, CTA lime sans contour. Accessible.",
     Component: CManual01,
+  },
+  {
+    slug: "c-manual-02",
+    label: "C · manual · 02 — Retro Forest (jaune géant)",
+    ad: "image3",
+    variant: "c",
+    tool: "manual",
+    tags: ["retro", "forest", "lime", "display"],
+    note: "Même base, version plus typographique : H1 entièrement lime, géant (64px), un mot par ligne (6 lignes), CTA pill, sous-titre réduit, footer forest foncé.",
+    Component: CManual02,
   },
 ];
 

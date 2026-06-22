@@ -1,7 +1,7 @@
 "use client";
 
 import { Bricolage_Grotesque, Space_Grotesk } from "next/font/google";
-import { useEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useRef, useState, type ReactNode, type CSSProperties } from "react";
 import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
@@ -82,9 +82,27 @@ function Reveal({
   );
 }
 
-type BaseProps = DesignProps & { problemBg: string };
+type BaseProps = DesignProps & {
+  problemBg: string;
+  heroMode?: "split" | "stack"; // split = white lead + lime punch word; stack = one all-lime word per line
+  heroMobilePx?: number;
+  heroDesktopPx?: number;
+  subtitlePx?: number;
+  ctaRadius?: number; // px (use a big number for a pill)
+  footerMode?: "color" | "dark"; // color = problemBg band, no divider; dark = forest
+};
 
-export default function RetroForestBase({ content, slug, problemBg }: BaseProps) {
+export default function RetroForestBase({
+  content,
+  slug,
+  problemBg,
+  heroMode = "split",
+  heroMobilePx = 46,
+  heroDesktopPx = 64,
+  subtitlePx = 18,
+  ctaRadius = 18,
+  footerMode = "color",
+}: BaseProps) {
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
@@ -99,6 +117,8 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
       const m = s.match(/^(.*\s)(\S+)$/);
       return m ? { lead: m[1].trim(), accent: m[2] } : { lead: s, accent: "" };
     });
+  // Stack mode: one word per line (6 lines for this title), all lime.
+  const heroWords = hero.title.split(/\s+/).filter(Boolean);
   const problemTitle = problem.title
     .replace(/^Logins,\s*/i, "")
     .replace(/^\w/, (c) => c.toUpperCase());
@@ -136,10 +156,10 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
   }) => (
     <button
       onClick={onClick}
-      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-bold uppercase tracking-wide ${
+      className={`ya-cta group inline-flex items-center justify-center gap-2.5 px-7 py-4 text-[15px] font-bold uppercase tracking-wide ${
         full ? "w-full" : ""
       }`}
-      style={{ backgroundColor: LIME, color: FOREST }}
+      style={{ backgroundColor: LIME, color: FOREST, borderRadius: ctaRadius }}
     >
       {label}
       <ArrowRight className="ya-arrow" style={{ width: 19, height: 19 }} strokeWidth={2.5} />
@@ -171,6 +191,8 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
         .ya-arrow { transition: transform .4s cubic-bezier(.16,1,.3,1); }
         .ya-cta:hover .ya-arrow { transform: translateX(4px); }
         .ya-marquee-track { display: inline-flex; white-space: nowrap; animation: ya-marquee 26s linear infinite; }
+        .ya-h1 { font-size: var(--h1-m); }
+        @media (min-width: 768px) { .ya-h1 { font-size: var(--h1-d); } }
         @media (prefers-reduced-motion: reduce) {
           .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
           .ya-stage > *, .ya-underline { animation: none !important; opacity: 1 !important; transform: none !important; }
@@ -197,28 +219,44 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
         {/* ───────── HERO (dark) ───────── */}
         <section className="ya-stage pt-12 md:pt-16">
           <h1
-            className="font-[family-name:var(--font-display)] text-[44px] font-extrabold uppercase italic leading-[0.98] tracking-[-0.035em] md:text-[64px]"
-            style={{ color: WHITE_1, animationDelay: "0.1s" }}
+            className="ya-h1 font-[family-name:var(--font-display)] font-extrabold uppercase italic leading-[0.98] tracking-[-0.05em]"
+            style={{
+              color: heroMode === "stack" ? LIME : WHITE_1,
+              animationDelay: "0.1s",
+              "--h1-m": `${heroMobilePx}px`,
+              "--h1-d": `${heroDesktopPx}px`,
+            } as CSSProperties}
           >
-            {heroLines.map((l, i) => (
-              <span key={i} className={`block ${i > 0 ? "mt-3" : ""}`}>
-                <span className="block">{l.lead}</span>
-                <span className="block" style={{ color: LIME }}>
-                  {l.accent}
-                </span>
-              </span>
-            ))}
+            {heroMode === "stack"
+              ? heroWords.map((w, i) => {
+                  const newSentence = i > 0 && /\.$/.test(heroWords[i - 1]);
+                  return (
+                    <span key={i} className={`block ${newSentence ? "mt-3" : ""}`}>
+                      {w}
+                    </span>
+                  );
+                })
+              : heroLines.map((l, i) => (
+                  <span key={i} className={`block ${i > 0 ? "mt-3" : ""}`}>
+                    <span className="block">{l.lead}</span>
+                    <span className="block" style={{ color: LIME }}>
+                      {l.accent}
+                    </span>
+                  </span>
+                ))}
           </h1>
 
-          <div
-            className="ya-underline mt-5 h-[3px] w-28 rounded-full"
-            style={{ backgroundColor: LIME, animationDelay: "0s" }}
-            aria-hidden
-          />
+          {heroMode === "split" && (
+            <div
+              className="ya-underline mt-5 h-[3px] w-28 rounded-full"
+              style={{ backgroundColor: LIME, animationDelay: "0s" }}
+              aria-hidden
+            />
+          )}
 
           <p
-            className="mt-5 max-w-[40ch] text-[18px] leading-[1.6]"
-            style={{ color: MUTED_D, animationDelay: "0.3s" }}
+            className="mt-5 max-w-[40ch] leading-[1.6]"
+            style={{ color: MUTED_D, fontSize: subtitlePx, animationDelay: "0.3s" }}
           >
             {hero.subtitle}
           </p>
@@ -505,8 +543,8 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
                   <button
                     type="submit"
                     disabled={fd.state === "loading"}
-                    className="ya-cta w-full rounded-[18px] px-6 py-4 text-[15px] font-bold uppercase tracking-wide disabled:opacity-60"
-                    style={{ backgroundColor: LIME, color: FOREST }}
+                    className="ya-cta w-full px-6 py-4 text-[15px] font-bold uppercase tracking-wide disabled:opacity-60"
+                    style={{ backgroundColor: LIME, color: FOREST, borderRadius: ctaRadius }}
                   >
                     {fd.state === "loading" ? "Reserving…" : fakedoor.submitLabel}
                   </button>
@@ -524,19 +562,30 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
           </section>
         )}
 
-        {/* ───────── FOOTER (white band) — continues the final-CTA white, with a
-            hairline divider separating it. Mark + links take the light accent. ───────── */}
-        <footer className="ya-bleed pb-16" style={{ backgroundColor: WHITE_BG }}>
-          <div className="border-t pt-8" style={{ borderColor: `${FOREST}1f` }}>
+        {/* ───────── FOOTER ───────── */}
+        {footerMode === "dark" ? (
+          // Dark forest footer (no divider — the white CTA band above sets it off).
+          <footer className="mt-20 pb-20">
+            <p className="mb-3">{wordmark(WHITE_1, LIME)}</p>
+            <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: "rgba(250,247,239,0.6)" }}>
+              {footer.lines[0]}
+            </p>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,247,239,0.42)" }}>
+              {footer.lines.slice(1).join("   ·   ")}
+            </p>
+          </footer>
+        ) : (
+          // Colored footer = the problem band's tint, no divider; tagline secondary.
+          <footer className="ya-bleed py-14" style={{ backgroundColor: problemBg }}>
             <p className="mb-3">{wordmark(FOREST, GREEN_L)}</p>
-            <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: FOREST }}>
+            <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: MUTED_L }}>
               {footer.lines[0]}
             </p>
             <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: MUTED_L }}>
               {footer.lines.slice(1).join("   ·   ")}
             </p>
-          </div>
-        </footer>
+          </footer>
+        )}
       </div>
     </main>
   );
