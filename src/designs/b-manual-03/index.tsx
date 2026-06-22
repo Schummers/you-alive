@@ -48,6 +48,7 @@ const spectral = Spectral({
 const INK = "#26235A"; // primary ink
 const SOFT = "#5A5690"; // secondary ink / accent
 const PAPER_LIGHT = "#F7F4FF"; // card paper tint
+const SOFT_WHITE = "#FAF8FF"; // off-white cards (Monthly + included): whiter than the field, not pure white
 
 // Scroll-reveal primitive: blur-rise, reduced-motion safe (ported structure).
 function Reveal({
@@ -143,14 +144,8 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
   // Problem title: drop "Logins,", join with an ampersand (Jonathan's edit).
   const problemTitle = problem.title.replace(
     /^Logins,\s*documents,\s*last wishes/i,
-    "Documents & last wishes"
+    "Documents and last wishes"
   );
-
-  // Drop-cap class — a large Fraunces float-left initial, like a chapter open.
-  const dropCap =
-    "[&:first-letter]:float-left [&:first-letter]:mr-3 [&:first-letter]:mt-1.5 " +
-    "[&:first-letter]:font-[family-name:var(--font-fraunces)] [&:first-letter]:text-[58px] " +
-    "[&:first-letter]:font-normal [&:first-letter]:leading-[0.78] [&:first-letter]:text-[#5A5690]";
 
   // Tiny serif wordmark — "You Alive ?" with a breath before the mark.
   const wordmark = (
@@ -224,7 +219,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
 
           <div className="relative">
             <h1
-              className="font-[family-name:var(--font-fraunces)] text-balance text-[50px] font-light leading-[1.02] tracking-[-0.02em] text-[#26235A] md:text-[64px]"
+              className="font-[family-name:var(--font-fraunces)] text-balance text-[56px] font-light leading-[1.0] tracking-[-0.02em] text-[#26235A] md:text-[68px]"
               style={{
                 fontVariationSettings: '"opsz" 96, "SOFT" 40, "WONK" 0',
                 animationDelay: "0.12s",
@@ -272,7 +267,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
               {problemTitle}
             </h2>
             <p
-              className={`mt-6 font-[family-name:var(--font-spectral)] text-[16px] font-light leading-[1.8] text-[#3d3a6e] ${dropCap}`}
+              className="mt-6 font-[family-name:var(--font-spectral)] text-[16px] font-light leading-[1.8] text-[#3d3a6e]"
             >
               {problem.body}
             </p>
@@ -334,9 +329,8 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
                           }
                         : {
                             color: INK,
-                            border: "1px solid rgba(38,35,90,0.15)",
-                            backgroundImage:
-                              "linear-gradient(155deg, rgba(247,244,255,0.7) 0%, rgba(235,230,255,0.35) 100%)",
+                            border: "1px solid rgba(38,35,90,0.12)",
+                            backgroundColor: SOFT_WHITE,
                           }
                     }
                   >
@@ -378,7 +372,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
           <Reveal className="mt-6">
             <div
               className="rounded-[4px] border border-[#26235A]/12 px-7 py-8"
-              style={{ backgroundColor: "#FFFFFF" }}
+              style={{ backgroundColor: SOFT_WHITE }}
             >
               <p className="text-center font-[family-name:var(--font-fraunces)] text-[9px] uppercase tracking-[0.36em] text-[#5A5690]">
                 Everything included

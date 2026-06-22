@@ -142,11 +142,14 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         color: INK,
         // ── THE single field: strong layered recipe (3 radial halos + vertical
         // linear), continuous saturated lavender across the whole page. ──
+        // Ad-inspired mesh (image2.jpeg): saturated violet pool upper-left,
+        // cornflower-blue right + bottom, white channels between.
         background:
-          "radial-gradient(120% 70% at 12% -4%, #F3ECFF 0%, rgba(243,236,255,0) 52%)," +
-          "radial-gradient(110% 60% at 92% 12%, #D6E4FF 0%, rgba(214,228,255,0) 50%)," +
-          "radial-gradient(130% 82% at 50% 104%, #EBE6FF 0%, rgba(235,230,255,0) 58%)," +
-          "linear-gradient(180deg, #F7F4FF 0%, #F3ECFF 50%, #EFEAFF 100%)",
+          "radial-gradient(85% 55% at 26% 9%, rgba(141,128,214,0.44) 0%, rgba(141,128,214,0) 55%)," +
+          "radial-gradient(80% 50% at 95% 16%, rgba(160,184,242,0.52) 0%, rgba(160,184,242,0) 52%)," +
+          "radial-gradient(95% 55% at 52% 110%, rgba(166,190,244,0.42) 0%, rgba(166,190,244,0) 60%)," +
+          "radial-gradient(58% 40% at 6% 80%, rgba(146,132,216,0.28) 0%, rgba(146,132,216,0) 55%)," +
+          "linear-gradient(180deg, #F7F6FF 0%, #F1EEFF 50%, #F6F4FF 100%)",
       }}
     >
       <style>{`
@@ -206,7 +209,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
             className="pointer-events-none absolute left-1/2 top-[36%] -z-0 h-[560px] w-[680px] -translate-x-1/2 -translate-y-1/2 blur-[60px]"
             style={{
               background:
-                "radial-gradient(50% 50% at 50% 45%, rgba(160,172,232,0.9) 0%, rgba(190,200,246,0.5) 42%, rgba(214,228,255,0) 72%)",
+                "radial-gradient(55% 52% at 50% 40%, rgba(120,106,200,0.92) 0%, rgba(146,132,220,0.5) 40%, rgba(176,192,240,0) 72%)",
             }}
           />
 
@@ -248,8 +251,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                 color: INK,
                 fontVariationSettings: '"opsz" 72, "SOFT" 50',
                 animationDelay: "0.12s",
-                "--h1-m": "38px",
-                "--h1-d": "46px",
+                "--h1-m": "42px",
+                "--h1-d": "56px",
               } as CSSProperties}
             >
               Leave nothing{" "}
@@ -303,7 +306,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
               className="max-w-[20ch] font-[family-name:var(--font-display)] text-[30px] leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK, fontVariationSettings: '"opsz" 60, "SOFT" 40' }}
             >
-              Documents &amp; last wishes:{" "}
+              Documents and last wishes:{" "}
               <span className="italic" style={{ color: TITLE_ACCENT }}>
                 someone has to sort it all.
               </span>
