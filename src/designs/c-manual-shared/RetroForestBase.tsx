@@ -41,7 +41,7 @@ const WHITE_BG = "#FBF8F1"; // white light-band background (method / stories / f
 const CREAM = "#EFEAD8"; // warm cream — fakedoor body text only
 const INK_L = "#283A30"; // body text on light (darker, not pure black)
 const MUTED_L = "#566355"; // secondary text on light (links, etc.)
-const GREY_CAP = "#7E7C72"; // neutral grey for de-emphasised captions (names/ages)
+const GREY_CAP = "#6A6860"; // neutral grey for de-emphasised captions (names/ages). 5.3:1 on white (AA)
 const WHITE_1 = "#FAF7EF"; // primary text on dark
 const MUTED_D = "rgba(250,247,239,0.82)"; // secondary text on dark
 
@@ -193,6 +193,7 @@ export default function RetroForestBase({
         .ya-marquee-track { display: inline-flex; white-space: nowrap; animation: ya-marquee 26s linear infinite; }
         .ya-h1 { font-size: var(--h1-m); }
         @media (min-width: 768px) { .ya-h1 { font-size: var(--h1-d); } }
+        .ya-input:focus { outline: 2px solid #C8F169 !important; outline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) {
           .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
           .ya-stage > *, .ya-underline { animation: none !important; opacity: 1 !important; transform: none !important; }
@@ -537,7 +538,7 @@ export default function RetroForestBase({
                     value={fd.email}
                     onChange={(e) => fd.setEmail(e.target.value)}
                     placeholder={fakedoor.emailPlaceholder}
-                    className="w-full rounded-[18px] border px-5 py-4 text-[15px] outline-none"
+                    className="ya-input w-full rounded-[18px] border px-5 py-4 text-[15px]"
                     style={{ backgroundColor: FOREST, color: CREAM, borderColor: "rgba(239,234,216,0.2)" }}
                   />
                   <button
@@ -570,7 +571,7 @@ export default function RetroForestBase({
             <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: "rgba(250,247,239,0.6)" }}>
               {footer.lines[0]}
             </p>
-            <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,247,239,0.42)" }}>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,247,239,0.6)" }}>
               {footer.lines.slice(1).join("   ·   ")}
             </p>
           </footer>
