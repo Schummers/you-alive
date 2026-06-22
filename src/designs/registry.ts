@@ -14,8 +14,6 @@ import CManual01 from "@/designs/c-manual-01";
 // cards only on pricing + final CTA). Five hand-built directions.
 import BManual01 from "@/designs/b-manual-01";
 import BManual03 from "@/designs/b-manual-03";
-import BManual04 from "@/designs/b-manual-04";
-import BManual05 from "@/designs/b-manual-05";
 import CManual02 from "@/designs/c-manual-02";
 
 import AFd09 from "@/designs/a-fd-09";
@@ -499,26 +497,6 @@ const bManual: DesignModule[] = [
     tags: ["biblique", "drop-caps", "carré", "serif"],
     note: "Biblique (b-fd-06): filets de chapitre, drop-caps, coins carrés, numéros chapitre sur bordure gauche, CTA final carré. Corps Spectral.",
     Component: BManual03,
-  },
-  {
-    slug: "b-manual-04",
-    label: "B · manual · 04 — Bicolor",
-    ad: "image2",
-    variant: "b",
-    tool: "manual",
-    tags: ["bi-couleur", "titres", "périwinkle", "italique"],
-    note: "Identité = titres bi-couleur (Fraunces roman + italique périwinkle) qui portent toute la hiérarchie. Fond lavande light-medium, filets fins. DM Sans.",
-    Component: BManual04,
-  },
-  {
-    slug: "b-manual-05",
-    label: "B · manual · 05 — Lumen",
-    ad: "image2",
-    variant: "b",
-    tool: "manual",
-    tags: ["soft", "lavender", "gradient-fort", "synthèse"],
-    note: "Synthèse premium: gradient fort lumineux, ghost hero, un drop-cap sur le problème, cards pricing raffinées, CTA final panneau + marquee. Mulish.",
-    Component: BManual05,
   },
 ];
 
