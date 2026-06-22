@@ -33,13 +33,7 @@ import BFd08 from "@/designs/b-fd-08";
 
 // Variant-C guided iterations (Retro / Forest).
 import CFd01 from "@/designs/c-fd-01";
-import CFd02 from "@/designs/c-fd-02";
-import CFd03 from "@/designs/c-fd-03";
 import CFd04 from "@/designs/c-fd-04";
-import CFd05 from "@/designs/c-fd-05";
-import CFd06 from "@/designs/c-fd-06";
-import CFd07 from "@/designs/c-fd-07";
-import CFd08 from "@/designs/c-fd-08";
 
 // Round 2 — no-photo guided: ad = moodboard only, hero = text+CSS (or clean photo for A).
 import AFd17 from "@/designs/a-fd-17";
@@ -47,9 +41,6 @@ import BFd09 from "@/designs/b-fd-09";
 import BFd10 from "@/designs/b-fd-10";
 import BFd11 from "@/designs/b-fd-11";
 import BFd12 from "@/designs/b-fd-12";
-import CFd09 from "@/designs/c-fd-09";
-import CFd10 from "@/designs/c-fd-10";
-import CFd11 from "@/designs/c-fd-11";
 import CFd12 from "@/designs/c-fd-12";
 
 // Variant-B taste-skill iterations (3 Dials + style sub-skill, guided, no ad photo).
@@ -64,13 +55,9 @@ import BTaste08 from "@/designs/b-taste-08";
 
 // Variant-C taste-skill iterations (3 Dials + style sub-skill, guided, no ad photo).
 import CTaste01 from "@/designs/c-taste-01";
-import CTaste02 from "@/designs/c-taste-02";
 import CTaste03 from "@/designs/c-taste-03";
 import CTaste04 from "@/designs/c-taste-04";
 import CTaste05 from "@/designs/c-taste-05";
-import CTaste06 from "@/designs/c-taste-06";
-import CTaste07 from "@/designs/c-taste-07";
-import CTaste08 from "@/designs/c-taste-08";
 
 // One design per ad. Slug = url segment (/preview/a, /preview/b, /preview/c).
 // Each design renders the FIXED content from src/content/site.ts; only the
@@ -425,30 +412,6 @@ const cFdGuided: DesignModule[] = [
     Component: CFd01,
   },
   {
-    slug: "c-fd-02",
-    label: "C · fd · 02",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["dense", "bento", "sharp", "industrial"],
-    note: "Dense bento ledger, sharp corners. Big Shoulders + Spline Mono + Fraunces.",
-    brief: "Axis: compact density, 0px corners, modular grid.",
-    Component: CFd02,
-  },
-  {
-    slug: "c-fd-03",
-    label: "C · fd · 03",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["saturated", "motion", "glow"],
-    note: "Intense lime + motion, living vault glow. Fraunces + Familjen Grotesk.",
-    brief: "Axis: high color intensity, high motion.",
-    Component: CFd03,
-  },
-  {
     slug: "c-fd-04",
     label: "C · fd · 04",
     ad: "image3",
@@ -459,54 +422,6 @@ const cFdGuided: DesignModule[] = [
     note: "Risograph texture + depth, botanical motifs. Fraunces + Darker Grotesque.",
     brief: "Axis: high depth/texture, grain, gradients, motifs.",
     Component: CFd04,
-  },
-  {
-    slug: "c-fd-05",
-    label: "C · fd · 05",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["typographic", "oversized", "retro"],
-    note: "Typography-driven, oversized retro display. Fraunces + Darker Grotesque.",
-    brief: "Axis: type dominates, dramatic scale contrast, photo secondary.",
-    Component: CFd05,
-  },
-  {
-    slug: "c-fd-06",
-    label: "C · fd · 06",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["editorial", "almanac", "drop-cap", "columns"],
-    note: "Editorial almanac spread, masthead + drop cap. Fraunces + Spectral.",
-    brief: "Axis: print layout, multi-column, asymmetry, drop caps.",
-    Component: CFd06,
-  },
-  {
-    slug: "c-fd-07",
-    label: "C · fd · 07",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["swiss", "flat", "grid", "minimal"],
-    note: "Swiss / International style, matte flat grid. Spectral + Archivo.",
-    brief: "Axis: strict grid, small type, max air, fully flat.",
-    Component: CFd07,
-  },
-  {
-    slug: "c-fd-08",
-    label: "C · fd · 08",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["organic", "blobs", "gradient", "earthy"],
-    note: "Organic + warm, hand-drawn blobs. Fraunces + Figtree.",
-    brief: "Axis: curved organic shapes, warm gradient washes.",
-    Component: CFd08,
   },
 ];
 
@@ -525,18 +440,6 @@ const cTasteGuided: DesignModule[] = [
     note: "Airy + rounded, typographic poster hero. Bricolage Grotesque + Hanken.",
     brief: "Dials 4/2/2 · minimalist-ui · max whitespace, full-radius, light.",
     Component: CTaste01,
-  },
-  {
-    slug: "c-taste-02",
-    label: "C · taste · 02",
-    ad: "image3",
-    variant: "c",
-    tool: "taste",
-    mode: "guided",
-    tags: ["bento", "grid", "sharp", "mono"],
-    note: "Dense modular bento, 0px corners, forest substrate. Archivo + JetBrains Mono.",
-    brief: "Dials 6/3/8 · industrial-brutalist-ui · dense bento, sharp corners.",
-    Component: CTaste02,
   },
   {
     slug: "c-taste-03",
@@ -573,42 +476,6 @@ const cTasteGuided: DesignModule[] = [
     note: "Typo-driven, oversized display, hairline dividers. Bricolage + Newsreader italic.",
     brief: "Dials 8/4/3 · minimalist-ui · type dominates, dramatic scale.",
     Component: CTaste05,
-  },
-  {
-    slug: "c-taste-06",
-    label: "C · taste · 06",
-    ad: "image3",
-    variant: "c",
-    tool: "taste",
-    mode: "guided",
-    tags: ["editorial", "magazine", "drop-cap", "columns"],
-    note: "Magazine field-guide, drop cap, colophon. Newsreader + Spline Sans.",
-    brief: "Dials 8/3/5 · minimalist-ui · multi-column, asymmetry, drop caps.",
-    Component: CTaste06,
-  },
-  {
-    slug: "c-taste-07",
-    label: "C · taste · 07",
-    ad: "image3",
-    variant: "c",
-    tool: "taste",
-    mode: "guided",
-    tags: ["swiss", "flat", "grid", "minimal"],
-    note: "Swiss flat 12-col grid, spec-sheet indices, zero shadow. Space Grotesk + IBM Plex Mono.",
-    brief: "Dials 3/2/4 · minimalist-ui · strict grid, small type, fully flat.",
-    Component: CTaste07,
-  },
-  {
-    slug: "c-taste-08",
-    label: "C · taste · 08",
-    ad: "image3",
-    variant: "c",
-    tool: "taste",
-    mode: "guided",
-    tags: ["organic", "rounded", "blob", "gradient"],
-    note: "Organic warmth, CSS blobs + gradient washes. Quicksand + Nunito Sans.",
-    brief: "Dials 7/5/3 · high-end-visual-design · curved organic shapes.",
-    Component: CTaste08,
   },
 ];
 
@@ -682,42 +549,6 @@ const bFdNoPhoto: DesignModule[] = [
 ];
 
 const cFdNoPhoto: DesignModule[] = [
-  {
-    slug: "c-fd-09",
-    label: "C · fd · 09",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["texture", "depth", "grain", "no-photo"],
-    note: "Earthy pressed-paper depth, beveled cards, grain layer. Fraunces + DM Serif Display.",
-    brief: "Axis 04: grain, bevel shadows, material forest feel. Pure CSS, no photo.",
-    Component: CFd09,
-  },
-  {
-    slug: "c-fd-10",
-    label: "C · fd · 10",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["editorial", "magazine", "drop-cap", "no-photo"],
-    note: "Editorial book cover, gazette rules, italic lime H1. Fraunces + Lora.",
-    brief: "Axis 06: multi-column, rules, drop cap, book-cover hero. Pure CSS, no photo.",
-    Component: CFd10,
-  },
-  {
-    slug: "c-fd-11",
-    label: "C · fd · 11",
-    ad: "image3",
-    variant: "c",
-    tool: "fd",
-    mode: "guided",
-    tags: ["swiss", "flat", "grid", "mono", "no-photo"],
-    note: "Swiss high-contrast, lime punctuation on forest, DM Mono spec-sheet. Fraunces + DM Mono.",
-    brief: "Axis 07: strict grid, zero shadows, lime accent rules. Pure CSS, no photo.",
-    Component: CFd11,
-  },
   {
     slug: "c-fd-12",
     label: "C · fd · 12",
