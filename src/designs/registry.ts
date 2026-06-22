@@ -14,7 +14,6 @@ import CManual01 from "@/designs/c-manual-01";
 // cards only on pricing + final CTA). Five hand-built directions.
 import BManual01 from "@/designs/b-manual-01";
 import BManual01b from "@/designs/b-manual-01b";
-import BManual01c from "@/designs/b-manual-01c";
 import BManual02 from "@/designs/b-manual-02";
 import BManual03 from "@/designs/b-manual-03";
 import CManual02 from "@/designs/c-manual-02";
@@ -500,16 +499,6 @@ const bManual: DesignModule[] = [
     tags: ["soft", "lavender", "ghost-hero", "niveau-2"],
     note: "Même design que 01, halo niveau 2 : ghost blanc plus présent, halo lavande un peu plus marqué.",
     Component: BManual01b,
-  },
-  {
-    slug: "b-manual-01c",
-    label: "B · manual · 01 — Halo (niveau 3, médian)",
-    ad: "image2",
-    variant: "b",
-    tool: "manual",
-    tags: ["soft", "lavender", "ghost-hero", "niveau-3"],
-    note: "Même design que 01, halo niveau 3 (médian) : halo periwinkle un peu plus dense, ghost blanc lisible.",
-    Component: BManual01c,
   },
   {
     slug: "b-manual-02",
