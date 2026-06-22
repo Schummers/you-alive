@@ -204,7 +204,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
           {/* H1 leads the hero directly; no ghost wordmark, no hero-local halo. */}
           <div className="ya-stage relative">
             <h1
-              className="ya-h1 font-[family-name:var(--font-display)] font-normal leading-[1.02] tracking-[-0.02em]"
+              className="ya-h1 font-[family-name:var(--font-display)] font-light leading-[1.02] tracking-[-0.02em]"
               style={{
                 color: INK,
                 animationDelay: "0.12s",
@@ -260,7 +260,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="max-w-[20ch] font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
+              className="max-w-[20ch] font-[family-name:var(--font-display)] text-[34px] font-light leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               Documents and last wishes:{" "}
@@ -281,7 +281,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.14] tracking-[-0.015em]"
+              className="font-[family-name:var(--font-display)] text-[34px] font-light leading-[1.14] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               How{" "}
@@ -328,7 +328,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section ref={fd.pricingRef} className="mt-28">
           <Reveal>
             <h2
-              className="max-w-[18ch] font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
+              className="max-w-[18ch] font-[family-name:var(--font-display)] text-[34px] font-light leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               Take care of them,{" "}
@@ -482,7 +482,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
+              className="font-[family-name:var(--font-display)] text-[34px] font-light leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               From{" "}
@@ -530,7 +530,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
+              className="font-[family-name:var(--font-display)] text-[34px] font-light leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               Questions you{" "}
@@ -590,7 +590,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
                 }}
               />
               <h2
-                className="relative mx-auto max-w-[16ch] font-[family-name:var(--font-display)] text-[36px] font-normal leading-[1.12] tracking-[-0.015em]"
+                className="relative mx-auto max-w-[16ch] font-[family-name:var(--font-display)] text-[36px] font-light leading-[1.12] tracking-[-0.015em]"
               >
                 Ready to leave them{" "}
                 <span className="italic" style={{ color: "#CDD6FF" }}>
