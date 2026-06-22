@@ -11,6 +11,7 @@ import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { CountUp } from "@/designs/shared/CountUp";
+import { WaitlistTakeoverB } from "@/designs/shared/WaitlistTakeoverB";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · B · "Scripture" — the literary / printed-scripture treatment.
@@ -146,6 +147,21 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
     /^Logins,\s*documents,\s*last wishes/i,
     "Documents and last wishes"
   );
+
+  // CTA click → full-screen "Start my plan" takeover (like variant A), B palette.
+  // This design uses --font-fraunces / --font-spectral, so map them explicitly.
+  if (fd.showWaitlist) {
+    return (
+      <WaitlistTakeoverB
+        fd={fd}
+        fakedoor={fakedoor}
+        confirmation={content.confirmation}
+        fontVars={`${fraunces.variable} ${spectral.variable}`}
+        displayFont="font-[family-name:var(--font-fraunces)]"
+        bodyFont="font-[family-name:var(--font-spectral)]"
+      />
+    );
+  }
 
   // Tiny serif wordmark — "You Alive ?" with a breath before the mark.
   const wordmark = (
@@ -471,63 +487,6 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
           </Reveal>
         </section>
 
-        {/* ───────── FAKE-DOOR (square form card, allowed card) ───────── */}
-        {fd.showWaitlist && (
-          <section
-            id="waitlist"
-            className="mt-12 rounded-[4px] border border-[#26235A]/15 px-7 py-10"
-            style={{ backgroundColor: PAPER_LIGHT }}
-          >
-            {fd.state === "done" ? (
-              <div className="text-center">
-                <p className="font-[family-name:var(--font-fraunces)] text-[24px] font-light leading-tight text-[#26235A]">
-                  {content.confirmation.title}
-                </p>
-                <p className="mx-auto mt-4 max-w-[36ch] font-[family-name:var(--font-spectral)] text-[14.5px] font-light leading-[1.7] text-[#3d3a6e]">
-                  {content.confirmation.body}
-                </p>
-              </div>
-            ) : (
-              <>
-                <p className="text-center font-[family-name:var(--font-fraunces)] text-[26px] font-light italic leading-[1.15] tracking-[-0.01em] text-[#26235A]">
-                  {fakedoor.title}
-                </p>
-                <p className="mx-auto mt-4 max-w-[36ch] text-center font-[family-name:var(--font-spectral)] text-[14.5px] font-light leading-[1.7] text-[#3d3a6e]">
-                  {fakedoor.body}
-                </p>
-                <form onSubmit={fd.submit} className="mt-7 flex flex-col gap-3">
-                  <label htmlFor="ya-email" className="sr-only">
-                    {fakedoor.emailPlaceholder}
-                  </label>
-                  <input
-                    id="ya-email"
-                    type="email"
-                    required
-                    value={fd.email}
-                    onChange={(e) => fd.setEmail(e.target.value)}
-                    placeholder={fakedoor.emailPlaceholder}
-                    className="w-full rounded-[4px] border border-[#26235A]/20 bg-white/70 px-5 py-3.5 font-[family-name:var(--font-spectral)] text-[15px] text-[#26235A] placeholder:text-[#9590c4] focus:border-[#26235A] focus:outline-none"
-                  />
-                  <button
-                    type="submit"
-                    disabled={fd.state === "loading"}
-                    className="ya-cta w-full rounded-[4px] bg-[#26235A] px-6 py-4 text-[14px] font-medium tracking-wide text-[#F7F4FF] disabled:opacity-60"
-                  >
-                    {fd.state === "loading" ? "Reserving…" : fakedoor.submitLabel}
-                  </button>
-                  {fd.state === "error" && (
-                    <p className="text-center font-[family-name:var(--font-spectral)] text-[13px] text-[#993556]">
-                      Something went wrong. Please try again.
-                    </p>
-                  )}
-                </form>
-                <p className="mt-5 text-center font-[family-name:var(--font-spectral)] text-[12px] font-light italic text-[#5A5690]">
-                  {fakedoor.privacyLine}
-                </p>
-              </>
-            )}
-          </section>
-        )}
 
         {/* ───────── FOOTER ───────── */}
         <footer className="mt-20 border-t border-[#26235A]/15 pt-7 text-center">

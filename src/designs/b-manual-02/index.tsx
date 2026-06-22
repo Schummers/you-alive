@@ -12,6 +12,7 @@ import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { CountUp } from "@/designs/shared/CountUp";
+import { WaitlistTakeoverB } from "@/designs/shared/WaitlistTakeoverB";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · B · b-manual-02 — "Halo (Newsreader)"
@@ -103,6 +104,18 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
 
   // Reassurance line → CountUp on the embedded number (RetroForestBase reMatch).
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
+
+  // CTA click → full-screen "Start my plan" takeover (like variant A), B palette.
+  if (fd.showWaitlist) {
+    return (
+      <WaitlistTakeoverB
+        fd={fd}
+        fakedoor={fakedoor}
+        confirmation={content.confirmation}
+        fontVars={`${display.variable} ${body.variable}`}
+      />
+    );
+  }
 
   // THE constant CTA: ink fill, light label, lucide arrow. Pill. Same everywhere.
   const Cta = ({
@@ -615,85 +628,6 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
           </Reveal>
         </section>
 
-        {/* ───────── FAKE-DOOR (card allowed — inline, not a takeover) ───────── */}
-        {fd.showWaitlist && (
-          <section
-            id="waitlist"
-            className="mt-12 rounded-[36px] p-8"
-            style={{
-              background: "rgba(255,255,255,0.6)",
-              border: "1px solid rgba(255,255,255,0.7)",
-              boxShadow: "0 24px 60px -50px rgba(38,35,90,0.6)",
-            }}
-          >
-            {fd.state === "done" ? (
-              <div className="text-center">
-                <p
-                  className="font-[family-name:var(--font-display)] text-[26px] font-normal leading-tight tracking-[-0.01em]"
-                  style={{ color: INK }}
-                >
-                  {content.confirmation.title}
-                </p>
-                <p
-                  className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.68]"
-                  style={{ color: SOFT }}
-                >
-                  {content.confirmation.body}
-                </p>
-              </div>
-            ) : (
-              <>
-                <p
-                  className="text-center font-[family-name:var(--font-display)] text-[28px] font-normal italic leading-[1.12] tracking-[-0.015em]"
-                  style={{ color: INK }}
-                >
-                  {fakedoor.title}
-                </p>
-                <p
-                  className="mx-auto mt-4 max-w-[36ch] text-center text-[14.5px] leading-[1.68]"
-                  style={{ color: SOFT }}
-                >
-                  {fakedoor.body}
-                </p>
-                <form onSubmit={fd.submit} className="mt-8 flex flex-col gap-3">
-                  <label htmlFor="ya-email" className="sr-only">
-                    {fakedoor.emailPlaceholder}
-                  </label>
-                  <input
-                    id="ya-email"
-                    type="email"
-                    required
-                    value={fd.email}
-                    onChange={(e) => fd.setEmail(e.target.value)}
-                    placeholder={fakedoor.emailPlaceholder}
-                    className="w-full rounded-[18px] border px-5 py-4 text-[15px] outline-none focus:border-[#26235A]"
-                    style={{
-                      background: "rgba(247,244,255,0.9)",
-                      borderColor: "rgba(90,86,144,0.25)",
-                      color: INK,
-                    }}
-                  />
-                  <button
-                    type="submit"
-                    disabled={fd.state === "loading"}
-                    className="ya-cta inline-flex w-full items-center justify-center gap-2.5 rounded-full px-6 py-4 text-[15px] font-semibold disabled:opacity-60"
-                    style={{ backgroundColor: INK, color: LIGHT }}
-                  >
-                    {fd.state === "loading" ? "Reserving…" : fakedoor.submitLabel}
-                  </button>
-                  {fd.state === "error" && (
-                    <p className="text-center text-[13px]" style={{ color: ACCENT }}>
-                      Something went wrong. Try again.
-                    </p>
-                  )}
-                </form>
-                <p className="mt-5 text-center text-[12px]" style={{ color: FAINT }}>
-                  {fakedoor.privacyLine}
-                </p>
-              </>
-            )}
-          </section>
-        )}
 
         {/* ───────── FOOTER ───────── */}
         <footer className="mt-24 border-t pt-10 pb-20" style={{ borderColor: HAIR }}>
