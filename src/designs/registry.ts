@@ -9,6 +9,14 @@ import AManual01 from "@/designs/a-manual-01";
 import AManual02 from "@/designs/a-manual-02";
 import AManual03 from "@/designs/a-manual-03";
 import CManual01 from "@/designs/c-manual-01";
+
+// Variant-B manual track — single-background family (one lavender field, no bands;
+// cards only on pricing + final CTA). Five hand-built directions.
+import BManual01 from "@/designs/b-manual-01";
+import BManual02 from "@/designs/b-manual-02";
+import BManual03 from "@/designs/b-manual-03";
+import BManual04 from "@/designs/b-manual-04";
+import BManual05 from "@/designs/b-manual-05";
 import CManual02 from "@/designs/c-manual-02";
 
 import AFd09 from "@/designs/a-fd-09";
@@ -469,8 +477,65 @@ const cManual: DesignModule[] = [
   },
 ];
 
+// Variant B — manual track. One single lavender background across the whole page
+// (the B signature, vs the alternating bands of A and C); no cards except pricing
+// + final CTA; giant ghost "You Alive?" hero; bi-color/italic titles, no eyebrows.
+const bManual: DesignModule[] = [
+  {
+    slug: "b-manual-01",
+    label: "B · manual · 01 — Halo",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["soft", "lavender", "gradient-fort", "ghost-hero"],
+    note: "Gradient lavande FORT (radiaux + linéaire, b-taste-05). Hero ghost You Alive? halo dense, titres bi-couleur italique. Cards pricing à gradient interne, CTA final panneau ink arrondi. DM Sans.",
+    Component: BManual01,
+  },
+  {
+    slug: "b-manual-02",
+    label: "B · manual · 02 — Air",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["soft", "lavender", "gradient-light", "airy"],
+    note: "Gradient LIGHT quasi-blanc (b-fd-12), aéré, grande échelle typo. Cards pricing translucides légères, CTA final doux. Mulish.",
+    Component: BManual02,
+  },
+  {
+    slug: "b-manual-03",
+    label: "B · manual · 03 — Scripture",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["biblique", "drop-caps", "carré", "serif"],
+    note: "Biblique (b-fd-06): filets de chapitre, drop-caps, coins carrés, numéros chapitre sur bordure gauche, CTA final carré. Corps Spectral.",
+    Component: BManual03,
+  },
+  {
+    slug: "b-manual-04",
+    label: "B · manual · 04 — Bicolor",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["bi-couleur", "titres", "périwinkle", "italique"],
+    note: "Identité = titres bi-couleur (Fraunces roman + italique périwinkle) qui portent toute la hiérarchie. Fond lavande light-medium, filets fins. DM Sans.",
+    Component: BManual04,
+  },
+  {
+    slug: "b-manual-05",
+    label: "B · manual · 05 — Lumen",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["soft", "lavender", "gradient-fort", "synthèse"],
+    note: "Synthèse premium: gradient fort lumineux, ghost hero, un drop-cap sur le problème, cards pricing raffinées, CTA final panneau + marquee. Mulish.",
+    Component: BManual05,
+  },
+];
+
 export const designs: DesignModule[] = [
   ...aManual,
+  ...bManual,
   ...cManual,
   ...baseDesigns,
   ...aFdGuided,

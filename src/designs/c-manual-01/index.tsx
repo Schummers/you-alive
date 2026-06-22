@@ -13,7 +13,7 @@ export default function ManualRetroForest01(props: DesignProps) {
       heroMode="split"
       heroMobilePx={46}
       heroDesktopPx={64}
-      footerMode="color"
+      footerMode="dark"
     />
   );
 }

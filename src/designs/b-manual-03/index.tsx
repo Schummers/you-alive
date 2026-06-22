@@ -153,41 +153,6 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
     </span>
   );
 
-  // Chapter rule: thin full-width line, uppercase serif label left, italic
-  // Fraunces roman numeral right. The recurring scripture device.
-  const ChapterRule = ({ label, numeral }: { label: string; numeral: string }) => (
-    <div className="flex items-baseline justify-between border-b border-[#26235A]/15 pb-2">
-      <span className="font-[family-name:var(--font-fraunces)] text-[10px] uppercase tracking-[0.4em] text-[#5A5690]">
-        {label}
-      </span>
-      <span className="font-[family-name:var(--font-fraunces)] text-[13px] italic text-[#5A5690]">
-        {numeral}
-      </span>
-    </div>
-  );
-
-  // THE constant CTA: classic solid ink fill, light label, lucide arrow.
-  // Square corners (4px). Same everywhere.
-  const Cta = ({
-    label,
-    onClick,
-    full,
-  }: {
-    label: string;
-    onClick: () => void;
-    full?: boolean;
-  }) => (
-    <button
-      onClick={onClick}
-      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[4px] bg-[#26235A] px-7 py-4 text-[14px] font-medium tracking-wide text-[#F7F4FF] ${
-        full ? "w-full" : ""
-      }`}
-    >
-      {label}
-      <ArrowRight className="ya-arrow" style={{ width: 17, height: 17 }} strokeWidth={2} />
-    </button>
-  );
-
   return (
     <main
       className={`${fraunces.variable} ${spectral.variable} font-[family-name:var(--font-spectral)] relative min-h-[100dvh] overflow-x-clip antialiased selection:bg-[#5A5690] selection:text-[#F7F4FF]`}

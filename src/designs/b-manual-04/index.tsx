@@ -6,7 +6,6 @@ import {
   useRef,
   useState,
   type ReactNode,
-  type CSSProperties,
 } from "react";
 import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";

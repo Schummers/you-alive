@@ -217,7 +217,7 @@ export default function RetroForestBase({
         </header>
 
         {/* ───────── HERO (dark) ───────── */}
-        <section className="ya-stage pt-12 md:pt-16">
+        <section className="ya-stage pt-4 md:pt-7">
           <h1
             className="ya-h1 font-[family-name:var(--font-display)] font-extrabold uppercase italic leading-[0.98] tracking-[-0.05em]"
             style={{

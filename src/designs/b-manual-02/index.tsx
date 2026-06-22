@@ -290,7 +290,7 @@ export default function BManual02Air({ content, slug }: DesignProps) {
           <ol className="mt-14 space-y-16">
             {solution.steps.map((s, i) => (
               <Reveal as="li" key={i} delay={i * 90}>
-                <li className="border-t pt-8" style={{ borderColor: HAIR }}>
+                <div className="border-t pt-8" style={{ borderColor: HAIR }}>
                   <span
                     className="block font-[family-name:var(--font-fraunces)] text-[68px] leading-none md:text-[76px]"
                     style={{ color: "rgba(126,120,201,0.55)", ...FV(72, 20) }}
@@ -309,7 +309,7 @@ export default function BManual02Air({ content, slug }: DesignProps) {
                   >
                     {s.body}
                   </p>
-                </li>
+                </div>
               </Reveal>
             ))}
           </ol>
