@@ -1,4 +1,4 @@
-import { designs } from "@/designs/registry";
+import { designs, designSlugs } from "@/designs/registry";
 import type { DesignModule } from "@/designs/types";
 import LikeButton from "./LikeButton";
 import TrashButton from "./TrashButton";
@@ -137,7 +137,7 @@ export default function GalleryPage() {
   return (
     <div className="min-h-screen bg-[#faf9f7] text-gray-900">
     <main className="mx-auto max-w-[1400px] px-6 py-10">
-      <MarksBar />
+      <MarksBar validSlugs={designSlugs} />
       <header className="mb-10">
         <h1 className="text-2xl font-semibold text-gray-900">
           You Alive — design bake-off

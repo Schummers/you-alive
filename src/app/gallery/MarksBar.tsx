@@ -1,19 +1,29 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LIKE_PREFIX, TRASH_PREFIX, MARKS_EVENT, listMarked } from "./marks";
+import { LIKE_PREFIX, TRASH_PREFIX, MARKS_EVENT, listMarked, setMarked } from "./marks";
 
 // Sticky summary of the current marks. Lets you copy the marked-for-deletion
 // slug list (to hand off for deletion) and the liked list. No backend.
-export default function MarksBar() {
+// `validSlugs` = the slugs still present in the registry; any mark on a slug
+// that's no longer there (deleted design) is stale and gets pruned from
+// localStorage on mount, so the bar self-heals.
+export default function MarksBar({ validSlugs }: { validSlugs: string[] }) {
   const [liked, setLiked] = useState<string[]>([]);
   const [trash, setTrash] = useState<string[]>([]);
   const [copied, setCopied] = useState<string | null>(null);
 
   useEffect(() => {
+    const valid = new Set(validSlugs);
     const sync = () => {
-      setLiked(listMarked(LIKE_PREFIX));
-      setTrash(listMarked(TRASH_PREFIX));
+      // Prune marks pointing at designs that no longer exist, then read back.
+      for (const prefix of [LIKE_PREFIX, TRASH_PREFIX]) {
+        for (const slug of listMarked(prefix)) {
+          if (!valid.has(slug)) setMarked(prefix, slug, false);
+        }
+      }
+      setLiked(listMarked(LIKE_PREFIX).filter((s) => valid.has(s)));
+      setTrash(listMarked(TRASH_PREFIX).filter((s) => valid.has(s)));
     };
     sync();
     window.addEventListener(MARKS_EVENT, sync);
@@ -22,7 +32,7 @@ export default function MarksBar() {
       window.removeEventListener(MARKS_EVENT, sync);
       window.removeEventListener("storage", sync);
     };
-  }, []);
+  }, [validSlugs]);
 
   const copy = (label: string, arr: string[]) => {
     try {
