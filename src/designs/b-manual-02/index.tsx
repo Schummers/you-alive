@@ -204,12 +204,12 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
           {/* H1 leads the hero directly; no ghost wordmark, no hero-local halo. */}
           <div className="ya-stage relative">
             <h1
-              className="ya-h1 font-[family-name:var(--font-display)] font-semibold leading-[1.04] tracking-[-0.02em]"
+              className="ya-h1 font-[family-name:var(--font-display)] font-normal leading-[1.02] tracking-[-0.02em]"
               style={{
                 color: INK,
                 animationDelay: "0.12s",
-                "--h1-m": "44px",
-                "--h1-d": "58px",
+                "--h1-m": "48px",
+                "--h1-d": "64px",
               } as CSSProperties}
             >
               <span className="block">Leave nothing</span>
@@ -260,7 +260,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="max-w-[20ch] font-[family-name:var(--font-display)] text-[30px] font-medium leading-[1.16] tracking-[-0.015em]"
+              className="max-w-[20ch] font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               Documents and last wishes:{" "}
@@ -281,7 +281,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[30px] font-medium leading-[1.14] tracking-[-0.015em]"
+              className="font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.14] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               How{" "}
@@ -297,7 +297,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
               <Reveal as="li" key={i} delay={i * 90}>
                 <div className="flex items-center gap-4">
                   <span
-                    className="font-[family-name:var(--font-display)] text-[52px] font-medium leading-none tracking-[-0.02em]"
+                    className="font-[family-name:var(--font-display)] text-[52px] font-normal leading-none tracking-[-0.02em]"
                     style={{ color: MUTE }}
                   >
                     {String(i + 1).padStart(2, "0")}
@@ -308,7 +308,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
                   />
                 </div>
                 <h3
-                  className="mt-4 max-w-[34ch] font-[family-name:var(--font-display)] text-[21px] font-medium leading-[1.26] tracking-[-0.005em]"
+                  className="mt-4 max-w-[34ch] font-[family-name:var(--font-display)] text-[21px] font-normal leading-[1.26] tracking-[-0.005em]"
                   style={{ color: INK }}
                 >
                   {s.title}
@@ -328,7 +328,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section ref={fd.pricingRef} className="mt-28">
           <Reveal>
             <h2
-              className="max-w-[18ch] font-[family-name:var(--font-display)] text-[30px] font-medium leading-[1.16] tracking-[-0.015em]"
+              className="max-w-[18ch] font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               Take care of them,{" "}
@@ -392,7 +392,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
                       {plan.name}
                     </p>
                     <p
-                      className="relative mt-2 font-[family-name:var(--font-display)] text-[42px] font-medium leading-none tracking-[-0.02em]"
+                      className="relative mt-2 font-[family-name:var(--font-display)] text-[42px] font-normal leading-none tracking-[-0.02em]"
                       style={{ color: hi ? LIGHT : INK }}
                     >
                       {plan.price}
@@ -482,7 +482,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[30px] font-medium leading-[1.16] tracking-[-0.015em]"
+              className="font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               From{" "}
@@ -499,7 +499,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
                   style={i > 0 ? { borderTop: `1px solid ${HAIR}` } : undefined}
                 >
                   <blockquote
-                    className="font-[family-name:var(--font-display)] text-[20px] font-medium leading-[1.46] tracking-[-0.005em]"
+                    className="font-[family-name:var(--font-display)] text-[20px] font-normal leading-[1.46] tracking-[-0.005em]"
                     style={{ color: INK }}
                   >
                     <span className="italic" style={{ color: TITLE_ACCENT }}>
@@ -530,7 +530,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[30px] font-medium leading-[1.16] tracking-[-0.015em]"
+              className="font-[family-name:var(--font-display)] text-[34px] font-normal leading-[1.16] tracking-[-0.015em]"
               style={{ color: INK }}
             >
               Questions you{" "}
@@ -548,7 +548,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
                 >
                   <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
                     <span
-                      className="font-[family-name:var(--font-display)] text-[18px] font-medium leading-[1.32] tracking-[-0.005em]"
+                      className="font-[family-name:var(--font-display)] text-[18px] font-normal leading-[1.32] tracking-[-0.005em]"
                       style={{ color: INK }}
                     >
                       {item.q}
@@ -590,7 +590,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
                 }}
               />
               <h2
-                className="relative mx-auto max-w-[16ch] font-[family-name:var(--font-display)] text-[32px] font-medium leading-[1.12] tracking-[-0.015em]"
+                className="relative mx-auto max-w-[16ch] font-[family-name:var(--font-display)] text-[36px] font-normal leading-[1.12] tracking-[-0.015em]"
               >
                 Ready to leave them{" "}
                 <span className="italic" style={{ color: "#CDD6FF" }}>
@@ -629,7 +629,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
             {fd.state === "done" ? (
               <div className="text-center">
                 <p
-                  className="font-[family-name:var(--font-display)] text-[26px] font-medium leading-tight tracking-[-0.01em]"
+                  className="font-[family-name:var(--font-display)] text-[26px] font-normal leading-tight tracking-[-0.01em]"
                   style={{ color: INK }}
                 >
                   {content.confirmation.title}
@@ -644,7 +644,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
             ) : (
               <>
                 <p
-                  className="text-center font-[family-name:var(--font-display)] text-[28px] font-medium italic leading-[1.12] tracking-[-0.015em]"
+                  className="text-center font-[family-name:var(--font-display)] text-[28px] font-normal italic leading-[1.12] tracking-[-0.015em]"
                   style={{ color: INK }}
                 >
                   {fakedoor.title}
@@ -699,7 +699,7 @@ export default function BManual02Halo({ content, slug }: DesignProps) {
         <footer className="mt-24 border-t pt-10 pb-20" style={{ borderColor: HAIR }}>
           <p className="mb-3">{wordmark}</p>
           <p
-            className="font-[family-name:var(--font-display)] text-[16px] font-medium italic leading-[1.4]"
+            className="font-[family-name:var(--font-display)] text-[16px] font-normal italic leading-[1.4]"
             style={{ color: SOFT }}
           >
             {footer.lines[0]}
