@@ -9,8 +9,6 @@ import AManual01 from "@/designs/a-manual-01";
 import AManual02 from "@/designs/a-manual-02";
 import AManual03 from "@/designs/a-manual-03";
 import CManual01 from "@/designs/c-manual-01";
-import CManual02 from "@/designs/c-manual-02";
-import CManual03 from "@/designs/c-manual-03";
 
 import AFd09 from "@/designs/a-fd-09";
 import AFd16 from "@/designs/a-fd-16";
@@ -446,39 +444,18 @@ const aManual: DesignModule[] = [
   },
 ];
 
-// Variant C — manual track. One shared RetroForestBase layout; the three
-// variants differ ONLY in the single colored "problem" band (sand / sage /
-// lime-tint), the rest of the light sections being white.
+// Variant C — manual track. RetroForestBase layout, problem band = pale
+// lime-tint (chosen over sand/sage).
 const cManual: DesignModule[] = [
   {
     slug: "c-manual-01",
-    label: "C · manual · 01 — Retro Forest (sable)",
-    ad: "image3",
-    variant: "c",
-    tool: "manual",
-    tags: ["retro", "forest", "lime", "sand"],
-    note: "Base Retro Forest partagée (Bricolage, lime sur forest, stepper 01+barre, marquee). Sections claires en blanc, CTA lime sans contour. Bande 'problème' = sable chaud.",
-    Component: CManual01,
-  },
-  {
-    slug: "c-manual-02",
-    label: "C · manual · 02 — Retro Forest (sauge)",
-    ad: "image3",
-    variant: "c",
-    tool: "manual",
-    tags: ["retro", "forest", "lime", "sage"],
-    note: "Même base que 01. Bande 'problème' = sauge pâle (vert très clair, raccord avec l'accent forest/lime).",
-    Component: CManual02,
-  },
-  {
-    slug: "c-manual-03",
-    label: "C · manual · 03 — Retro Forest (lime pâle)",
+    label: "C · manual · 01 — Retro Forest",
     ad: "image3",
     variant: "c",
     tool: "manual",
     tags: ["retro", "forest", "lime"],
-    note: "Même base que 01. Bande 'problème' = teinte lime pâle (la plus lumineuse/énergique des trois).",
-    Component: CManual03,
+    note: "Base Retro Forest partagée (Bricolage, lime sur forest, stepper 01+barre, marquee). Sections claires en blanc, bande 'problème' lime pâle, CTA lime sans contour, footer blanc séparé. Accessible.",
+    Component: CManual01,
   },
 ];
 

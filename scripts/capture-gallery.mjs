@@ -7,7 +7,7 @@ import path from "node:path";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const OUT = path.resolve(__dirname, "../public/gallery");
-const BASE = "http://localhost:3210";
+const BASE = process.env.GALLERY_BASE || "http://localhost:3210";
 
 const DEFAULT = [
   ...Array.from({ length: 8 }, (_, i) => `b-fd-0${i + 1}`),

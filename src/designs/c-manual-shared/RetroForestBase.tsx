@@ -40,7 +40,8 @@ const GREEN_L = "#246B27"; // accent — LIGHT surfaces (eyebrows, step numbers)
 const WHITE_BG = "#FBF8F1"; // white light-band background (method / stories / final-CTA)
 const CREAM = "#EFEAD8"; // warm cream — fakedoor body text only
 const INK_L = "#283A30"; // body text on light (darker, not pure black)
-const MUTED_L = "#566355"; // secondary/captions on light
+const MUTED_L = "#566355"; // secondary text on light (links, etc.)
+const GREY_CAP = "#7E7C72"; // neutral grey for de-emphasised captions (names/ages)
 const WHITE_1 = "#FAF7EF"; // primary text on dark
 const MUTED_D = "rgba(250,247,239,0.82)"; // secondary text on dark
 
@@ -116,7 +117,7 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
   // Eyebrow kicker. Accent flips by surface: lime on dark, vivid pine on light.
   const Eyebrow = ({ children, light }: { children: string; light?: boolean }) => (
     <p
-      className="text-[12px] font-bold uppercase tracking-[0.3em]"
+      className="text-[13.5px] font-extrabold uppercase tracking-[0.22em]"
       style={{ color: light ? GREEN_L : LIME }}
     >
       {children}
@@ -196,27 +197,27 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
         {/* ───────── HERO (dark) ───────── */}
         <section className="ya-stage pt-12 md:pt-16">
           <h1
-            className="font-[family-name:var(--font-display)] text-[42px] font-extrabold uppercase italic leading-[0.98] tracking-[-0.035em] md:text-[64px]"
+            className="font-[family-name:var(--font-display)] text-[44px] font-extrabold uppercase italic leading-[0.98] tracking-[-0.035em] md:text-[64px]"
             style={{ color: WHITE_1, animationDelay: "0.1s" }}
           >
-            {heroLines.flatMap((l, i) => [
-              <span key={`${i}-lead`} className="block">
-                {l.lead}
-              </span>,
-              <span key={`${i}-accent`} className="block" style={{ color: LIME }}>
-                {l.accent}
-              </span>,
-            ])}
+            {heroLines.map((l, i) => (
+              <span key={i} className={`block ${i > 0 ? "mt-3" : ""}`}>
+                <span className="block">{l.lead}</span>
+                <span className="block" style={{ color: LIME }}>
+                  {l.accent}
+                </span>
+              </span>
+            ))}
           </h1>
 
           <div
-            className="ya-underline mt-6 h-[3px] w-28 rounded-full"
+            className="ya-underline mt-5 h-[3px] w-28 rounded-full"
             style={{ backgroundColor: LIME, animationDelay: "0s" }}
             aria-hidden
           />
 
           <p
-            className="mt-7 max-w-[40ch] text-[18px] leading-[1.6]"
+            className="mt-5 max-w-[40ch] text-[18px] leading-[1.6]"
             style={{ color: MUTED_D, animationDelay: "0.3s" }}
           >
             {hero.subtitle}
@@ -394,9 +395,9 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
                     <blockquote className="font-[family-name:var(--font-display)] text-[17.5px] font-semibold leading-[1.45] tracking-[-0.01em]">
                       &ldquo;{t.quote}&rdquo;
                     </blockquote>
-                    <figcaption className="mt-4 flex items-center gap-3 text-[12.5px] font-bold uppercase tracking-[0.16em]">
-                      <span className="inline-block h-px w-8" style={{ backgroundColor: GREEN_L }} />
-                      {t.name} <span style={{ color: MUTED_L }}>/ {t.age}</span>
+                    <figcaption className="mt-4 flex items-center gap-3 text-[12.5px] font-semibold uppercase tracking-[0.14em]" style={{ color: GREY_CAP }}>
+                      <span className="inline-block h-px w-8" style={{ backgroundColor: GREY_CAP }} />
+                      {t.name} / {t.age}
                     </figcaption>
                   </figure>
                 </Reveal>
@@ -523,16 +524,18 @@ export default function RetroForestBase({ content, slug, problemBg }: BaseProps)
           </section>
         )}
 
-        {/* ───────── FOOTER (dark) — color step from the white band already
-            separates it, so no divider line. ───────── */}
-        <footer className="mt-20 pb-20">
-          <p className="mb-3">{wordmark(WHITE_1, LIME)}</p>
-          <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: WHITE_1 }}>
-            {footer.lines[0]}
-          </p>
-          <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,247,239,0.45)" }}>
-            {footer.lines.slice(1).join("   ·   ")}
-          </p>
+        {/* ───────── FOOTER (white band) — continues the final-CTA white, with a
+            hairline divider separating it. Mark + links take the light accent. ───────── */}
+        <footer className="ya-bleed pb-16" style={{ backgroundColor: WHITE_BG }}>
+          <div className="border-t pt-8" style={{ borderColor: `${FOREST}1f` }}>
+            <p className="mb-3">{wordmark(FOREST, GREEN_L)}</p>
+            <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: FOREST }}>
+              {footer.lines[0]}
+            </p>
+            <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: MUTED_L }}>
+              {footer.lines.slice(1).join("   ·   ")}
+            </p>
+          </div>
         </footer>
       </div>
     </main>
