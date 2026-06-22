@@ -13,7 +13,6 @@ import CManual01 from "@/designs/c-manual-01";
 // Variant-B manual track — single-background family (one lavender field, no bands;
 // cards only on pricing + final CTA). Five hand-built directions.
 import BManual01 from "@/designs/b-manual-01";
-import BManual02 from "@/designs/b-manual-02";
 import BManual03 from "@/designs/b-manual-03";
 import BManual04 from "@/designs/b-manual-04";
 import BManual05 from "@/designs/b-manual-05";
@@ -490,16 +489,6 @@ const bManual: DesignModule[] = [
     tags: ["soft", "lavender", "gradient-fort", "ghost-hero"],
     note: "Gradient lavande FORT (radiaux + linéaire, b-taste-05). Hero ghost You Alive? halo dense, titres bi-couleur italique. Cards pricing à gradient interne, CTA final panneau ink arrondi. DM Sans.",
     Component: BManual01,
-  },
-  {
-    slug: "b-manual-02",
-    label: "B · manual · 02 — Air",
-    ad: "image2",
-    variant: "b",
-    tool: "manual",
-    tags: ["soft", "lavender", "gradient-light", "airy"],
-    note: "Gradient LIGHT quasi-blanc (b-fd-12), aéré, grande échelle typo. Cards pricing translucides légères, CTA final doux. Mulish.",
-    Component: BManual02,
   },
   {
     slug: "b-manual-03",
