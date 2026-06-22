@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { CountUp } from "@/designs/shared/CountUp";
+import { RetroForestTakeover } from "@/designs/c-manual-shared/RetroForestTakeover";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · C · shared base — "Retro Forest"
@@ -38,7 +39,6 @@ const CARD_HI = "#22392B"; // elevated dark card — Annual (highlight)
 const LIME = "#C8F169"; // accent — DARK surfaces only
 const GREEN_L = "#246B27"; // accent — LIGHT surfaces (eyebrows, step numbers). AA on light.
 const WHITE_BG = "#FBF8F1"; // white light-band background (method / stories / final-CTA)
-const CREAM = "#EFEAD8"; // warm cream — fakedoor body text only
 const INK_L = "#283A30"; // body text on light (darker, not pure black)
 const MUTED_L = "#566355"; // secondary text on light (links, etc.)
 const GREY_CAP = "#6A6860"; // neutral grey for de-emphasised captions (names/ages). 5.3:1 on white (AA)
@@ -106,6 +106,19 @@ export default function RetroForestBase({
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
+
+  // CTA → full-screen "Start my plan" takeover (C skin), like variant A.
+  if (fd.showWaitlist) {
+    return (
+      <RetroForestTakeover
+        fd={fd}
+        fakedoor={fakedoor}
+        confirmation={content.confirmation}
+        fontVars={`${bricolage.variable} ${space.variable}`}
+        ctaRadius={ctaRadius}
+      />
+    );
+  }
 
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
   // Hero H1 → 4 lines: each sentence becomes a white lead line + a lime punch
@@ -193,7 +206,6 @@ export default function RetroForestBase({
         .ya-marquee-track { display: inline-flex; white-space: nowrap; animation: ya-marquee 26s linear infinite; }
         .ya-h1 { font-size: var(--h1-m); }
         @media (min-width: 768px) { .ya-h1 { font-size: var(--h1-d); } }
-        .ya-input:focus { outline: 2px solid #C8F169 !important; outline-offset: 2px; }
         @media (prefers-reduced-motion: reduce) {
           .reveal { opacity: 1 !important; transform: none !important; filter: none !important; transition: none !important; }
           .ya-stage > *, .ya-underline { animation: none !important; opacity: 1 !important; transform: none !important; }
@@ -503,65 +515,6 @@ export default function RetroForestBase({
           </Reveal>
         </section>
 
-        {/* ───────── FAKE-DOOR (dark) ───────── */}
-        {fd.showWaitlist && (
-          <section
-            id="waitlist"
-            className="mt-12 rounded-[36px] border p-8"
-            style={{ backgroundColor: CARD, borderColor: "rgba(239,234,216,0.12)" }}
-          >
-            {fd.state === "done" ? (
-              <div className="text-center">
-                <p className="font-[family-name:var(--font-display)] text-[26px] font-extrabold uppercase" style={{ color: LIME }}>
-                  {content.confirmation.title}
-                </p>
-                <p className="mx-auto mt-4 max-w-[34ch] text-[14.5px] leading-[1.68]" style={{ color: MUTED_D }}>
-                  {content.confirmation.body}
-                </p>
-              </div>
-            ) : (
-              <>
-                <p className="font-[family-name:var(--font-display)] text-[30px] font-extrabold uppercase italic leading-[0.98]" style={{ color: LIME }}>
-                  {fakedoor.title}
-                </p>
-                <p className="mt-3 max-w-[36ch] text-[14.5px] leading-[1.6]" style={{ color: CREAM }}>
-                  {fakedoor.body}
-                </p>
-                <form onSubmit={fd.submit} className="mt-6 flex flex-col gap-3">
-                  <label htmlFor="ya-email" className="sr-only">
-                    {fakedoor.emailPlaceholder}
-                  </label>
-                  <input
-                    id="ya-email"
-                    type="email"
-                    required
-                    value={fd.email}
-                    onChange={(e) => fd.setEmail(e.target.value)}
-                    placeholder={fakedoor.emailPlaceholder}
-                    className="ya-input w-full rounded-[18px] border px-5 py-4 text-[15px]"
-                    style={{ backgroundColor: FOREST, color: CREAM, borderColor: "rgba(239,234,216,0.2)" }}
-                  />
-                  <button
-                    type="submit"
-                    disabled={fd.state === "loading"}
-                    className="ya-cta w-full px-6 py-4 text-[15px] font-bold uppercase tracking-wide disabled:opacity-60"
-                    style={{ backgroundColor: LIME, color: FOREST, borderRadius: ctaRadius }}
-                  >
-                    {fd.state === "loading" ? "Reserving…" : fakedoor.submitLabel}
-                  </button>
-                  {fd.state === "error" && (
-                    <p className="text-center text-[13px]" style={{ color: LIME }}>
-                      Something went wrong. Try again.
-                    </p>
-                  )}
-                </form>
-                <p className="mt-5 text-center text-[12px]" style={{ color: MUTED_D }}>
-                  {fakedoor.privacyLine}
-                </p>
-              </>
-            )}
-          </section>
-        )}
 
         {/* ───────── FOOTER ───────── */}
         {footerMode === "dark" ? (
