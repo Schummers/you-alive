@@ -47,9 +47,7 @@ const spectral = Spectral({
 // Palette B (locked indigo / lavender family)
 const INK = "#26235A"; // primary ink
 const SOFT = "#5A5690"; // secondary ink / accent
-const LAV_PANEL = "#EBE6FF"; // ghost wordmark tint
 const PAPER_LIGHT = "#F7F4FF"; // card paper tint
-const LAV_INCLUDED = "#EFEAFF"; // included card tint
 
 // Scroll-reveal primitive: blur-rise, reduced-motion safe (ported structure).
 function Reveal({
@@ -114,17 +112,19 @@ function Cta({
   label,
   onClick,
   full,
+  onDark,
 }: {
   label: string;
   onClick: () => void;
   full?: boolean;
+  onDark?: boolean; // on a dark/colored card: cream fill + ink label (no ink-on-ink edge)
 }) {
   return (
     <button
       onClick={onClick}
-      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[4px] bg-[#26235A] px-7 py-4 text-[14px] font-medium tracking-wide text-[#F7F4FF] ${
-        full ? "w-full" : ""
-      }`}
+      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[4px] px-7 py-4 text-[14px] font-medium tracking-wide ${
+        onDark ? "is-light bg-[#F7F4FF] text-[#26235A]" : "bg-[#26235A] text-[#F7F4FF]"
+      } ${full ? "w-full" : ""}`}
     >
       {label}
       <ArrowRight className="ya-arrow" style={{ width: 17, height: 17 }} strokeWidth={2} />
@@ -139,6 +139,12 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
 
   // Reassurance line: split out the number for the CountUp.
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
+
+  // Problem title: drop "Logins,", join with an ampersand (Jonathan's edit).
+  const problemTitle = problem.title.replace(
+    /^Logins,\s*documents,\s*last wishes/i,
+    "Documents & last wishes"
+  );
 
   // Drop-cap class — a large Fraunces float-left initial, like a chapter open.
   const dropCap =
@@ -180,6 +186,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
         .ya-stage > * { opacity: 0; animation: ya-rise 1s cubic-bezier(.16,1,.3,1) forwards; }
         .ya-cta { transition: transform .4s cubic-bezier(.16,1,.3,1), background-color .4s ease; }
         .ya-cta:hover { transform: translateY(-2px); background-color: #322e6e; }
+        .ya-cta.is-light:hover { background-color: #ffffff; }
         .ya-cta:active { transform: translateY(0) scale(.99); }
         .ya-arrow { transition: transform .4s cubic-bezier(.16,1,.3,1); }
         .ya-cta:hover .ya-arrow { transform: translateX(4px); }
@@ -195,18 +202,18 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
         <header className="flex items-center justify-between border-b border-[#26235A]/15 pb-3 pt-7">
           {wordmark}
           <span className="font-[family-name:var(--font-fraunces)] text-[9px] uppercase tracking-[0.42em] text-[#5A5690]">
-            A quiet feature
+            Early access
           </span>
         </header>
 
         {/* ───────── HERO ───────── */}
-        <section className="ya-stage relative pt-14 md:pt-20">
+        <section className="ya-stage relative mt-10 pt-12 md:mt-4 md:pt-20">
           {/* GIANT ghost "You Alive?" wordmark behind the H1 */}
           <p
             aria-hidden
-            className="pointer-events-none absolute -top-2 left-1/2 -z-0 w-[140%] -translate-x-1/2 select-none text-center font-[family-name:var(--font-fraunces)] leading-[0.82] tracking-[-0.03em]"
+            className="pointer-events-none absolute -top-1 left-1/2 -z-0 w-[140%] -translate-x-1/2 select-none text-center font-[family-name:var(--font-fraunces)] leading-[0.82] tracking-[-0.03em]"
             style={{
-              color: LAV_PANEL,
+              color: "rgba(235,230,255,0.5)",
               fontSize: "clamp(92px, 27vw, 168px)",
               fontVariationSettings: '"opsz" 144, "SOFT" 100, "WONK" 0',
               animationDelay: "0s",
@@ -217,9 +224,9 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
 
           <div className="relative">
             <h1
-              className="font-[family-name:var(--font-fraunces)] text-balance text-[42px] font-light leading-[1.04] tracking-[-0.015em] text-[#26235A] md:text-[48px]"
+              className="font-[family-name:var(--font-fraunces)] text-balance text-[50px] font-light leading-[1.02] tracking-[-0.02em] text-[#26235A] md:text-[64px]"
               style={{
-                fontVariationSettings: '"opsz" 72, "SOFT" 40, "WONK" 0',
+                fontVariationSettings: '"opsz" 96, "SOFT" 40, "WONK" 0',
                 animationDelay: "0.12s",
               }}
             >
@@ -262,7 +269,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
           <Reveal>
             <ChapterRule label="The matter at hand" numeral="i" />
             <h2 className="mt-7 text-balance font-[family-name:var(--font-fraunces)] text-[28px] font-light leading-[1.18] tracking-[-0.01em] text-[#26235A]">
-              {problem.title}
+              {problemTitle}
             </h2>
             <p
               className={`mt-6 font-[family-name:var(--font-spectral)] text-[16px] font-light leading-[1.8] text-[#3d3a6e] ${dropCap}`}
@@ -278,25 +285,19 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
             <ChapterRule label={solution.intro} numeral="ii" />
           </Reveal>
 
-          <ol className="mt-10 space-y-11">
+          <ol className="mt-10 space-y-10">
             {solution.steps.map((s, i) => (
               <Reveal as="li" key={i} delay={i * 90}>
-                <div className="grid grid-cols-[auto_1fr] gap-x-5 border-l border-[#26235A]/12 pl-5">
-                  <span className="font-[family-name:var(--font-fraunces)] text-[46px] font-light leading-none text-[#5A5690]/55">
+                <div className="border-l border-[#26235A]/15 pl-5">
+                  <span className="block font-[family-name:var(--font-fraunces)] text-[13px] font-normal italic text-[#5A5690]">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  <div className="pt-1">
-                    <h3
-                      className={`font-[family-name:var(--font-fraunces)] text-[20px] font-normal leading-[1.28] tracking-[-0.005em] text-[#26235A] ${
-                        i === 0 ? dropCap : ""
-                      }`}
-                    >
-                      {s.title}
-                    </h3>
-                    <p className="mt-3 font-[family-name:var(--font-spectral)] text-[14.5px] font-light leading-[1.74] text-[#3d3a6e]">
-                      {s.body}
-                    </p>
-                  </div>
+                  <h3 className="mt-3 font-[family-name:var(--font-fraunces)] text-[21px] font-normal leading-[1.28] tracking-[-0.005em] text-[#26235A]">
+                    {s.title}
+                  </h3>
+                  <p className="mt-3 font-[family-name:var(--font-spectral)] text-[14.5px] font-light leading-[1.74] text-[#3d3a6e]">
+                    {s.body}
+                  </p>
                 </div>
               </Reveal>
             ))}
@@ -341,7 +342,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
                   >
                     {hi && (
                       <span className="absolute right-5 top-6 font-[family-name:var(--font-fraunces)] text-[9px] uppercase tracking-[0.3em] text-[#bcb6e8]">
-                        Editor&rsquo;s choice
+                        Most chosen
                       </span>
                     )}
                     <p
@@ -364,6 +365,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
                         label={plan.ctaLabel}
                         onClick={() => fd.onCta(`pricing-${plan.name.toLowerCase()}`)}
                         full
+                        onDark={hi}
                       />
                     </div>
                   </div>
@@ -376,7 +378,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
           <Reveal className="mt-6">
             <div
               className="rounded-[4px] border border-[#26235A]/12 px-7 py-8"
-              style={{ backgroundColor: LAV_INCLUDED }}
+              style={{ backgroundColor: "#FFFFFF" }}
             >
               <p className="text-center font-[family-name:var(--font-fraunces)] text-[9px] uppercase tracking-[0.36em] text-[#5A5690]">
                 Everything included
@@ -404,7 +406,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
         {/* ───────── STORIES (pull-quotes, thin rules, no cards) ───────── */}
         <section className="mt-24">
           <Reveal>
-            <ChapterRule label="Voices" numeral="iv" />
+            <ChapterRule label="Stories" numeral="iv" />
           </Reveal>
           <div className="mt-9">
             {testimonials.map((t, i) => (
@@ -426,7 +428,7 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
         {/* ───────── FAQ (details, thin rules between, square, no card) ───────── */}
         <section className="mt-24">
           <Reveal>
-            <ChapterRule label="Particulars" numeral="v" />
+            <ChapterRule label="Questions" numeral="v" />
           </Reveal>
           <div className="mt-3">
             {faq.map((item, i) => (
@@ -463,13 +465,13 @@ export default function ScriptureDesign({ content, slug }: DesignProps) {
               }}
             >
               <span className="font-[family-name:var(--font-fraunces)] text-[9px] uppercase tracking-[0.4em] text-[#bcb6e8]">
-                Colophon
+                Begin
               </span>
               <h2 className="mx-auto mt-6 max-w-[16ch] text-balance font-[family-name:var(--font-fraunces)] text-[30px] font-light leading-[1.16] tracking-[-0.01em]">
                 {content.finalCta.headline}
               </h2>
               <div className="mt-8 flex justify-center">
-                <Cta label={content.finalCta.ctaLabel} onClick={() => fd.onCta("final")} />
+                <Cta label={content.finalCta.ctaLabel} onClick={() => fd.onCta("final")} onDark />
               </div>
             </div>
           </Reveal>

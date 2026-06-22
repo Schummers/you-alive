@@ -1,6 +1,6 @@
 "use client";
 
-import { Fraunces, DM_Sans } from "next/font/google";
+import { Newsreader, Mona_Sans } from "next/font/google";
 import {
   useEffect,
   useRef,
@@ -14,28 +14,30 @@ import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
-// MANUAL · B · b-manual-01 — "Halo"
-// One single saturated lavender gradient field across the WHOLE page (the
-// signature of variant B). Every section is transparent and sits on that one
-// field; rhythm is vertical spacing only — no colored bands, no .ya-bleed.
-// Cards exist ONLY for: pricing plans, the "everything included" block, the
-// final-CTA panel, and the fakedoor form. Problem / method / stories / FAQ
-// render directly on the field with hairline rules and spacing.
-// No eyebrow kickers: each H2 emphasises its operative word(s) via a periwinkle
-// accent and/or Fraunces italic. ONE constant ink-fill CTA everywhere.
-// Structure mirrors c-manual-shared/RetroForestBase (Reveal, CountUp, hero
-// stagger, fakedoor wiring, reduced-motion CSS), re-skinned for B.
+// MANUAL · B · b-manual-02 — "Halo (Newsreader)"
+// Near-clone of b-manual-01 "Halo": ONE single saturated lavender gradient field
+// across the WHOLE page (the signature of variant B). Every section is
+// transparent and sits on that one field; rhythm is vertical spacing only — no
+// colored bands, no .ya-bleed. Cards exist ONLY for: pricing plans, the
+// "everything included" block, the final-CTA panel, and the fakedoor form.
+// Problem / method / stories / FAQ render directly on the field with hairline
+// rules and spacing. No eyebrow kickers: each H2 emphasises its operative
+// word(s) via a subtle Newsreader italic title accent. ONE constant ink-fill
+// pill CTA everywhere.
+// Differences from b-manual-01: display+body fonts swapped to Newsreader (tender
+// editorial, optical sizing automatic — no fontVariationSettings) + Mona Sans;
+// hero has NO ghost wordmark and a big 4-line H1; CTA is a full pill.
 // ─────────────────────────────────────────────────────────────────────────────
 
-const fraunces = Fraunces({
+const display = Newsreader({
   subsets: ["latin"],
   variable: "--font-display",
-  axes: ["opsz", "SOFT"],
+  weight: ["300", "400", "500"],
   style: ["normal", "italic"],
   display: "swap",
 });
 
-const dmSans = DM_Sans({
+const body = Mona_Sans({
   subsets: ["latin"],
   variable: "--font-body",
   display: "swap",
@@ -48,7 +50,7 @@ const MUTE = "#9C98D4"; // faint labels
 const FAINT = "#8b86bf"; // captions / quiet meta
 const ACCENT = "#6F69C9"; // periwinkle — labels, "?", dot only (NOT titles)
 const TITLE_ACCENT = "#5A5690"; // titles: subtle italic shift one step off ink (BT05-style)
-const GHOST = "#EBE6FF"; // near-transparent lavender for the hero ghost wordmark
+const GHOST = "#EBE6FF"; // near-transparent lavender for chips / ink-surface CTA
 const LIGHT = "#F7F4FF"; // light label on ink surfaces
 const HAIR = "rgba(90,86,144,0.18)"; // hairline rule on the field
 
@@ -94,7 +96,7 @@ function Reveal({
   );
 }
 
-export default function BManual01Halo({ content, slug }: DesignProps) {
+export default function BManual02Halo({ content, slug }: DesignProps) {
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
@@ -102,7 +104,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
   // Reassurance line → CountUp on the embedded number (RetroForestBase reMatch).
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
 
-  // THE constant CTA: ink fill, light label, lucide arrow. Same everywhere.
+  // THE constant CTA: ink fill, light label, lucide arrow. Pill. Same everywhere.
   const Cta = ({
     label,
     onClick,
@@ -114,7 +116,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
   }) => (
     <button
       onClick={onClick}
-      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-semibold ${
+      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-[15px] font-semibold ${
         full ? "w-full" : ""
       }`}
       style={{ backgroundColor: INK, color: LIGHT }}
@@ -124,11 +126,11 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
     </button>
   );
 
-  // "You Alive ?" wordmark — Fraunces italic, the "?" carries the accent mark.
+  // "You Alive ?" wordmark — Newsreader italic, the "?" carries the accent mark.
   const wordmark = (
     <span
       className="font-[family-name:var(--font-display)] text-[18px] italic"
-      style={{ color: INK, fontVariationSettings: '"opsz" 20, "SOFT" 60' }}
+      style={{ color: INK }}
     >
       {hero.brandLockup.replace("?", "")}
       <span style={{ color: ACCENT }}>?</span>
@@ -137,7 +139,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
 
   return (
     <main
-      className={`${fraunces.variable} ${dmSans.variable} font-[family-name:var(--font-body)] relative min-h-[100dvh] overflow-x-clip antialiased`}
+      className={`${display.variable} ${body.variable} font-[family-name:var(--font-body)] relative min-h-[100dvh] overflow-x-clip antialiased`}
       style={{
         color: INK,
         // ── THE single field: strong layered recipe (3 radial halos + vertical
@@ -197,67 +199,25 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
           </span>
         </header>
 
-        {/* ───────── HERO (ghost wordmark + H1 on top) ───────── */}
+        {/* ───────── HERO (no ghost — big 4-line H1) ───────── */}
         <section className="relative pt-14 md:pt-20">
-          {/* Hero-only STRONGER gradient: a deeper lavender→periwinkle pool so
-              the near-white ghost wordmark reads as white (b-fd-12 effect). */}
-          <div
-            aria-hidden
-            className="pointer-events-none absolute left-1/2 top-[36%] -z-0 h-[560px] w-[680px] -translate-x-1/2 -translate-y-1/2 blur-[60px]"
-            style={{
-              background:
-                "radial-gradient(50% 50% at 50% 45%, rgba(160,172,232,0.9) 0%, rgba(190,200,246,0.5) 42%, rgba(214,228,255,0) 72%)",
-            }}
-          />
-
-          {/* GIANT ghost "You Alive?" behind the H1. */}
-          <p
-            aria-hidden
-            className="ya-stage pointer-events-none -mx-2 select-none font-[family-name:var(--font-display)] leading-[0.84] tracking-[-0.03em]"
-            style={{ color: "rgba(255,255,255,0.78)" }}
-          >
-            <span
-              className="block"
-              style={{
-                fontSize: "clamp(92px, 30vw, 140px)",
-                fontVariationSettings: '"opsz" 144, "SOFT" 100',
-                textShadow: "0 2px 40px rgba(90,86,144,0.16)",
-                animationDelay: "0s",
-              } as CSSProperties}
-            >
-              You
-            </span>
-            <span
-              className="block"
-              style={{
-                fontSize: "clamp(92px, 30vw, 140px)",
-                fontVariationSettings: '"opsz" 144, "SOFT" 100',
-                textShadow: "0 2px 40px rgba(90,86,144,0.16)",
-                animationDelay: "0.06s",
-              } as CSSProperties}
-            >
-              Alive?
-            </span>
-          </p>
-
-          {/* H1 sits on top, overlapping the ghost. */}
-          <div className="ya-stage relative -mt-10 md:-mt-14">
+          {/* H1 leads the hero directly; no ghost wordmark, no hero-local halo. */}
+          <div className="ya-stage relative">
             <h1
-              className="ya-h1 font-[family-name:var(--font-display)] leading-[1.06] tracking-[-0.02em]"
+              className="ya-h1 font-[family-name:var(--font-display)] font-light leading-[1.04] tracking-[-0.02em]"
               style={{
                 color: INK,
-                fontVariationSettings: '"opsz" 72, "SOFT" 50',
                 animationDelay: "0.12s",
-                "--h1-m": "38px",
-                "--h1-d": "46px",
+                "--h1-m": "44px",
+                "--h1-d": "58px",
               } as CSSProperties}
             >
-              Leave nothing{" "}
-              <span className="italic" style={{ color: TITLE_ACCENT }}>
+              <span className="block">Leave nothing</span>
+              <span className="block italic" style={{ color: TITLE_ACCENT }}>
                 unsaid.
-              </span>{" "}
-              Leave nothing{" "}
-              <span className="italic" style={{ color: TITLE_ACCENT }}>
+              </span>
+              <span className="block">Leave nothing</span>
+              <span className="block italic" style={{ color: TITLE_ACCENT }}>
                 unfound.
               </span>
             </h1>
@@ -300,8 +260,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="max-w-[20ch] font-[family-name:var(--font-display)] text-[30px] leading-[1.16] tracking-[-0.015em]"
-              style={{ color: INK, fontVariationSettings: '"opsz" 60, "SOFT" 40' }}
+              className="max-w-[20ch] font-[family-name:var(--font-display)] text-[30px] font-light leading-[1.16] tracking-[-0.015em]"
+              style={{ color: INK }}
             >
               Documents &amp; last wishes:{" "}
               <span className="italic" style={{ color: TITLE_ACCENT }}>
@@ -321,8 +281,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[30px] leading-[1.14] tracking-[-0.015em]"
-              style={{ color: INK, fontVariationSettings: '"opsz" 56, "SOFT" 40' }}
+              className="font-[family-name:var(--font-display)] text-[30px] font-light leading-[1.14] tracking-[-0.015em]"
+              style={{ color: INK }}
             >
               How{" "}
               <span className="italic" style={{ color: TITLE_ACCENT }}>
@@ -337,11 +297,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
               <Reveal as="li" key={i} delay={i * 90}>
                 <div className="flex items-center gap-4">
                   <span
-                    className="font-[family-name:var(--font-display)] text-[52px] leading-none tracking-[-0.02em]"
-                    style={{
-                      color: MUTE,
-                      fontVariationSettings: '"opsz" 144, "SOFT" 60',
-                    }}
+                    className="font-[family-name:var(--font-display)] text-[52px] font-light leading-none tracking-[-0.02em]"
+                    style={{ color: MUTE }}
                   >
                     {String(i + 1).padStart(2, "0")}
                   </span>
@@ -351,8 +308,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                   />
                 </div>
                 <h3
-                  className="mt-4 max-w-[34ch] font-[family-name:var(--font-display)] text-[21px] leading-[1.26] tracking-[-0.005em]"
-                  style={{ color: INK, fontVariationSettings: '"opsz" 40, "SOFT" 40' }}
+                  className="mt-4 max-w-[34ch] font-[family-name:var(--font-display)] text-[21px] font-light leading-[1.26] tracking-[-0.005em]"
+                  style={{ color: INK }}
                 >
                   {s.title}
                 </h3>
@@ -371,8 +328,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         <section ref={fd.pricingRef} className="mt-28">
           <Reveal>
             <h2
-              className="max-w-[18ch] font-[family-name:var(--font-display)] text-[30px] leading-[1.16] tracking-[-0.015em]"
-              style={{ color: INK, fontVariationSettings: '"opsz" 56, "SOFT" 40' }}
+              className="max-w-[18ch] font-[family-name:var(--font-display)] text-[30px] font-light leading-[1.16] tracking-[-0.015em]"
+              style={{ color: INK }}
             >
               Take care of them,{" "}
               <span className="italic" style={{ color: TITLE_ACCENT }}>
@@ -430,19 +387,13 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                     )}
                     <p
                       className={`relative ${hi ? "mt-4" : ""} font-[family-name:var(--font-display)] text-[15px] italic`}
-                      style={{
-                        color: hi ? "#CDD6FF" : SOFT,
-                        fontVariationSettings: '"opsz" 18, "SOFT" 80',
-                      }}
+                      style={{ color: hi ? "#CDD6FF" : SOFT }}
                     >
                       {plan.name}
                     </p>
                     <p
-                      className="relative mt-2 font-[family-name:var(--font-display)] text-[42px] leading-none tracking-[-0.02em]"
-                      style={{
-                        color: hi ? LIGHT : INK,
-                        fontVariationSettings: '"opsz" 144, "SOFT" 30',
-                      }}
+                      className="relative mt-2 font-[family-name:var(--font-display)] text-[42px] font-light leading-none tracking-[-0.02em]"
+                      style={{ color: hi ? LIGHT : INK }}
                     >
                       {plan.price}
                     </p>
@@ -456,7 +407,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                       {hi ? (
                         <button
                           onClick={() => fd.onCta(`pricing-${plan.name.toLowerCase()}`)}
-                          className="ya-cta group inline-flex w-full items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-semibold"
+                          className="ya-cta group inline-flex w-full items-center justify-center gap-2.5 rounded-full px-7 py-4 text-[15px] font-semibold"
                           style={{ backgroundColor: GHOST, color: INK }}
                         >
                           {plan.ctaLabel}
@@ -531,8 +482,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[30px] leading-[1.16] tracking-[-0.015em]"
-              style={{ color: INK, fontVariationSettings: '"opsz" 56, "SOFT" 40' }}
+              className="font-[family-name:var(--font-display)] text-[30px] font-light leading-[1.16] tracking-[-0.015em]"
+              style={{ color: INK }}
             >
               From{" "}
               <span className="italic" style={{ color: TITLE_ACCENT }}>
@@ -548,8 +499,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                   style={i > 0 ? { borderTop: `1px solid ${HAIR}` } : undefined}
                 >
                   <blockquote
-                    className="font-[family-name:var(--font-display)] text-[20px] leading-[1.46] tracking-[-0.005em]"
-                    style={{ color: INK, fontVariationSettings: '"opsz" 48, "SOFT" 50' }}
+                    className="font-[family-name:var(--font-display)] text-[20px] font-light leading-[1.46] tracking-[-0.005em]"
+                    style={{ color: INK }}
                   >
                     <span className="italic" style={{ color: TITLE_ACCENT }}>
                       &ldquo;
@@ -579,8 +530,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         <section className="mt-28">
           <Reveal>
             <h2
-              className="font-[family-name:var(--font-display)] text-[30px] leading-[1.16] tracking-[-0.015em]"
-              style={{ color: INK, fontVariationSettings: '"opsz" 56, "SOFT" 40' }}
+              className="font-[family-name:var(--font-display)] text-[30px] font-light leading-[1.16] tracking-[-0.015em]"
+              style={{ color: INK }}
             >
               Questions you{" "}
               <span className="italic" style={{ color: TITLE_ACCENT }}>
@@ -597,8 +548,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                 >
                   <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
                     <span
-                      className="font-[family-name:var(--font-display)] text-[18px] leading-[1.32] tracking-[-0.005em]"
-                      style={{ color: INK, fontVariationSettings: '"opsz" 36, "SOFT" 40' }}
+                      className="font-[family-name:var(--font-display)] text-[18px] font-light leading-[1.32] tracking-[-0.005em]"
+                      style={{ color: INK }}
                     >
                       {item.q}
                     </span>
@@ -639,8 +590,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                 }}
               />
               <h2
-                className="relative mx-auto max-w-[16ch] font-[family-name:var(--font-display)] text-[32px] leading-[1.12] tracking-[-0.015em]"
-                style={{ fontVariationSettings: '"opsz" 144, "SOFT" 50' }}
+                className="relative mx-auto max-w-[16ch] font-[family-name:var(--font-display)] text-[32px] font-light leading-[1.12] tracking-[-0.015em]"
               >
                 Ready to leave them{" "}
                 <span className="italic" style={{ color: "#CDD6FF" }}>
@@ -650,7 +600,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
               <div className="relative mt-9 flex justify-center">
                 <button
                   onClick={() => fd.onCta("final")}
-                  className="ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-semibold"
+                  className="ya-cta group inline-flex items-center justify-center gap-2.5 rounded-full px-7 py-4 text-[15px] font-semibold"
                   style={{ backgroundColor: GHOST, color: INK }}
                 >
                   {content.finalCta.ctaLabel}
@@ -679,8 +629,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
             {fd.state === "done" ? (
               <div className="text-center">
                 <p
-                  className="font-[family-name:var(--font-display)] text-[26px] leading-tight tracking-[-0.01em]"
-                  style={{ color: INK, fontVariationSettings: '"opsz" 72, "SOFT" 50' }}
+                  className="font-[family-name:var(--font-display)] text-[26px] font-light leading-tight tracking-[-0.01em]"
+                  style={{ color: INK }}
                 >
                   {content.confirmation.title}
                 </p>
@@ -694,8 +644,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
             ) : (
               <>
                 <p
-                  className="text-center font-[family-name:var(--font-display)] text-[28px] italic leading-[1.12] tracking-[-0.015em]"
-                  style={{ color: INK, fontVariationSettings: '"opsz" 60, "SOFT" 80' }}
+                  className="text-center font-[family-name:var(--font-display)] text-[28px] font-light italic leading-[1.12] tracking-[-0.015em]"
+                  style={{ color: INK }}
                 >
                   {fakedoor.title}
                 </p>
@@ -726,7 +676,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
                   <button
                     type="submit"
                     disabled={fd.state === "loading"}
-                    className="ya-cta inline-flex w-full items-center justify-center gap-2.5 rounded-[18px] px-6 py-4 text-[15px] font-semibold disabled:opacity-60"
+                    className="ya-cta inline-flex w-full items-center justify-center gap-2.5 rounded-full px-6 py-4 text-[15px] font-semibold disabled:opacity-60"
                     style={{ backgroundColor: INK, color: LIGHT }}
                   >
                     {fd.state === "loading" ? "Reserving…" : fakedoor.submitLabel}
@@ -749,8 +699,8 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
         <footer className="mt-24 border-t pt-10 pb-20" style={{ borderColor: HAIR }}>
           <p className="mb-3">{wordmark}</p>
           <p
-            className="font-[family-name:var(--font-display)] text-[16px] italic leading-[1.4]"
-            style={{ color: SOFT, fontVariationSettings: '"opsz" 24, "SOFT" 60' }}
+            className="font-[family-name:var(--font-display)] text-[16px] font-light italic leading-[1.4]"
+            style={{ color: SOFT }}
           >
             {footer.lines[0]}
           </p>

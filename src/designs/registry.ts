@@ -13,6 +13,7 @@ import CManual01 from "@/designs/c-manual-01";
 // Variant-B manual track — single-background family (one lavender field, no bands;
 // cards only on pricing + final CTA). Five hand-built directions.
 import BManual01 from "@/designs/b-manual-01";
+import BManual02 from "@/designs/b-manual-02";
 import BManual03 from "@/designs/b-manual-03";
 import CManual02 from "@/designs/c-manual-02";
 
@@ -485,8 +486,18 @@ const bManual: DesignModule[] = [
     variant: "b",
     tool: "manual",
     tags: ["soft", "lavender", "gradient-fort", "ghost-hero"],
-    note: "Gradient lavande FORT (radiaux + linéaire, b-taste-05). Hero ghost You Alive? halo dense, titres bi-couleur italique. Cards pricing à gradient interne, CTA final panneau ink arrondi. DM Sans.",
+    note: "Gradient lavande FORT, hero ghost You Alive? en blanc, accent de titre subtil (italique SOFT), CTA ink, cards pricing à gradient interne. DM Sans.",
     Component: BManual01,
+  },
+  {
+    slug: "b-manual-02",
+    label: "B · manual · 02 — Halo (Newsreader)",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["soft", "lavender", "newsreader", "no-ghost"],
+    note: "Même design que 01 mais police Newsreader + Mona Sans (b-taste-05). Hero SANS ghost, H1 géant sur 4 lignes (44/58px), CTA pill arrondi, accent de titre subtil.",
+    Component: BManual02,
   },
   {
     slug: "b-manual-03",
