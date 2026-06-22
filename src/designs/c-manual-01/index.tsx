@@ -32,14 +32,22 @@ const space = Space_Grotesk({
   display: "swap",
 });
 
-const FOREST = "#16271F";
-const LIME = "#C8F169";
-const CREAM = "#EFEAD8"; // light-1 (lightest) — method, testimonials
-const CREAM2 = "#E6DECB"; // light-2 (a hair darker) — problem
-const WHITE = "#F7F4EA"; // warm white — Annual card, final-CTA card
+const FOREST = "#16271F"; // section dark / ink base
+const FOREST_2 = "#0F1D16"; // deeper forest — final-CTA panel
 const CARD = "#1d3328"; // transparent-ish dark card (c-taste-03)
-const MUTED_D = "rgba(239,234,216,0.70)"; // muted text on dark
-const MUTED_L = "#52624F"; // muted text on light
+const CARD_HI = "#22392B"; // elevated dark card — Annual (highlight)
+// Two-accent system: lime ONLY reads on dark; on light it disappears, so light
+// surfaces get a vivid pine green that still clears AA on cream.
+const LIME = "#C8F169"; // accent — DARK surfaces only
+const GREEN_L = "#246B27"; // accent — LIGHT surfaces (eyebrows, step numbers). AA 5.4:1 on cream.
+const CREAM = "#EFEAD8"; // light band 1
+const CREAM2 = "#EAE3D1"; // light band 2 — now a whisper off CREAM, not a step
+// Text on LIGHT: body a darker ink (not pure black), captions stay muted.
+const INK_L = "#283A30"; // body text on light
+const MUTED_L = "#566355"; // secondary/captions on light
+// Text on DARK: a true warm white primary + a brighter muted secondary.
+const WHITE_1 = "#FAF7EF"; // primary text on dark
+const MUTED_D = "rgba(250,247,239,0.82)"; // secondary text on dark (brighter than before)
 
 // Scroll-reveal primitive (ported from c-taste-03): blur-rise, reduced-motion safe.
 function Reveal({
@@ -84,6 +92,15 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
     content;
 
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
+  // Hero H1 → 4 lines: each sentence becomes a cream lead line + a lime punch
+  // word ("unsaid." / "unfound.") on its own line.
+  const heroLines = hero.title
+    .split(/(?<=\.)\s+/)
+    .filter(Boolean)
+    .map((s) => {
+      const m = s.match(/^(.*\s)(\S+)$/);
+      return m ? { lead: m[1].trim(), accent: m[2] } : { lead: s, accent: "" };
+    });
   const problemTitle = problem.title
     .replace(/^Logins,\s*/i, "")
     .replace(/^\w/, (c) => c.toUpperCase());
@@ -99,11 +116,11 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
     </span>
   );
 
-  // Eyebrow kicker. `lime` controls accent: lime on dark, forest on light.
+  // Eyebrow kicker. Accent flips by surface: lime on dark, vivid pine on light.
   const Eyebrow = ({ children, light }: { children: string; light?: boolean }) => (
     <p
       className="text-[12px] font-bold uppercase tracking-[0.3em]"
-      style={{ color: light ? FOREST : LIME }}
+      style={{ color: light ? GREEN_L : LIME }}
     >
       {children}
     </p>
@@ -164,10 +181,11 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
         }
       `}</style>
 
-      {/* Ambient lime orb (atmosphere on the dark canvas). */}
+      {/* Hero sits on flat forest like the ad — no top glow. A single ambient
+          lime orb drifts low, well below the fold, for quiet atmosphere only. */}
       <div
         aria-hidden
-        className="ya-orb pointer-events-none absolute -top-24 left-1/2 -z-0 h-[520px] w-[520px] -translate-x-1/2 rounded-full opacity-[0.16] blur-[90px]"
+        className="ya-orb pointer-events-none absolute top-[140vh] left-1/2 -z-0 h-[460px] w-[460px] -translate-x-1/2 rounded-full opacity-[0.10] blur-[100px]"
         style={{ backgroundColor: LIME }}
       />
 
@@ -181,10 +199,17 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
         {/* ───────── HERO (dark) ───────── */}
         <section className="ya-stage pt-12 md:pt-16">
           <h1
-            className="font-[family-name:var(--font-display)] text-[52px] font-extrabold uppercase italic leading-[0.92] tracking-[-0.03em] md:text-[78px]"
-            style={{ color: LIME, animationDelay: "0.1s" }}
+            className="font-[family-name:var(--font-display)] text-[40px] font-extrabold uppercase italic leading-[0.98] tracking-[-0.03em] md:text-[58px]"
+            style={{ color: WHITE_1, animationDelay: "0.1s" }}
           >
-            {hero.title}
+            {heroLines.flatMap((l, i) => [
+              <span key={`${i}-lead`} className="block">
+                {l.lead}
+              </span>,
+              <span key={`${i}-accent`} className="block" style={{ color: LIME }}>
+                {l.accent}
+              </span>,
+            ])}
           </h1>
 
           <div
@@ -231,7 +256,7 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
               <h2 className="mt-4 font-[family-name:var(--font-display)] text-[30px] font-bold leading-[1.12] tracking-[-0.02em]">
                 {problemTitle}
               </h2>
-              <p className="mt-5 max-w-[44ch] text-[16px] leading-[1.7]" style={{ color: MUTED_L }}>
+              <p className="mt-5 max-w-[44ch] text-[16px] leading-[1.7]" style={{ color: INK_L }}>
                 {problem.body}
               </p>
             </div>
@@ -252,15 +277,18 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
               {solution.steps.map((s, i) => (
                 <Reveal as="li" key={i} delay={i * 90}>
                   <div className="flex items-center gap-3">
-                    <span className="font-[family-name:var(--font-display)] text-[44px] font-extrabold leading-none tracking-[-0.02em]">
+                    <span
+                      className="font-[family-name:var(--font-display)] text-[44px] font-extrabold leading-none tracking-[-0.02em]"
+                      style={{ color: GREEN_L }}
+                    >
                       {String(i + 1).padStart(2, "0")}
                     </span>
-                    <span className="h-[2px] flex-1 rounded-full" style={{ backgroundColor: `${FOREST}33` }} />
+                    <span className="h-[2px] flex-1 rounded-full" style={{ backgroundColor: `${GREEN_L}2e` }} />
                   </div>
                   <h3 className="mt-3 font-[family-name:var(--font-display)] text-[21px] font-bold leading-[1.2]">
                     {s.title}
                   </h3>
-                  <p className="mt-2 max-w-[44ch] text-[15.5px] leading-[1.6]" style={{ color: MUTED_L }}>
+                  <p className="mt-2 max-w-[44ch] text-[15.5px] leading-[1.6]" style={{ color: INK_L }}>
                     {s.body}
                   </p>
                 </Reveal>
@@ -272,8 +300,8 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
         {/* ───────── PRICING (dark) ───────── */}
         <section ref={fd.pricingRef} className="mt-20">
           <Reveal>
-            <Eyebrow>Membership</Eyebrow>
-            <h2 className="mt-4 font-[family-name:var(--font-display)] text-[30px] font-bold leading-[1.12] tracking-[-0.02em]" style={{ color: CREAM }}>
+            <Eyebrow>Pricing</Eyebrow>
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-[30px] font-bold leading-[1.12] tracking-[-0.02em]" style={{ color: WHITE_1 }}>
               {pricing.title}
             </h2>
             <p className="mt-5 max-w-[40ch] text-[16px] leading-[1.65]" style={{ color: MUTED_D }}>
@@ -283,35 +311,35 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
 
           <div className="mt-9 space-y-5">
             {pricing.plans.map((plan, i) => {
-              const white = !!plan.highlight; // Annual = white card, Monthly = dark card
+              const hi = !!plan.highlight; // Annual = elevated forest card, lime hairline
               return (
                 <Reveal key={i} delay={i * 90}>
                   <div
                     className="relative rounded-[28px] border p-7"
                     style={{
-                      backgroundColor: white ? WHITE : CARD,
-                      color: white ? FOREST : CREAM,
-                      borderColor: white ? "transparent" : "rgba(239,234,216,0.12)",
+                      backgroundColor: hi ? CARD_HI : CARD,
+                      color: WHITE_1,
+                      borderColor: hi ? "rgba(200,241,105,0.42)" : "rgba(250,247,239,0.10)",
                     }}
                   >
-                    {white && (
+                    {hi && (
                       <span
                         className="absolute right-6 top-7 rounded-full px-3 py-1 text-[10px] font-bold uppercase tracking-[0.16em]"
-                        style={{ backgroundColor: FOREST, color: LIME }}
+                        style={{ backgroundColor: LIME, color: FOREST }}
                       >
                         Most chosen
                       </span>
                     )}
                     <p
                       className="text-[13px] font-bold uppercase tracking-[0.18em]"
-                      style={{ color: white ? MUTED_L : "rgba(239,234,216,0.55)" }}
+                      style={{ color: hi ? LIME : "rgba(250,247,239,0.55)" }}
                     >
                       {plan.name}
                     </p>
                     <p className="mt-3 font-[family-name:var(--font-display)] text-[40px] font-extrabold leading-none tracking-[-0.02em]">
                       {plan.price}
                     </p>
-                    <p className="mt-3 text-[13px]" style={{ color: white ? MUTED_L : "rgba(239,234,216,0.6)" }}>
+                    <p className="mt-3 text-[13px]" style={{ color: "rgba(250,247,239,0.62)" }}>
                       {plan.descriptor}
                     </p>
                     <div className="mt-7">
@@ -323,15 +351,15 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
             })}
           </div>
 
-          {/* Everything included — dark transparent card, two columns. */}
+          {/* Everything included — dark card, two columns, no-lock-in line inside. */}
           <Reveal className="mt-6">
-            <div className="rounded-[28px] border p-7" style={{ backgroundColor: CARD, borderColor: "rgba(239,234,216,0.10)" }}>
-              <p className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: "rgba(239,234,216,0.5)" }}>
+            <div className="rounded-[28px] border p-7" style={{ backgroundColor: CARD, borderColor: "rgba(250,247,239,0.10)" }}>
+              <p className="text-[11px] font-bold uppercase tracking-[0.28em]" style={{ color: "rgba(250,247,239,0.5)" }}>
                 Everything included
               </p>
               <ul className="mt-6 grid grid-cols-2 gap-x-4 gap-y-3.5">
                 {pricing.included.map((feature, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-[13.5px] leading-[1.35]" style={{ color: "rgba(239,234,216,0.85)" }}>
+                  <li key={i} className="flex items-start gap-2.5 text-[13.5px] leading-[1.35]" style={{ color: "rgba(250,247,239,0.86)" }}>
                     <span
                       className="mt-[3px] flex h-4 w-4 flex-none items-center justify-center rounded-full text-[10px] font-bold"
                       style={{ backgroundColor: LIME, color: FOREST }}
@@ -342,13 +370,13 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
                   </li>
                 ))}
               </ul>
+              <p
+                className="mt-7 border-t pt-6 text-[13px] leading-[1.6]"
+                style={{ borderColor: "rgba(250,247,239,0.12)", color: "rgba(250,247,239,0.6)" }}
+              >
+                {pricing.scarcityLine}
+              </p>
             </div>
-          </Reveal>
-
-          <Reveal className="mt-6">
-            <p className="max-w-[40ch] text-[12.5px] leading-[1.6]" style={{ color: "rgba(239,234,216,0.55)" }}>
-              {pricing.scarcityLine}
-            </p>
           </Reveal>
         </section>
 
@@ -356,20 +384,23 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
         <section className="ya-bleed mt-20 py-16" style={{ backgroundColor: CREAM }}>
           <div style={{ color: FOREST }}>
             <Reveal>
-              <Eyebrow light>Real people</Eyebrow>
+              <Eyebrow light>Stories</Eyebrow>
+              <h2 className="mt-4 font-[family-name:var(--font-display)] text-[30px] font-bold leading-[1.12] tracking-[-0.02em]">
+                From those who started
+              </h2>
             </Reveal>
             <div className="mt-8">
               {testimonials.map((t, i) => (
                 <Reveal as="figure" key={i} delay={i * 80}>
                   <figure
-                    className="py-8"
-                    style={i > 0 ? { borderTop: `1px solid ${FOREST}22` } : undefined}
+                    className="py-7"
+                    style={i > 0 ? { borderTop: `1px solid ${FOREST}1f` } : undefined}
                   >
-                    <blockquote className="font-[family-name:var(--font-display)] text-[22px] font-semibold leading-[1.32] tracking-[-0.01em]">
+                    <blockquote className="font-[family-name:var(--font-display)] text-[17.5px] font-semibold leading-[1.45] tracking-[-0.01em]">
                       &ldquo;{t.quote}&rdquo;
                     </blockquote>
-                    <figcaption className="mt-4 flex items-center gap-3 text-[13px] font-bold uppercase tracking-[0.16em]">
-                      <span className="inline-block h-px w-8" style={{ backgroundColor: FOREST }} />
+                    <figcaption className="mt-4 flex items-center gap-3 text-[12.5px] font-bold uppercase tracking-[0.16em]">
+                      <span className="inline-block h-px w-8" style={{ backgroundColor: GREEN_L }} />
                       {t.name} <span style={{ color: MUTED_L }}>/ {t.age}</span>
                     </figcaption>
                   </figure>
@@ -382,8 +413,8 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
         {/* ───────── FAQ (dark) ───────── */}
         <section className="mt-20">
           <Reveal>
-            <Eyebrow>Questions</Eyebrow>
-            <h2 className="mt-4 font-[family-name:var(--font-display)] text-[30px] font-bold leading-[1.12] tracking-[-0.02em]" style={{ color: CREAM }}>
+            <Eyebrow>Good to know</Eyebrow>
+            <h2 className="mt-4 font-[family-name:var(--font-display)] text-[30px] font-bold leading-[1.12] tracking-[-0.02em]" style={{ color: WHITE_1 }}>
               Questions you might have
             </h2>
           </Reveal>
@@ -395,7 +426,7 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
                   style={{ backgroundColor: CARD, borderColor: "rgba(239,234,216,0.10)" }}
                 >
                   <summary className="flex cursor-pointer list-none items-start justify-between gap-4">
-                    <span className="font-[family-name:var(--font-display)] text-[17px] font-bold leading-[1.3] tracking-[-0.005em]" style={{ color: CREAM }}>
+                    <span className="font-[family-name:var(--font-display)] text-[17px] font-bold leading-[1.3] tracking-[-0.005em]" style={{ color: WHITE_1 }}>
                       {item.q}
                     </span>
                     <span
@@ -414,14 +445,14 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
           </div>
         </section>
 
-        {/* ───────── FINAL CTA (dark section, WHITE card + marquee) ───────── */}
+        {/* ───────── FINAL CTA (deep-forest panel, lime hairline + marquee) ───────── */}
         <Reveal className="mt-20">
           <section
-            className="relative overflow-hidden rounded-[36px] p-9 text-center"
-            style={{ backgroundColor: WHITE, color: FOREST }}
+            className="relative overflow-hidden rounded-[36px] border p-9 text-center"
+            style={{ backgroundColor: FOREST_2, color: WHITE_1, borderColor: "rgba(200,241,105,0.30)" }}
           >
-            <div className="pointer-events-none absolute inset-x-0 top-5 overflow-hidden opacity-[0.10]" aria-hidden>
-              <div className="ya-marquee-track font-[family-name:var(--font-display)] text-[30px] font-extrabold uppercase tracking-[-0.01em]" style={{ color: FOREST }}>
+            <div className="pointer-events-none absolute inset-x-0 top-5 overflow-hidden opacity-[0.14]" aria-hidden>
+              <div className="ya-marquee-track font-[family-name:var(--font-display)] text-[30px] font-extrabold uppercase tracking-[-0.01em]" style={{ color: LIME }}>
                 <span className="px-4">Leave them ready · Leave them ready · </span>
                 <span className="px-4">Leave them ready · Leave them ready · </span>
               </div>
@@ -497,11 +528,11 @@ export default function ManualRetroForestDesign({ content, slug }: DesignProps) 
 
         {/* ───────── FOOTER (dark) ───────── */}
         <footer className="mt-20 border-t pt-8 pb-20" style={{ borderColor: "rgba(239,234,216,0.10)" }}>
-          <p className="mb-3">{wordmark(CREAM, LIME)}</p>
-          <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: LIME }}>
+          <p className="mb-3">{wordmark(WHITE_1, LIME)}</p>
+          <p className="font-[family-name:var(--font-display)] text-[16px] font-bold italic" style={{ color: WHITE_1 }}>
             {footer.lines[0]}
           </p>
-          <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(239,234,216,0.45)" }}>
+          <p className="mt-3 text-[11px] uppercase tracking-[0.22em]" style={{ color: "rgba(250,247,239,0.45)" }}>
             {footer.lines.slice(1).join("   ·   ")}
           </p>
         </footer>

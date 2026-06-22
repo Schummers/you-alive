@@ -194,13 +194,13 @@ export const site: SiteContent = {
   },
   confirmation: {
     title: "Your spot is reserved.",
-    body: "We'll email you the moment You Alive opens. Until then — nothing to do, except maybe think about what you'd want to say.",
+    body: "We'll email you the moment You Alive opens. Until then, nothing to do, except maybe think about what you'd want to say.",
   },
   finalCta: {
     headline: "Ready to leave them ready?",
     ctaLabel: "Start my plan",
   },
   footer: {
-    lines: ["You Alive — prepared today, delivered when it matters.", "Privacy policy", "Contact"],
+    lines: ["You Alive, prepared today, delivered when it matters.", "Privacy policy", "Contact"],
   },
 };
