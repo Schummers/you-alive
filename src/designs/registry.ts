@@ -8,6 +8,7 @@ import RetroForestDesign from "@/designs/c";
 import AManual01 from "@/designs/a-manual-01";
 import AManual02 from "@/designs/a-manual-02";
 import AManual03 from "@/designs/a-manual-03";
+import CManual01 from "@/designs/c-manual-01";
 
 import AFd09 from "@/designs/a-fd-09";
 import AFd16 from "@/designs/a-fd-16";
@@ -22,14 +23,9 @@ import ATaste11 from "@/designs/a-taste-11";
 import ATaste16 from "@/designs/a-taste-16";
 
 // Variant-B guided iterations (Soft / Wellness).
-import BFd01 from "@/designs/b-fd-01";
-import BFd02 from "@/designs/b-fd-02";
-import BFd03 from "@/designs/b-fd-03";
 import BFd04 from "@/designs/b-fd-04";
 import BFd05 from "@/designs/b-fd-05";
 import BFd06 from "@/designs/b-fd-06";
-import BFd07 from "@/designs/b-fd-07";
-import BFd08 from "@/designs/b-fd-08";
 
 // Variant-C guided iterations (Retro / Forest).
 import CFd01 from "@/designs/c-fd-01";
@@ -38,20 +34,13 @@ import CFd04 from "@/designs/c-fd-04";
 // Round 2 — no-photo guided: ad = moodboard only, hero = text+CSS (or clean photo for A).
 import AFd17 from "@/designs/a-fd-17";
 import BFd09 from "@/designs/b-fd-09";
-import BFd10 from "@/designs/b-fd-10";
-import BFd11 from "@/designs/b-fd-11";
 import BFd12 from "@/designs/b-fd-12";
 import CFd12 from "@/designs/c-fd-12";
 
 // Variant-B taste-skill iterations (3 Dials + style sub-skill, guided, no ad photo).
 import BTaste01 from "@/designs/b-taste-01";
-import BTaste02 from "@/designs/b-taste-02";
-import BTaste03 from "@/designs/b-taste-03";
-import BTaste04 from "@/designs/b-taste-04";
 import BTaste05 from "@/designs/b-taste-05";
 import BTaste06 from "@/designs/b-taste-06";
-import BTaste07 from "@/designs/b-taste-07";
-import BTaste08 from "@/designs/b-taste-08";
 
 // Variant-C taste-skill iterations (3 Dials + style sub-skill, guided, no ad photo).
 import CTaste01 from "@/designs/c-taste-01";
@@ -197,42 +186,6 @@ const aTaste2Guided: DesignModule[] = [
 // the "You Alive?" wordmark, so designs render hero.title as H1 instead of duplicating it.
 const bFdGuided: DesignModule[] = [
   {
-    slug: "b-fd-01",
-    label: "B · fd · 01",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["airy", "rounded", "light", "minimal"],
-    note: "Very airy + very rounded, luminous. Fraunces + Mona Sans.",
-    brief: "Axis: max whitespace, full-radius, light, serene.",
-    Component: BFd01,
-  },
-  {
-    slug: "b-fd-02",
-    label: "B · fd · 02",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["dense", "bento", "sharp", "grid"],
-    note: "Dense bento, sharp 0px corners. Fraunces + IBM Plex Sans + Spline Mono.",
-    brief: "Axis: compact density, 0px corners, modular grid.",
-    Component: BFd02,
-  },
-  {
-    slug: "b-fd-03",
-    label: "B · fd · 03",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["saturated", "motion", "aurora"],
-    note: "Intense color + motion, drifting mesh aurora. Fraunces + Outfit.",
-    brief: "Axis: high color intensity, high motion.",
-    Component: BFd03,
-  },
-  {
     slug: "b-fd-04",
     label: "B · fd · 04",
     ad: "image2",
@@ -268,30 +221,6 @@ const bFdGuided: DesignModule[] = [
     brief: "Axis: print layout, multi-column, asymmetry, drop caps.",
     Component: BFd06,
   },
-  {
-    slug: "b-fd-07",
-    label: "B · fd · 07",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["swiss", "flat", "grid", "minimal"],
-    note: "Swiss / International style, flat numbered grid. Fraunces + Archivo.",
-    brief: "Axis: strict grid, small type, max air, fully flat.",
-    Component: BFd07,
-  },
-  {
-    slug: "b-fd-08",
-    label: "B · fd · 08",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["organic", "blobs", "gradient", "warm"],
-    note: "Organic + warm, drifting blobs + petals. Fraunces + Mulish.",
-    brief: "Axis: curved organic shapes, warm gradient washes.",
-    Component: BFd08,
-  },
 ];
 
 // Variant B — taste-skill GUIDED: locked indigo/soft-purple/lavender-periwinkle
@@ -309,42 +238,6 @@ const bTasteGuided: DesignModule[] = [
     note: "Airy + rounded, mesh light field, pillowy cards. Newsreader + Figtree.",
     brief: "Dials 4/2/2 · minimalist-ui · max whitespace, full-radius, luminous.",
     Component: BTaste01,
-  },
-  {
-    slug: "b-taste-02",
-    label: "B · taste · 02",
-    ad: "image2",
-    variant: "b",
-    tool: "taste",
-    mode: "guided",
-    tags: ["bento", "grid", "sharp", "mono"],
-    note: "Dense modular bento, 0px corners, soft lens. Space Grotesk + Space Mono.",
-    brief: "Dials 6/3/8 · industrial-brutalist-ui · dense grid, tender not military.",
-    Component: BTaste02,
-  },
-  {
-    slug: "b-taste-03",
-    label: "B · taste · 03",
-    ad: "image2",
-    variant: "b",
-    tool: "taste",
-    mode: "guided",
-    tags: ["color", "motion", "aurora", "dreamy"],
-    note: "Rich indigo on luminous mesh, drifting aurora + reveals. Bricolage + Geist.",
-    brief: "Dials 8/8/4 · high-end-visual-design · intense color + motion.",
-    Component: BTaste03,
-  },
-  {
-    slug: "b-taste-04",
-    label: "B · taste · 04",
-    ad: "image2",
-    variant: "b",
-    tool: "taste",
-    mode: "guided",
-    tags: ["texture", "grain", "depth", "gradient"],
-    note: "CSS grain + double-bezel cards, tinted shadows. Newsreader + Mona Sans.",
-    brief: "Dials 7/5/5 · high-end-visual-design · texture / depth (all CSS).",
-    Component: BTaste04,
   },
   {
     slug: "b-taste-05",
@@ -369,30 +262,6 @@ const bTasteGuided: DesignModule[] = [
     note: "Print feature, drop cap, italic pull-quotes. Newsreader + Archivo.",
     brief: "Dials 8/3/5 · minimalist-ui · multi-column, asymmetry, drop caps.",
     Component: BTaste06,
-  },
-  {
-    slug: "b-taste-07",
-    label: "B · taste · 07",
-    ad: "image2",
-    variant: "b",
-    tool: "taste",
-    mode: "guided",
-    tags: ["swiss", "flat", "grid", "minimal"],
-    note: "Swiss flat 12-col grid, coordinate labels, flat blocks. Space Grotesk + IBM Plex Mono.",
-    brief: "Dials 3/2/4 · minimalist-ui · strict grid, small type, fully flat.",
-    Component: BTaste07,
-  },
-  {
-    slug: "b-taste-08",
-    label: "B · taste · 08",
-    ad: "image2",
-    variant: "b",
-    tool: "taste",
-    mode: "guided",
-    tags: ["organic", "rounded", "blob", "gradient"],
-    note: "Organic warmth, CSS blobs + breathing orbs. Quicksand + Nunito.",
-    brief: "Dials 7/5/3 · high-end-visual-design · curved organic shapes.",
-    Component: BTaste08,
   },
 ];
 
@@ -511,30 +380,6 @@ const bFdNoPhoto: DesignModule[] = [
     Component: BFd09,
   },
   {
-    slug: "b-fd-10",
-    label: "B · fd · 10",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["editorial", "magazine", "drop-cap", "no-photo"],
-    note: "Wellness magazine feature, folio numbers, italic pull-quotes. Fraunces + DM Serif Display.",
-    brief: "Axis 06: multi-column, vertical rules, drop cap. Pure CSS, no photo.",
-    Component: BFd10,
-  },
-  {
-    slug: "b-fd-11",
-    label: "B · fd · 11",
-    ad: "image2",
-    variant: "b",
-    tool: "fd",
-    mode: "guided",
-    tags: ["swiss", "flat", "grid", "mono", "no-photo"],
-    note: "Swiss cold-precision mono on tender lavender. DM Serif Display + IBM Plex Mono.",
-    brief: "Axis 07: strict grid, zero shadows, monospaced UI. Pure CSS, no photo.",
-    Component: BFd11,
-  },
-  {
     slug: "b-fd-12",
     label: "B · fd · 12",
     ad: "image2",
@@ -599,8 +444,22 @@ const aManual: DesignModule[] = [
   },
 ];
 
+const cManual: DesignModule[] = [
+  {
+    slug: "c-manual-01",
+    label: "C · manual · 01 — Retro Forest",
+    ad: "image3",
+    variant: "c",
+    tool: "manual",
+    tags: ["retro", "forest", "lime", "offbeat"],
+    note: "Hero + method du C Retro Forest original (Bricolage, lime sur forest, stepper 01+barre). Corps de c-taste-03 (Reveal blur, marquee 'Leave them ready'). Fonds alternés dark/clair, CTA lime à contour forest, accessible.",
+    Component: CManual01,
+  },
+];
+
 export const designs: DesignModule[] = [
   ...aManual,
+  ...cManual,
   ...baseDesigns,
   ...aFdGuided,
   ...aFdNoPhoto,
