@@ -13,6 +13,8 @@ import CManual01 from "@/designs/c-manual-01";
 // Variant-B manual track — single-background family (one lavender field, no bands;
 // cards only on pricing + final CTA). Five hand-built directions.
 import BManual01 from "@/designs/b-manual-01";
+import BManual01b from "@/designs/b-manual-01b";
+import BManual01c from "@/designs/b-manual-01c";
 import BManual02 from "@/designs/b-manual-02";
 import BManual03 from "@/designs/b-manual-03";
 import CManual02 from "@/designs/c-manual-02";
@@ -481,13 +483,33 @@ const cManual: DesignModule[] = [
 const bManual: DesignModule[] = [
   {
     slug: "b-manual-01",
-    label: "B · manual · 01 — Halo",
+    label: "B · manual · 01 — Halo (niveau 1, doux)",
     ad: "image2",
     variant: "b",
     tool: "manual",
-    tags: ["soft", "lavender", "gradient-fort", "ghost-hero"],
-    note: "Gradient lavande FORT, hero ghost You Alive? en blanc, accent de titre subtil (italique SOFT), CTA ink, cards pricing à gradient interne. DM Sans.",
+    tags: ["soft", "lavender", "ghost-hero", "niveau-1"],
+    note: "Halo niveau 1 (le plus doux) : fond lavande clair, halo très léger, ghost lavande. Accent de titre subtil, CTA ink, cards pricing à gradient interne. DM Sans.",
     Component: BManual01,
+  },
+  {
+    slug: "b-manual-01b",
+    label: "B · manual · 01 — Halo (niveau 2, doux+)",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["soft", "lavender", "ghost-hero", "niveau-2"],
+    note: "Même design que 01, halo niveau 2 : ghost blanc plus présent, halo lavande un peu plus marqué.",
+    Component: BManual01b,
+  },
+  {
+    slug: "b-manual-01c",
+    label: "B · manual · 01 — Halo (niveau 3, médian)",
+    ad: "image2",
+    variant: "b",
+    tool: "manual",
+    tags: ["soft", "lavender", "ghost-hero", "niveau-3"],
+    note: "Même design que 01, halo niveau 3 (médian) : halo periwinkle un peu plus dense, ghost blanc lisible.",
+    Component: BManual01c,
   },
   {
     slug: "b-manual-02",

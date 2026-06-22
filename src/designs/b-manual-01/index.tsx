@@ -52,6 +52,31 @@ const GHOST = "#EBE6FF"; // near-transparent lavender for the hero ghost wordmar
 const LIGHT = "#F7F4FF"; // light label on ink surfaces
 const HAIR = "rgba(90,86,144,0.18)"; // hairline rule on the field
 
+// Hero gradient levels (site lavender palette only — no saturated violet). The
+// whole-page field + the hero-local halo + the ghost color vary by level.
+export type Gradient = { field: string; halo: string; ghost: string; ghostShadow: string };
+
+export const GRADIENT_1: Gradient = {
+  field: "linear-gradient(180deg,#F7F4FF 0%,#F3ECFF 100%)",
+  halo: "radial-gradient(56% 50% at 50% 42%, rgba(214,228,255,0.40) 0%, rgba(214,228,255,0) 70%)",
+  ghost: "#EBE6FF",
+  ghostShadow: "none",
+};
+export const GRADIENT_2: Gradient = {
+  field: "linear-gradient(180deg,#F7F4FF 0%,#F3ECFF 100%)",
+  halo:
+    "radial-gradient(56% 52% at 50% 42%, rgba(214,228,255,0.62) 0%, rgba(235,230,255,0.30) 45%, rgba(214,228,255,0) 72%)",
+  ghost: "rgba(255,255,255,0.68)",
+  ghostShadow: "0 2px 36px rgba(90,86,144,0.12)",
+};
+export const GRADIENT_3: Gradient = {
+  field: "linear-gradient(180deg,#F7F4FF 0%,#EFEAFF 100%)",
+  halo:
+    "radial-gradient(56% 52% at 50% 42%, rgba(198,210,245,0.70) 0%, rgba(214,228,255,0.34) 46%, rgba(214,228,255,0) 72%)",
+  ghost: "rgba(255,255,255,0.78)",
+  ghostShadow: "0 2px 40px rgba(90,86,144,0.14)",
+};
+
 // Scroll-reveal primitive (ported from RetroForestBase): blur-rise, RM-safe.
 function Reveal({
   children,
@@ -94,7 +119,11 @@ function Reveal({
   );
 }
 
-export default function BManual01Halo({ content, slug }: DesignProps) {
+export function HaloBase({
+  content,
+  slug,
+  gradient,
+}: DesignProps & { gradient: Gradient }) {
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
@@ -140,16 +169,9 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
       className={`${fraunces.variable} ${dmSans.variable} font-[family-name:var(--font-body)] relative min-h-[100dvh] overflow-x-clip antialiased`}
       style={{
         color: INK,
-        // ── THE single field: strong layered recipe (3 radial halos + vertical
-        // linear), continuous saturated lavender across the whole page. ──
-        // Ad-inspired mesh (image2.jpeg): saturated violet pool upper-left,
-        // cornflower-blue right + bottom, white channels between.
-        background:
-          "radial-gradient(85% 55% at 26% 9%, rgba(141,128,214,0.44) 0%, rgba(141,128,214,0) 55%)," +
-          "radial-gradient(80% 50% at 95% 16%, rgba(160,184,242,0.52) 0%, rgba(160,184,242,0) 52%)," +
-          "radial-gradient(95% 55% at 52% 110%, rgba(166,190,244,0.42) 0%, rgba(166,190,244,0) 60%)," +
-          "radial-gradient(58% 40% at 6% 80%, rgba(146,132,216,0.28) 0%, rgba(146,132,216,0) 55%)," +
-          "linear-gradient(180deg, #F7F6FF 0%, #F1EEFF 50%, #F6F4FF 100%)",
+        // THE single field across the whole page (gentle site lavender). The
+        // hero gets an extra local halo; both are driven by `gradient`.
+        background: gradient.field,
       }}
     >
       <style>{`
@@ -202,29 +224,25 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
 
         {/* ───────── HERO (ghost wordmark + H1 on top) ───────── */}
         <section className="relative pt-14 md:pt-20">
-          {/* Hero-only STRONGER gradient: a deeper lavender→periwinkle pool so
-              the near-white ghost wordmark reads as white (b-fd-12 effect). */}
+          {/* Hero-only halo (level-driven) so the ghost wordmark reads softly. */}
           <div
             aria-hidden
             className="pointer-events-none absolute left-1/2 top-[36%] -z-0 h-[560px] w-[680px] -translate-x-1/2 -translate-y-1/2 blur-[60px]"
-            style={{
-              background:
-                "radial-gradient(55% 52% at 50% 40%, rgba(120,106,200,0.92) 0%, rgba(146,132,220,0.5) 40%, rgba(176,192,240,0) 72%)",
-            }}
+            style={{ background: gradient.halo }}
           />
 
           {/* GIANT ghost "You Alive?" behind the H1. */}
           <p
             aria-hidden
             className="ya-stage pointer-events-none -mx-2 select-none font-[family-name:var(--font-display)] leading-[0.84] tracking-[-0.03em]"
-            style={{ color: "rgba(255,255,255,0.78)" }}
+            style={{ color: gradient.ghost }}
           >
             <span
               className="block"
               style={{
                 fontSize: "clamp(92px, 30vw, 140px)",
                 fontVariationSettings: '"opsz" 144, "SOFT" 100',
-                textShadow: "0 2px 40px rgba(90,86,144,0.16)",
+                textShadow: gradient.ghostShadow,
                 animationDelay: "0s",
               } as CSSProperties}
             >
@@ -235,7 +253,7 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
               style={{
                 fontSize: "clamp(92px, 30vw, 140px)",
                 fontVariationSettings: '"opsz" 144, "SOFT" 100',
-                textShadow: "0 2px 40px rgba(90,86,144,0.16)",
+                textShadow: gradient.ghostShadow,
                 animationDelay: "0.06s",
               } as CSSProperties}
             >
@@ -767,4 +785,9 @@ export default function BManual01Halo({ content, slug }: DesignProps) {
       </div>
     </main>
   );
+}
+
+// b-manual-01 = level 1 (le plus doux).
+export default function BManual01Halo(props: DesignProps) {
+  return <HaloBase {...props} gradient={GRADIENT_1} />;
 }
