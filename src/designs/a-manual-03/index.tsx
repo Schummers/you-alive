@@ -7,7 +7,6 @@ import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
 import { WaitlistTakeover } from "@/designs/shared/WaitlistTakeover";
 import { useScrollReveal } from "@/designs/shared/useScrollReveal";
-import { CountUp } from "@/designs/shared/CountUp";
 
 // ─────────────────────────────────────────────────────────────────────────────
 // MANUAL · 03 — "Hero plein écran + stepper"
@@ -43,7 +42,6 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
     content;
 
   const titleLines = hero.title.split(/(?<=\.)\s+/).filter(Boolean);
-  const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
   const pricingTitleParts = pricing.title.split(/,\s*/);
   const problemTitle = problem.title
     .replace(/^Logins,\s*/i, "")
@@ -190,24 +188,6 @@ export default function ManualStepperDesign({ content, slug }: DesignProps) {
               {arrow}
             </button>
           </div>
-
-          <p
-            className="ya-hero ya-hero-5 mt-5 flex items-center gap-3 text-[13px] tracking-wide"
-            style={{ color: "#6a7a6f" }}
-          >
-            <span className="inline-block h-px w-7" style={{ backgroundColor: "#b8a888" }} />
-            <span>
-              {reMatch ? (
-                <>
-                  {reMatch[1]}
-                  <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
-                  {reMatch[3]}
-                </>
-              ) : (
-                hero.reassuranceLine
-              )}
-            </span>
-          </p>
         </section>
 
         {/* ───────── PROBLEM (tone band) ───────── */}

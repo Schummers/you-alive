@@ -91,6 +91,7 @@ type BaseProps = DesignProps & {
   subtitlePx?: number;
   ctaRadius?: number; // px (use a big number for a pill)
   footerMode?: "color" | "dark"; // color = problemBg band, no divider; dark = forest
+  hideReassurance?: boolean; // hide the hero reassurance line
 };
 
 export default function RetroForestBase({
@@ -104,6 +105,7 @@ export default function RetroForestBase({
   subtitlePx = 18,
   ctaRadius = 18,
   footerMode = "color",
+  hideReassurance = false,
 }: BaseProps) {
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
@@ -280,23 +282,25 @@ export default function RetroForestBase({
             <Cta label={hero.ctaLabel} onClick={() => fd.onCta("hero")} />
           </div>
 
-          <p
-            className="mt-7 flex items-center gap-2.5 text-[13px]"
-            style={{ color: MUTED_D, animationDelay: "0.58s" }}
-          >
-            <span className="ya-pulse-dot h-1.5 w-1.5 rounded-full" style={{ backgroundColor: LIME }} />
-            <span>
-              {reMatch ? (
-                <>
-                  {reMatch[1]}
-                  <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
-                  {reMatch[3]}
-                </>
-              ) : (
-                hero.reassuranceLine
-              )}
-            </span>
-          </p>
+          {!hideReassurance && (
+            <p
+              className="mt-7 flex items-center gap-2.5 text-[13px]"
+              style={{ color: MUTED_D, animationDelay: "0.58s" }}
+            >
+              <span className="ya-pulse-dot h-1.5 w-1.5 rounded-full" style={{ backgroundColor: LIME }} />
+              <span>
+                {reMatch ? (
+                  <>
+                    {reMatch[1]}
+                    <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
+                    {reMatch[3]}
+                  </>
+                ) : (
+                  hero.reassuranceLine
+                )}
+              </span>
+            </p>
+          )}
         </section>
 
         {/* ───────── PROBLEM (the one colored band — variant-controlled) ───────── */}

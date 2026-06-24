@@ -21,6 +21,8 @@ type Fd = {
   setEmail: (v: string) => void;
   features: string[];
   toggleFeature: (id: string) => void;
+  otherFeature: string;
+  setOtherFeature: (v: string) => void;
   closeWaitlist: () => void;
   state: "idle" | "loading" | "done" | "error";
   submit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -193,6 +195,21 @@ export function WaitlistTakeoverB({
                       );
                     })}
                   </div>
+                  <input
+                    type="text"
+                    value={fd.otherFeature}
+                    onChange={(e) => fd.setOtherFeature(e.target.value)}
+                    placeholder="Something else?"
+                    maxLength={80}
+                    className={`mt-2 w-full rounded-full border px-4 py-2 text-[11.5px] font-semibold focus:outline-none focus:ring-2 focus:ring-[#6F69C9]/40 ${
+                      centered ? "text-center" : ""
+                    }`}
+                    style={{
+                      borderColor: "rgba(38,35,90,0.18)",
+                      backgroundColor: "rgba(255,255,255,0.7)",
+                      color: INK,
+                    }}
+                  />
                 </fieldset>
               )}
 

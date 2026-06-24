@@ -11,7 +11,6 @@ import {
 import { ArrowRight } from "lucide-react";
 import type { DesignProps } from "@/designs/types";
 import { useFakeDoor } from "@/designs/shared/useFakeDoor";
-import { CountUp } from "@/designs/shared/CountUp";
 import { WaitlistTakeoverB } from "@/designs/shared/WaitlistTakeoverB";
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -135,9 +134,6 @@ export function HaloBase({
   const r = squared
     ? { cta: "rounded-[4px]", card: "rounded-[6px]", panel: "rounded-[8px]", pill: "rounded-[4px]" }
     : { cta: "rounded-[18px]", card: "rounded-[28px]", panel: "rounded-[36px]", pill: "rounded-full" };
-
-  // Reassurance line → CountUp on the embedded number (RetroForestBase reMatch).
-  const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
 
   // CTA click → full-screen "Start my plan" takeover (like variant A), B palette.
   if (fd.showWaitlist) {
@@ -314,27 +310,6 @@ export function HaloBase({
             <div className="mt-9" style={{ animationDelay: "0.42s" }}>
               <Cta label={hero.ctaLabel} onClick={() => fd.onCta("hero")} />
             </div>
-
-            <p
-              className="mt-7 flex items-center gap-2.5 text-[13px]"
-              style={{ color: SOFT, animationDelay: "0.56s" }}
-            >
-              <span
-                className="ya-pulse-dot h-1.5 w-1.5 rounded-full"
-                style={{ backgroundColor: ACCENT }}
-              />
-              <span>
-                {reMatch ? (
-                  <>
-                    {reMatch[1]}
-                    <CountUp end={parseInt(reMatch[2].replace(/[.,]/g, ""), 10)} />
-                    {reMatch[3]}
-                  </>
-                ) : (
-                  hero.reassuranceLine
-                )}
-              </span>
-            </p>
           </div>
         </section>
 

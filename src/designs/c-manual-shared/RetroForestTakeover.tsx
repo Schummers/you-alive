@@ -20,6 +20,8 @@ type Fd = {
   setEmail: (v: string) => void;
   features: string[];
   toggleFeature: (id: string) => void;
+  otherFeature: string;
+  setOtherFeature: (v: string) => void;
   closeWaitlist: () => void;
   state: "idle" | "loading" | "done" | "error";
   submit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -160,6 +162,14 @@ export function RetroForestTakeover({
                       );
                     })}
                   </div>
+                  <input
+                    type="text"
+                    value={fd.otherFeature}
+                    onChange={(e) => fd.setOtherFeature(e.target.value)}
+                    placeholder="Something else?"
+                    maxLength={80}
+                    className="ya-tinput mt-2 w-full rounded-full px-4 py-2 text-[12px] font-semibold"
+                  />
                 </fieldset>
               )}
 

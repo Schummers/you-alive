@@ -15,6 +15,7 @@ export default function ManualRetroForest03(props: DesignProps) {
       heroMobilePx={46}
       heroDesktopPx={64}
       footerMode="dark"
+      hideReassurance
     />
   );
 }
