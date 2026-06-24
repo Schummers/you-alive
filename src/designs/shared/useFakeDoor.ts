@@ -26,6 +26,7 @@ export function useFakeDoor(slug: string) {
   const [showWaitlist, setShowWaitlist] = useState(false);
   const [email, setEmail] = useState("");
   const [features, setFeatures] = useState<string[]>([]);
+  const [otherFeature, setOtherFeature] = useState("");
   const [state, setState] = useState<FakeDoorState>("idle");
   const pricingRef = useRef<HTMLElement | null>(null);
 
@@ -88,12 +89,13 @@ export function useFakeDoor(slug: string) {
       // Shared dedup key between the browser Pixel and the server CAPI event.
       const eventId = crypto.randomUUID();
       try {
+        const allFeatures = [...features, ...(otherFeature.trim() ? [otherFeature.trim()] : [])];
         const res = await fetch("/api/waitlist", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             email,
-            features,
+            features: allFeatures,
             variant: slug,
             event_id: eventId,
             event_source_url: window.location.href,
@@ -101,14 +103,14 @@ export function useFakeDoor(slug: string) {
           }),
         });
         if (!res.ok) throw new Error("failed");
-        track("email_submit", { design: slug, features }, { eventId });
+        track("email_submit", { design: slug, features: allFeatures }, { eventId });
         setState("done");
       } catch {
         track("waitlist_error", { design: slug });
         setState("error");
       }
     },
-    [email, features, slug]
+    [email, features, otherFeature, slug]
   );
 
   return {
@@ -118,6 +120,8 @@ export function useFakeDoor(slug: string) {
     setEmail,
     features,
     toggleFeature,
+    otherFeature,
+    setOtherFeature,
     closeWaitlist,
     state,
     onCta,
