@@ -124,10 +124,16 @@ export function HaloBase({
   content,
   slug,
   gradient,
-}: DesignProps & { gradient: Gradient }) {
+  squared = false,
+}: DesignProps & { gradient: Gradient; squared?: boolean }) {
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
+
+  // Corner language. squared = near-square (Scripture-like); default = rounded.
+  const r = squared
+    ? { cta: "rounded-[4px]", card: "rounded-[6px]", panel: "rounded-[8px]", pill: "rounded-[4px]" }
+    : { cta: "rounded-[18px]", card: "rounded-[28px]", panel: "rounded-[36px]", pill: "rounded-full" };
 
   // Reassurance line → CountUp on the embedded number (RetroForestBase reMatch).
   const reMatch = hero.reassuranceLine.match(/^(.*?)([\d.,]+)(.*)$/);
@@ -156,7 +162,7 @@ export function HaloBase({
   }) => (
     <button
       onClick={onClick}
-      className={`ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-semibold ${
+      className={`ya-cta group inline-flex items-center justify-center gap-2.5 ${r.cta} px-7 py-4 text-[15px] font-semibold ${
         full ? "w-full" : ""
       }`}
       style={{ backgroundColor: INK, color: LIGHT }}
@@ -228,7 +234,7 @@ export function HaloBase({
         <header className="flex items-center justify-between pt-7">
           {wordmark}
           <span
-            className="rounded-full border px-3 py-1 text-[10px] uppercase tracking-[0.22em]"
+            className={`${r.pill} border px-3 py-1 text-[10px] uppercase tracking-[0.22em]`}
             style={{ borderColor: HAIR, color: SOFT }}
           >
             Early access
@@ -427,7 +433,7 @@ export function HaloBase({
               return (
                 <Reveal key={i} delay={i * 90}>
                   <div
-                    className="relative overflow-hidden rounded-[28px] p-7"
+                    className={`relative overflow-hidden ${r.card} p-7`}
                     style={
                       hi
                         ? {
@@ -456,7 +462,7 @@ export function HaloBase({
                     )}
                     {hi && (
                       <span
-                        className="relative inline-block rounded-full px-4 py-1 text-[10px] uppercase tracking-[0.2em]"
+                        className={`relative inline-block ${r.pill} px-4 py-1 text-[10px] uppercase tracking-[0.2em]`}
                         style={{ backgroundColor: GHOST, color: INK }}
                       >
                         Most chosen
@@ -490,7 +496,7 @@ export function HaloBase({
                       {hi ? (
                         <button
                           onClick={() => fd.onCta(`pricing-${plan.name.toLowerCase()}`)}
-                          className="ya-cta group inline-flex w-full items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-semibold"
+                          className={`ya-cta group inline-flex w-full items-center justify-center gap-2.5 ${r.cta} px-7 py-4 text-[15px] font-semibold`}
                           style={{ backgroundColor: GHOST, color: INK }}
                         >
                           {plan.ctaLabel}
@@ -517,7 +523,7 @@ export function HaloBase({
           {/* Everything included — card allowed. Two columns, no-lock-in inside. */}
           <Reveal className="mt-6">
             <div
-              className="rounded-[28px] p-7"
+              className={`${r.card} p-7`}
               style={{
                 background: "rgba(255,255,255,0.5)",
                 border: "1px solid rgba(255,255,255,0.7)",
@@ -656,7 +662,7 @@ export function HaloBase({
         <section className="mt-28">
           <Reveal>
             <div
-              className="relative overflow-hidden rounded-[36px] p-10 text-center"
+              className={`relative overflow-hidden ${r.panel} p-10 text-center`}
               style={{
                 background: "radial-gradient(130% 100% at 50% 0%, #393577 0%, #26235A 65%)",
                 color: LIGHT,
@@ -684,7 +690,7 @@ export function HaloBase({
               <div className="relative mt-9 flex justify-center">
                 <button
                   onClick={() => fd.onCta("final")}
-                  className="ya-cta group inline-flex items-center justify-center gap-2.5 rounded-[18px] px-7 py-4 text-[15px] font-semibold"
+                  className={`ya-cta group inline-flex items-center justify-center gap-2.5 ${r.cta} px-7 py-4 text-[15px] font-semibold`}
                   style={{ backgroundColor: GHOST, color: INK }}
                 >
                   {content.finalCta.ctaLabel}

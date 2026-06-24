@@ -85,6 +85,7 @@ function Reveal({
 type BaseProps = DesignProps & {
   problemBg: string;
   heroMode?: "split" | "stack"; // split = white lead + lime punch word; stack = one all-lime word per line
+  heroAllLime?: boolean; // split mode: render the whole H1 in lime (no white lead)
   heroMobilePx?: number;
   heroDesktopPx?: number;
   subtitlePx?: number;
@@ -97,6 +98,7 @@ export default function RetroForestBase({
   slug,
   problemBg,
   heroMode = "split",
+  heroAllLime = false,
   heroMobilePx = 46,
   heroDesktopPx = 64,
   subtitlePx = 18,
