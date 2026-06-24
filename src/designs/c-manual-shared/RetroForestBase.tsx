@@ -236,7 +236,7 @@ export default function RetroForestBase({
           <h1
             className="ya-h1 font-[family-name:var(--font-display)] font-extrabold uppercase italic leading-[0.98] tracking-[-0.05em]"
             style={{
-              color: heroMode === "stack" ? LIME : WHITE_1,
+              color: heroMode === "stack" || heroAllLime ? LIME : WHITE_1,
               animationDelay: "0.1s",
               "--h1-m": `${heroMobilePx}px`,
               "--h1-d": `${heroDesktopPx}px`,

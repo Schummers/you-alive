@@ -18,6 +18,7 @@ import BManual01d from "@/designs/b-manual-01d";
 import BManual02 from "@/designs/b-manual-02";
 import BManual03 from "@/designs/b-manual-03";
 import CManual02 from "@/designs/c-manual-02";
+import CManual03 from "@/designs/c-manual-03";
 
 import AFd09 from "@/designs/a-fd-09";
 import AFd16 from "@/designs/a-fd-16";
@@ -474,6 +475,16 @@ const cManual: DesignModule[] = [
     tags: ["retro", "forest", "lime", "display"],
     note: "Même base, version plus typographique : H1 entièrement lime, géant (64px), un mot par ligne (6 lignes), CTA pill, sous-titre réduit, footer forest foncé.",
     Component: CManual02,
+  },
+  {
+    slug: "c-manual-03",
+    label: "C · manual · 03 — Retro Forest (H1 tout lime)",
+    ad: "image3",
+    variant: "c",
+    tool: "manual",
+    tags: ["retro", "forest", "lime"],
+    note: "Identique à c-manual-01 (hero split 4 lignes, 46px) mais le H1 est entièrement lime (plus de lignes blanches).",
+    Component: CManual03,
   },
 ];
 
