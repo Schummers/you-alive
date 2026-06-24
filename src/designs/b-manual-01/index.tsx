@@ -125,7 +125,8 @@ export function HaloBase({
   slug,
   gradient,
   squared = false,
-}: DesignProps & { gradient: Gradient; squared?: boolean }) {
+  heroSuffix,
+}: DesignProps & { gradient: Gradient; squared?: boolean; heroSuffix?: string }) {
   const fd = useFakeDoor(slug);
   const { hero, problem, solution, pricing, testimonials, faq, fakedoor, footer } =
     content;
@@ -300,6 +301,7 @@ export function HaloBase({
               <span className="italic" style={{ color: TITLE_ACCENT }}>
                 unfound.
               </span>
+              {heroSuffix ? <span className="not-italic"> {heroSuffix}</span> : null}
             </h1>
 
             <p
