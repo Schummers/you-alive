@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=1" />
+<title>You Alive — Ad B (Scripture)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,300..700,0..100,0..1;1,9..144,300..700,0..100,0..1&family=Spectral:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&display=swap" rel="stylesheet" />
+<style>
+  /* ── Tokens b-manual-03 "Scripture" ──────────────────────────── */
+  :root {
+    --ink: #26235A;
+    --soft: #5A5690;
+    --body: #3d3a6e;
+    --fraunces: "Fraunces", Georgia, serif;
+    --spectral: "Spectral", Georgia, serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: #2b2b2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .canvas {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    font-family: var(--spectral);
+    color: var(--ink);
+    -webkit-font-smoothing: antialiased;
+    /* ONE continuous lavender field — exact b-manual-03 recipe */
+    background-color: #F3ECFF;
+    background-image:
+      radial-gradient(120% 70% at 50% 4%, #F7F4FF 0%, rgba(247,244,255,0) 46%),
+      radial-gradient(120% 80% at 8% -6%, #EBE6FF 0%, rgba(235,230,255,0) 55%),
+      radial-gradient(95% 70% at 105% 16%, #E4DCFF 0%, rgba(228,220,255,0) 52%),
+      radial-gradient(120% 90% at 50% 118%, #EFEAFF 0%, rgba(239,234,255,0) 60%),
+      linear-gradient(180deg, #F7F4FF 0%, #EFEAFF 60%, #F3ECFF 100%);
+  }
+  .title-group {
+    position: absolute;
+    top: 560px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 96px;
+  }
+  h1 {
+    font-family: var(--fraunces);
+    font-variation-settings: "opsz" 96, "SOFT" 40, "WONK" 0;
+    font-weight: 300;
+    color: var(--ink);
+    font-size: 148px;
+    line-height: 1.0;
+    letter-spacing: -0.02em;
+  }
+  .emojis {
+    margin-top: 44px;
+    font-size: 104px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  .subtitle {
+    position: absolute;
+    top: 1330px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0 96px;
+    font-family: var(--spectral);
+    font-weight: 300;
+    color: var(--body);
+    font-size: 50px;
+    line-height: 1.5;
+    letter-spacing: 0.01em;
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="title-group">
+      <h1>You Alive?</h1>
+      <div class="emojis">🥹❤️</div>
+    </div>
+    <p class="subtitle">Notify your loved ones<br />if something happens</p>
+  </div>
+</body>
+</html>
