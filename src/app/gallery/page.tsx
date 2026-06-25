@@ -1,8 +1,14 @@
+import type { Metadata } from "next";
 import { designs, designSlugs } from "@/designs/registry";
 import type { DesignModule } from "@/designs/types";
 import LikeButton from "./LikeButton";
 import TrashButton from "./TrashButton";
 import MarksBar from "./MarksBar";
+
+// Internal design gallery — never indexed, never reachable from ads/users.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 // Static-screenshot gallery for the design bake-off. Thumbnails are pre-rendered
 // 390px screenshots in /public/gallery/<slug>.jpg (regenerate with the Playwright

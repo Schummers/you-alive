@@ -1,6 +1,12 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { designMap, designSlugs } from "@/designs/registry";
 import { site } from "@/content/site";
+
+// Internal design preview — never indexed, never reachable from ads/users.
+export const metadata: Metadata = {
+  robots: { index: false, follow: false },
+};
 
 // Renders one design variant with the FIXED canonical content.
 // Distinct from /[variant] (the copy A/B test) — this axis is visual design.

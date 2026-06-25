@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1080, initial-scale=1" />
+<title>You Alive — Ad C (Retro Forest)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+<style>
+  /* ── Tokens c-manual-01 "Retro Forest" ───────────────────────── */
+  :root {
+    --forest: #16271F;
+    --lime: #C8F169;
+    --display: "Bricolage Grotesque", system-ui, sans-serif;
+    --body: "Space Grotesk", system-ui, sans-serif;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body {
+    background: #2b2b2b;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  .canvas {
+    position: relative;
+    width: 1080px;
+    height: 1920px;
+    overflow: hidden;
+    background: var(--forest);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+  }
+  .head {
+    position: absolute;
+    top: 320px;
+    left: 110px;
+    right: 110px;
+  }
+  h1 {
+    font-family: var(--display);
+    font-weight: 800;            /* extrabold */
+    font-style: italic;          /* synthesised oblique, like the site */
+    text-transform: uppercase;
+    color: var(--lime);
+    font-size: 184px;
+    line-height: 0.98;
+    letter-spacing: -0.05em;
+  }
+  .emojis {
+    margin-top: 56px;
+    margin-left: 300px;
+    font-size: 100px;
+    line-height: 1;
+    letter-spacing: 0.02em;
+  }
+  /* Lower block: lime hairline + right-aligned caption */
+  .foot {
+    position: absolute;
+    top: 1300px;
+    left: 360px;
+    right: 110px;
+  }
+  .rule {
+    height: 4px;
+    width: 100%;
+    background: var(--lime);
+    border-radius: 999px;
+  }
+  .caption {
+    margin-top: 80px;
+    text-align: right;
+    font-family: var(--body);
+    font-weight: 500;
+    color: var(--lime);
+    font-size: 44px;
+    line-height: 1.45;
+    letter-spacing: 0.005em;
+  }
+</style>
+</head>
+<body>
+  <div class="canvas">
+    <div class="head">
+      <h1>You<br />Alive?</h1>
+      <div class="emojis">🥹❤️</div>
+    </div>
+    <div class="foot">
+      <div class="rule"></div>
+      <p class="caption">notify your loved ones<br />when you don't reply</p>
+    </div>
+  </div>
+</body>
+</html>
