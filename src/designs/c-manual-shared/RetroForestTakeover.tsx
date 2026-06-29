@@ -112,7 +112,7 @@ export function RetroForestTakeover({
             </p>
 
             <form id="ya-form" onSubmit={fd.submit} className="mt-7 w-full max-w-[440px]">
-              <label htmlFor="ya-email" className="block text-[13px] font-bold uppercase tracking-[0.16em]">
+              <label htmlFor="ya-email" className="block text-[13px] font-bold">
                 Leave your email for 20% off at launch
                 <span aria-hidden="true" style={{ color: LIME }}>
                   *
@@ -136,7 +136,7 @@ export function RetroForestTakeover({
 
               {features.length > 0 && (
                 <fieldset className="mt-6 border-0 p-0">
-                  <legend className="mb-3 text-[13px] font-bold uppercase tracking-[0.16em]">
+                  <legend className="mb-3 text-[13px] font-bold">
                     {fakedoor.featuresTitle}{" "}
                     <span style={{ color: MUTED_D2, fontWeight: 400 }}>(optional)</span>
                   </legend>
