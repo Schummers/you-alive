@@ -130,7 +130,7 @@ export function WaitlistTakeoverB({
                 htmlFor="ya-email"
                 className={`block text-[13px] font-semibold ${centered ? "text-center" : ""}`}
               >
-                Your email{" "}
+                Leave your email for 20% off at launch
                 <span aria-hidden="true" style={{ color: ACCENT }}>
                   *
                 </span>

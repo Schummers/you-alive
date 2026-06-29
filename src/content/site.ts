@@ -179,7 +179,7 @@ export const site: SiteContent = {
     submitLabel: "Reserve my spot",
     privacyLine: "No spam. One email when we launch.",
     badge: "Launching soon",
-    fieldNote: "First access + 20% off at launch",
+    fieldNote: "",
     featuresTitle: "Which features matter most to you?",
     features: [
       { id: "store-passwords", label: "Store passwords & logins" },

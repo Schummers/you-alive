@@ -113,7 +113,7 @@ export function RetroForestTakeover({
 
             <form id="ya-form" onSubmit={fd.submit} className="mt-7 w-full max-w-[440px]">
               <label htmlFor="ya-email" className="block text-[13px] font-bold uppercase tracking-[0.16em]">
-                Your email{" "}
+                Leave your email for 20% off at launch
                 <span aria-hidden="true" style={{ color: LIME }}>
                   *
                 </span>
